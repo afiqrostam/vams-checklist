@@ -10,8 +10,8 @@
         "FUNCTION_REQUEST_INFO": {
           "REQUEST_TYPE": "LIST.HEAD_DATA.STORED",
           "GRID": {
-            "GRID_NAME": "9U9987",
-            "USER_FUNCTION_NAME": "9U9987",
+            "GRID_NAME": "",
+            "USER_FUNCTION_NAME": "",
             "NUMBER_OF_ROWS_FIRST_RETURNED": "9999",
             "CURSOR_POSITION": "1",
             "Namespace": "http://schemas.datastream.net/MP_entities/GridRequest"
@@ -24,31 +24,13 @@
             "Namespace": "http://schemas.datastream.net/MP_entities/GridRequest",
             "MADDON_FILTER": [
               {
-                "ALIAS_NAME": "evt_org",
-                "OPERATOR": "=",
-                "VALUE": "TAS",
+                "ALIAS_NAME": "",
+                "OPERATOR": "",
+                "VALUE": "",
                 "RPAREN": "false",
                 "LPAREN": "false",
                 "JOINER": "AND",
                 "SEQNUM": "1"
-              },
-              {
-                "ALIAS_NAME": "ack_event",
-                "OPERATOR": "=",
-                "VALUE": "1006353048",
-                "RPAREN": "false",
-                "LPAREN": "false",
-                "JOINER": "AND",
-                "SEQNUM": "2"
-              },
-              {
-                "ALIAS_NAME": "ack_act",
-                "OPERATOR": "=",
-                "VALUE": "30",
-                "RPAREN": "false",
-                "LPAREN": "false",
-                "JOINER": "AND",
-                "SEQNUM": "3"
               }
             ]
           }
