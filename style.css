@@ -1,4 +1,28 @@
-
+.container {
+  max-width: 960px !important;
+}
 .pre-line {
-  white-space: pre-line
+  white-space: pre-line;
+}
+#form {
+  min-height: 75vh;
+  display: block;
+}
+.opacity-80 {
+  opacity: 0.8 !important;
+}
+.opacity-85 {
+  opacity: 0.85 !important;
+}
+.opacity-90 {
+  opacity: 0.9 !important;
+}
+.opacity-95 {
+  opacity: 0.95 !important;
+}
+.min-vh-90 {
+  min-height: 90vh !important;
+}
+.min-vh-80 {
+  min-height: 80vh !important;
 }
