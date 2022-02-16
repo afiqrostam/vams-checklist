@@ -1,27 +1,26 @@
 var alert_mod = {
   data() {
     return {
-      alerts: [],
-      infos: [],
+      datas: [],
     };
   },
   methods: {
-    addAlert(alert) {
+    add(input) {
       var new_id = alert_id++;
-      this.alerts.unshift({ id: 'A' + (new_id).toString().padStart(3, '0'), text: alert });
+      var prefix;
+      var classfix;
+      if (input.type == 'error') { prefix = 'E'; classfix = 'bg-danger' }
+      if (input.type == 'info') { prefix = 'I'; classfix = 'bg-warning' }
+      if (input.type == 'success') { prefix = 'S'; classfix = 'bg-primary' }
+      this.datas.unshift({
+        id: prefix + (new_id).toString().padStart(3, '0'),
+        text: input.text,
+        type: input.type,
+        classfix: classfix
+      });
     },
-    addInfo(info) {
-      var new_id = info_id++;
-      this.infos.unshift({ id: 'I' + (new_id).toString().padStart(3, '0'), text: info });
-    },
-    removeAlert(alert) {
-      var data = this.alerts;
-      setTimeout(function (data, alert) {
-        data = data.filter((t) => t !== alert);
-      }, 200, data, alert);
-    },
-    removeInfo(info) {
-      var data = this.infos;
+    remove(info) {
+      var data = this.datas;
       setTimeout(function (data, info) {
         data = data.filter((t) => t !== info);
       }, 200, data, info);
@@ -39,36 +38,13 @@ var checklist_mod = {
   methods: {
     addItems(input) {
       input['wo'] = 'WO' + input['ack_event'];
-      if (input['ack_completed'] == undefined) { input['completed'] = false }
-      else {
-        if (input['ack_completed'] == '-') { input['completed'] = false }
-        else { input['completed'] = true }
-      }
-      if (input['ack_yes'] == undefined) { input['yes'] = false }
-      else {
-        if (input['ack_yes'] == '-') { input['yes'] = false }
-        else { input['yes'] = true }
-      }
-      if (input['ack_no'] == undefined) { input['no'] = false }
-      else {
-        if (input['ack_no'] == '-') { input['no'] = false }
-        else { input['no'] = true }
-      }
-      if (input['ack_ok'] == undefined) { input['ok'] = false }
-      else {
-        if (input['ack_ok'] == '-') { input['ok'] = false }
-        else { input['ok'] = true }
-      }
-      if (input['ack_adjusted'] == undefined) { input['adjusted'] = false }
-      else {
-        if (input['ack_adjusted'] == '-') { input['adjusted'] = false }
-        else { input['adjusted'] = true }
-      }
-      if (input['ack_not_applicable'] == undefined) { input['not_applicable'] = false }
-      else {
-        if (input['ack_not_applicable'] == '') { input['not_applicable'] = false }
-        else { input['not_applicable'] = true }
-      }
+      if (input['ack_completed'] == undefined) { input['ack_completed'] = '' }
+      if (input['ack_yes'] == undefined) { input['ack_yes'] = '' }
+      if (input['ack_no'] == undefined) { input['ack_no'] = '' }
+      if (input['ack_ok'] == undefined) { input['ack_ok'] = '' }
+      if (input['ack_adjusted'] == undefined) { input['ack_adjusted'] = '' }
+      if (input['ack_not_applicable'] == undefined) { input['ack_not_applicable'] = '' }
+      if (input['ack_notes'] == undefined) { input['ack_notes'] = '' }
       if (input['ack_taskchecklistcode_comments'] == undefined) { input['message'] = input['ack_desc'] }
       else { input['message'] = input['ack_desc'] + ' ' + input['ack_taskchecklistcode_comments'] }
       this.raw.push(input)
@@ -91,20 +67,20 @@ var checklist_mod = {
               group_label: input['ack_group_label_desc'],
               parentid: input['wo'] + '-' + input['ack_act'],
               items: [{
-                id: input['ack_code'],
+                ack_code: input['ack_code'],
                 message: input['message'],
-                entry: input['ack_desc'],
-                comments: input['ack_taskchecklistcode_comments'],
-                required: input['ack_requiredtoclose'],
-                type: input['ack_type'],
-                note: input['ack_note'],
-                completed: input['completed'],
-                ok: input['ok'],
-                adjusted: input['adjusted'],
-                yes: input['yes'],
-                no: input['no'],
-                not_applicable: input['not_applicable'],
-                seq: input['ack_sequence'],
+                ack_desc: input['ack_desc'],
+                ack_taskchecklistcode_comments: input['ack_taskchecklistcode_comments'],
+                ack_requiredtoclose: input['ack_requiredtoclose'],
+                ack_type: input['ack_type'],
+                ack_notes: input['ack_notes'],
+                ack_completed: input['ack_completed'],
+                ack_ok: input['ack_ok'],
+                ack_adjusted: input['ack_adjusted'],
+                ack_yes: input['ack_yes'],
+                ack_no: input['ack_no'],
+                ack_not_applicable: input['ack_not_applicable'],
+                ack_sequence: input['ack_sequence'],
                 parentid: input['wo'] + '-' + input['ack_act'] + '-' + input['ack_group_label'],
               }],
             }],
@@ -142,27 +118,40 @@ var checklist_mod = {
           return e.id == input['wo'] + '-' + input['ack_act'] + '-' + input['ack_group_label']
         });
         this.data.activities[activity].groups[group].items.push({
-          id: input['ack_code'],
-          entry: input['ack_desc'],
+          ack_code: input['ack_code'],
           message: input['message'],
-          comments: input['ack_taskchecklistcode_comments'],
-          required: input['ack_requiredtoclose'],
-          type: input['ack_type'],
-          note: input['ack_notes'],
-          completed: input['completed'],
-          ok: input['ok'],
-          adjusted: input['adjusted'],
-          yes: input['yes'],
-          no: input['no'],
-          not_applicable: input['not_applicable'],
-          seq: input['ack_sequence'],
+          ack_desc: input['ack_desc'],
+          ack_taskchecklistcode_comments: input['ack_taskchecklistcode_comments'],
+          ack_requiredtoclose: input['ack_requiredtoclose'],
+          ack_type: input['ack_type'],
+          ack_notes: input['ack_notes'],
+          ack_completed: input['ack_completed'],
+          ack_ok: input['ack_ok'],
+          ack_adjusted: input['ack_adjusted'],
+          ack_yes: input['ack_yes'],
+          ack_no: input['ack_no'],
+          ack_not_applicable: input['ack_not_applicable'],
+          ack_sequence: input['ack_sequence'],
           parentid: input['wo'] + '-' + input['ack_act'] + '-' + input['ack_group_label'],
         });
       }
     },
     snycItems(item) {
-      var id = this.raw.findIndex(function (e) { return e.ack_code == item.id });
-      this.raw[id].ack_notes = item.note;
+      var id = this.raw.findIndex(function (e) { return e['ack_code'] == item['ack_code'] });
+      var raw = this.raw[id];
+      raw['ack_notes'] = item['ack_notes'];
+      raw['ack_not_applicable'] = item['ack_not_applicable'];
+      raw['ack_yes'] = item['ack_yes'];
+      if(item['ack_yes'] == '-'){item['ack_no'] = '+'}
+      else if(item['ack_yes'] == '+'){item['ack_no'] = '-'}
+      raw['ack_no'] = item['ack_no'];
+      raw['ack_completed'] = item['ack_completed'];
+      raw['ack_ok'] = item['ack_ok'];
+      if(item['ack_ok'] == '-'){item['ack_adjusted'] = '+'}
+      else if(item['ack_ok'] == '+'){item['ack_adjusted'] = '-'}
+      raw['ack_adjusted'] = item['ack_adjusted'];
+      console.log(item);
+      console.log(this.raw[id]);
     }
   }
 }
