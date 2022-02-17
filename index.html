@@ -46,7 +46,7 @@
           </div>
           <div
             v-bind="{ 'id': 'c'+activity.id, 'aria-labelledby': 'h'+activity.id, 'data-bs-parent': '#'+activity.parentid }"
-            class="accordion-collapse collapse">
+            class="accordion-collapse collapse show">
             <template v-if="activity.groups !== undefined">
               <div class="accordion accordion-flush" :id="activity.id">
                 <div class="accordion-item" v-for="group in activity.groups" :key="group.id">
@@ -54,7 +54,7 @@
                     <button class="accordion-button py-2 collapsed" type="button" data-bs-toggle="collapse"
                       aria-expanded="false" v-bind="{ 'data-bs-target': '#c'+group.id, 'aria-controls': 'c'+group.id }">
                       <span class="w-100">{{ group.group_label}}</span>
-                      <span class="small fw-light pe-2 text-nowrap">[ of {{ group.items.length}} complete ]</span>
+                      <span class="small fw-light pe-2 text-nowrap">( {{ getGroupCompleted(group) }} of {{ group.items.length}} done )</span>
                     </button>
                   </div>
                   <div v-bind="{ 'id': 'c'+group.id, 'aria-labelledby': 'h'+group.id }"
@@ -66,20 +66,19 @@
                             <button class="accordion-button py-2 collapsed" type="button" data-bs-toggle="collapse"
                               aria-expanded="false"
                               v-bind="{ 'data-bs-target': '#c'+item.ack_code, 'aria-controls': 'c'+item.ack_code }">
-                              <span class="fw-light pre-line pe-2">{{ item.message }}</span>
+                              <div class="fw-light pe-2">
+                                <i class="bi bi-circle pe-2" v-if="!getItemCompleted(item)"></i>
+                                <i class="bi bi-check2-circle pe-1" v-if="getItemCompleted(item)"></i>
+                                <span>{{ item.ack_desc }}</span>
+                                <p v-if="item.ack_taskchecklistcode_comments != ''" class="pre-line ps-4 m-0">{{
+                                  item.ack_taskchecklistcode_comments }}</p>
+                              </div>
                             </button>
                           </div>
                           <div v-bind="{ 'id': 'c'+item.ack_code, 'aria-labelledby': 'h'+item.ack_code }"
                             class="accordion-collapse collapse">
                             <div class="accordion-body">
                               <div class="d-grip gap-2 d-flex mb-2">
-                                <div class="flex-fill">
-                                  <input type="checkbox" class="btn-check" :id="'NA'+item.ack_code" autocomplete="off"
-                                    v-model="item.ack_not_applicable" true-value="NA" false-value=""
-                                    @change="snycItems(item)">
-                                  <label class="btn btn-outline-primary d-block" :for="'NA'+item.ack_code">Not
-                                    Applicable</label>
-                                </div>
                                 <div class="flex-fill d-grip gap-2 d-flex " v-if="item.ack_type == '02'">
                                   <input type="radio" class="btn-check" :id="'YES'+item.ack_code"
                                     @change="snycItems(item)" :name="'YES'+item.ack_code" autocomplete="off"
@@ -96,19 +95,26 @@
                                   <input type="checkbox" class="btn-check" :id="'COMP'+item.ack_code" autocomplete="off"
                                     v-model="item.ack_completed" true-value="+" false-value="-"
                                     @change="snycItems(item)">
-                                  <label class="btn btn-outline-secondary d-block" :for="'COMP'+item.ack_code">Completed</label>
+                                  <label class="btn btn-outline-secondary d-block"
+                                    :for="'COMP'+item.ack_code">Completed</label>
                                 </div>
                                 <div class="flex-fill d-grip gap-2 d-flex " v-if="item.ack_type == '09'">
                                   <input type="radio" class="btn-check" :id="'OK'+item.ack_code"
                                     @change="snycItems(item)" :name="'OK'+item.ack_code" autocomplete="off"
                                     v-model="item.ack_ok" value="+">
-                                  <label class="btn btn-outline-info flex-fill"
-                                    :for="'OK'+item.ack_code">OK</label>
+                                  <label class="btn btn-outline-info flex-fill" :for="'OK'+item.ack_code">OK</label>
                                   <input type="radio" class="btn-check" :id="'ADJ'+item.ack_code"
                                     @change="snycItems(item)" :name="'OK'+item.ack_code" autocomplete="off"
                                     v-model="item.ack_ok" value="-">
                                   <label class="btn btn-outline-info flex-fill"
                                     :for="'ADJ'+item.ack_code">Adjusted</label>
+                                </div>
+                                <div class="flex-fill">
+                                  <input type="checkbox" class="btn-check" :id="'NA'+item.ack_code" autocomplete="off"
+                                    v-model="item.ack_not_applicable" true-value="NA" false-value=""
+                                    @change="snycItems(item)">
+                                  <label class="btn btn-outline-primary d-block" :for="'NA'+item.ack_code">Not
+                                    Applicable</label>
                                 </div>
                               </div>
                               <div>
