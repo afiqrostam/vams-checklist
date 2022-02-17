@@ -45,8 +45,7 @@ var checklist_mod = {
       if (input['ack_adjusted'] == undefined) { input['ack_adjusted'] = '' }
       if (input['ack_not_applicable'] == undefined) { input['ack_not_applicable'] = '' }
       if (input['ack_notes'] == undefined) { input['ack_notes'] = '' }
-      if (input['ack_taskchecklistcode_comments'] == undefined) { input['message'] = input['ack_desc'] }
-      else { input['message'] = input['ack_desc'] + ' ' + input['ack_taskchecklistcode_comments'] }
+      if (input['ack_taskchecklistcode_comments'] == undefined) { input['ack_taskchecklistcode_comments'] = '' }
       this.raw.push(input)
       if (Object.keys(this.data).length == 0) {
         var header = {
@@ -68,7 +67,6 @@ var checklist_mod = {
               parentid: input['wo'] + '-' + input['ack_act'],
               items: [{
                 ack_code: input['ack_code'],
-                message: input['message'],
                 ack_desc: input['ack_desc'],
                 ack_taskchecklistcode_comments: input['ack_taskchecklistcode_comments'],
                 ack_requiredtoclose: input['ack_requiredtoclose'],
@@ -119,7 +117,6 @@ var checklist_mod = {
         });
         this.data.activities[activity].groups[group].items.push({
           ack_code: input['ack_code'],
-          message: input['message'],
           ack_desc: input['ack_desc'],
           ack_taskchecklistcode_comments: input['ack_taskchecklistcode_comments'],
           ack_requiredtoclose: input['ack_requiredtoclose'],
@@ -142,16 +139,27 @@ var checklist_mod = {
       raw['ack_notes'] = item['ack_notes'];
       raw['ack_not_applicable'] = item['ack_not_applicable'];
       raw['ack_yes'] = item['ack_yes'];
-      if(item['ack_yes'] == '-'){item['ack_no'] = '+'}
-      else if(item['ack_yes'] == '+'){item['ack_no'] = '-'}
+      if (item['ack_yes'] == '-') { item['ack_no'] = '+' }
+      else if (item['ack_yes'] == '+') { item['ack_no'] = '-' }
       raw['ack_no'] = item['ack_no'];
       raw['ack_completed'] = item['ack_completed'];
       raw['ack_ok'] = item['ack_ok'];
-      if(item['ack_ok'] == '-'){item['ack_adjusted'] = '+'}
-      else if(item['ack_ok'] == '+'){item['ack_adjusted'] = '-'}
+      if (item['ack_ok'] == '-') { item['ack_adjusted'] = '+' }
+      else if (item['ack_ok'] == '+') { item['ack_adjusted'] = '-' }
       raw['ack_adjusted'] = item['ack_adjusted'];
       console.log(item);
       console.log(this.raw[id]);
+    },
+    getItemCompleted(item) {
+      if ((item.ack_completed == '' || item.ack_completed == '-') && item.ack_ok == '' && item.ack_adjusted == '' && item.ack_yes == '' && item.ack_no == '' && item.ack_not_applicable == '') {
+        return false
+      }
+      else { return true }
+    },
+    getGroupCompleted(group) {
+      return group.items.filter(function (item) {
+        return !((item.ack_completed == '' || item.ack_completed == '-') && item.ack_ok == '' && item.ack_adjusted == '' && item.ack_yes == '' && item.ack_no == '' && item.ack_not_applicable == '')
+      }).length
     }
   }
 }
