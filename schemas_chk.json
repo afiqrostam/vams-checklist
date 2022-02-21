@@ -44,35 +44,39 @@
     "group": "Tracking Data Management",
     "role": "Tracking Data",
     "body": {
-      "MP0808_SyncTrackingData_001": {
-        "verb": "Sync",
-        "noun": "TrackingData",
+      "MP0810_AddInterfaceTransactions_001": {
+        "verb": "Add",
+        "noun": "InterfaceTransactions",
         "version": "001",
-        "callname": "SyncTrackingData",
-        "Namespace": "http://schemas.datastream.net/MP_functions/MP0808_001",
-        "TrackingData": {
-          "recordid":"0",
-          "Namespace": "http://schemas.datastream.net/MP_entities/TrackingData_001",
-          "TRANSCODE": {
-            "Namespace": "http://schemas.datastream.net/MP_fields"
-          },
-          "PROMPTDATA1": {
-            "Namespace": "http://schemas.datastream.net/MP_fields"
-          },
-          "PROMPTDATA2": {
-            "Namespace": "http://schemas.datastream.net/MP_fields"
-          },
-          "PROMPTDATA3": {
-            "Namespace": "http://schemas.datastream.net/MP_fields"
-          },
-          "PROMPTDATA4": {
-            "Namespace": "http://schemas.datastream.net/MP_fields"
-          },
-          "PROMPTDATA5": {
-            "Namespace": "http://schemas.datastream.net/MP_fields"
-          },
-          "PROMPTDATA6": {
-            "Namespace": "http://schemas.datastream.net/MP_fields"
+        "Namespace": "http://schemas.datastream.net/MP_functions/MP0810_001",
+        "InterfaceTransactions": {
+          "recordid": "0",
+          "Namespace": "http://schemas.datastream.net/MP_entities/InterfaceTransactions_001",
+          "InterfaceTransactions": {
+            "Namespace": "http://schemas.datastream.net/MP_entities/TrackingData_001",
+            "Tracking Data": {
+              "TRANSCODE": {
+                "Namespace": "http://schemas.datastream.net/MP_fields"
+              },
+              "PROMPTDATA1": {
+                "Namespace": "http://schemas.datastream.net/MP_fields"
+              },
+              "PROMPTDATA2": {
+                "Namespace": "http://schemas.datastream.net/MP_fields"
+              },
+              "PROMPTDATA3": {
+                "Namespace": "http://schemas.datastream.net/MP_fields"
+              },
+              "PROMPTDATA4": {
+                "Namespace": "http://schemas.datastream.net/MP_fields"
+              },
+              "PROMPTDATA5": {
+                "Namespace": "http://schemas.datastream.net/MP_fields"
+              },
+              "PROMPTDATA6": {
+                "Namespace": "http://schemas.datastream.net/MP_fields"
+              }
+            }
           }
         }
       }
@@ -85,7 +89,7 @@
         "required": true,
         "order": 0,
         "type": "Text",
-        "parent": "MP0808_SyncTrackingData_001/TrackingData/TRANSCODE"
+        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/InterfaceTransactions/Tracking Data/TRANSCODE"
       },
       {
         "name": "PROMPTDATA1",
