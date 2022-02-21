@@ -44,11 +44,12 @@
     "group": "Tracking Data Management",
     "role": "Tracking Data",
     "body": {
-      "TrackingData_001": {
-        "verb": "Add",
+      "MP0808_SyncTrackingData_001": {
+        "verb": "Sync",
         "noun": "TrackingData",
         "version": "001",
-        "Namespace": "http://schemas.datastream.net/MP_entities/TrackingData_001",
+        "callname": "SyncTrackingData",
+        "Namespace": "http://schemas.datastream.net/MP_functions/MP0808_001",
         "TrackingData": {
           "recordid":"0",
           "Namespace": "http://schemas.datastream.net/MP_entities/TrackingData_001",
@@ -84,7 +85,7 @@
         "required": true,
         "order": 0,
         "type": "Text",
-        "parent": "TrackingData_001/TrackingData/TRANSCODE"
+        "parent": "MP0808_SyncTrackingData_001/TrackingData/TRANSCODE"
       },
       {
         "name": "PROMPTDATA1",
@@ -93,7 +94,7 @@
         "required": false,
         "order": 0,
         "type": "Text",
-        "parent": "TrackingData_001/TrackingData/PROMPTDATA1"
+        "parent": "MP0808_SyncTrackingData_001/TrackingData/PROMPTDATA1"
       },
       {
         "name": "PROMPTDATA2",
@@ -102,7 +103,7 @@
         "required": false,
         "order": 0,
         "type": "Text",
-        "parent": "TrackingData_001/TrackingData/PROMPTDATA2"
+        "parent": "MP0808_SyncTrackingData_001/TrackingData/PROMPTDATA2"
       },
       {
         "name": "PROMPTDATA3",
@@ -111,7 +112,7 @@
         "required": false,
         "order": 0,
         "type": "Text",
-        "parent": "TrackingData_001/TrackingData/PROMPTDATA3"
+        "parent": "MP0808_SyncTrackingData_001/TrackingData/PROMPTDATA3"
       },
       {
         "name": "PROMPTDATA4",
@@ -120,7 +121,7 @@
         "required": false,
         "order": 0,
         "type": "Text",
-        "parent": "TrackingData_001/TrackingData/PROMPTDATA4"
+        "parent": "MP0808_SyncTrackingData_001/TrackingData/PROMPTDATA4"
       },
       {
         "name": "PROMPTDATA5",
@@ -129,7 +130,7 @@
         "required": false,
         "order": 0,
         "type": "Text",
-        "parent": "TrackingData_001/TrackingData/PROMPTDATA5"
+        "parent": "MP0808_SyncTrackingData_001/TrackingData/PROMPTDATA5"
       },
       {
         "name": "PROMPTDATA6",
@@ -138,7 +139,7 @@
         "required": false,
         "order": 0,
         "type": "Text",
-        "parent": "TrackingData_001/TrackingData/PROMPTDATA6"
+        "parent": "MP0808_SyncTrackingData_001/TrackingData/PROMPTDATA6"
       }
     ]
   }
