@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 </head>
 
-<body class="bg-light min-vh-100 vw-100 pt-md-5">
+<body class="bg-light pt-md-5">
   <div id="alert" class="container fixed-bottom p-1">
     <div class="col-sm-8 col-md-6 opacity-75" v-for="data in datas" :key="data.id">
       <div :id="data.id"
@@ -26,8 +26,18 @@
     </div>
   </div>
   <div id="form" class="container p-1 mb-5">
-    <div class="card card min-vh-90 bg-light" v-show="Object.keys(data).length == 0"></div>
-    <div class="card card min-vh-90" v-show="Object.keys(data).length != 0">
+    <div class="card card min-vh-90 d-flex align-items-center justify-content-center bg-dark opacity-75"
+      v-if="Object.keys(data).length == 0">
+      <div class="spinner-border text-light" role="status" v-show="broken == false">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div v-show="broken == true">
+        <div class="text-warning text-center lead"><i class="bi bi-cloud-lightning-rain big"></i>
+          <p>Oh no! Something broken</p>
+        </div>
+      </div>
+    </div>
+    <div class="card card min-vh-90" v-else>
       <div class="card-header pre-line">
         <a :href="data.url" target="_blank" type="button" class="btn btn-sm btn-outline-secondary position-relative">{{
           data.wo }}<span
@@ -54,7 +64,8 @@
                     <button class="accordion-button py-2 collapsed" type="button" data-bs-toggle="collapse"
                       aria-expanded="false" v-bind="{ 'data-bs-target': '#c'+group.id, 'aria-controls': 'c'+group.id }">
                       <span class="w-100">{{ group.group_label}}</span>
-                      <span class="small fw-light pe-2 text-nowrap">( {{ getGroupCompleted(group) }} of {{ group.items.length}} done )</span>
+                      <span class="small fw-light pe-2 text-nowrap">( {{ getGroupCompleted(group) }} of {{
+                        group.items.length}} done )</span>
                     </button>
                   </div>
                   <div v-bind="{ 'id': 'c'+group.id, 'aria-labelledby': 'h'+group.id }"
@@ -68,7 +79,7 @@
                               v-bind="{ 'data-bs-target': '#c'+item.ack_code, 'aria-controls': 'c'+item.ack_code }">
                               <div class="fw-light pe-2">
                                 <i class="bi bi-circle pe-2" v-if="!getItemCompleted(item)"></i>
-                                <i class="bi bi-check2-circle pe-1" v-if="getItemCompleted(item)"></i>
+                                <i class="bi bi-check2-circle pe-2" v-if="getItemCompleted(item)"></i>
                                 <span>{{ item.ack_desc }}</span>
                                 <p v-if="item.ack_taskchecklistcode_comments != ''" class="pre-line ps-4 m-0">{{
                                   item.ack_taskchecklistcode_comments }}</p>
@@ -78,7 +89,7 @@
                           <div v-bind="{ 'id': 'c'+item.ack_code, 'aria-labelledby': 'h'+item.ack_code }"
                             class="accordion-collapse collapse">
                             <div class="accordion-body">
-                              <div class="d-grip gap-2 d-flex mb-2">
+                              <div class="d-grid gap-2 d-sm-flex mb-2">
                                 <div class="flex-fill d-grip gap-2 d-flex " v-if="item.ack_type == '02'">
                                   <input type="radio" class="btn-check" :id="'YES'+item.ack_code"
                                     @change="snycItems(item)" :name="'YES'+item.ack_code" autocomplete="off"
@@ -90,6 +101,14 @@
                                     v-model="item.ack_yes" value="-">
                                   <label class="btn btn-outline-secondary flex-fill"
                                     :for="'NO'+item.ack_code">No</label>
+                                </div>
+                                <div class="flex-fill" v-if="item.ack_type == '04'">
+                                  <div class="input-group">
+                                    <input type="number" v-model="item.ack_value" @input="snycItems(item)"
+                                      class="form-control" placeholder="...."
+                                      v-bind="{'aria-describedby' : 'VAL'+item.ack_code }">
+                                    <span class="input-group-text" :id="'VAL'+item.ack_code">{{ item.ack_uom }}</span>
+                                  </div>
                                 </div>
                                 <div class="flex-fill" v-if="item.ack_type == '01'">
                                   <input type="checkbox" class="btn-check" :id="'COMP'+item.ack_code" autocomplete="off"
@@ -118,23 +137,24 @@
                                 </div>
                               </div>
                               <div>
-                                <label for="exampleFormControlTextarea1" class="form-label">Notes</label>
-                                <textarea class="form-control" v-model="item.ack_notes" rows="2"
-                                  @input="snycItems(item)" placeholder="...."></textarea>
+                                <label :for="'NOTES'+item.ack_code" class="form-label">Notes</label>
+                                <textarea :id="'NOTES'+item.ack_code" class="form-control" v-model="item.ack_notes"
+                                  rows="1" @input="snycItems(item)" placeholder="...."></textarea>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </template>
                   </div>
-                </div>
-              </div>
             </template>
           </div>
         </div>
       </div>
+      </template>
     </div>
+  </div>
+  </div>
+  </div>
   </div>
   <!-- Optional JavaScript; choose one of the two! -->
   <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -172,6 +192,7 @@
               text: data.text,
               type: 'error'
             })
+            form.broken = true;
           }
           else {
             alert.add({
