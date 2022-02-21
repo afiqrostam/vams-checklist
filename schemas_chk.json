@@ -87,7 +87,7 @@
         "required": true,
         "order": 0,
         "type": "Text",
-        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData/TRANSCODE"
+        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData"
       },
       {
         "name": "PROMPTDATA1",
@@ -96,7 +96,7 @@
         "required": false,
         "order": 1,
         "type": "Text",
-        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData/PROMPTDATA1"
+        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData"
       },
       {
         "name": "PROMPTDATA2",
@@ -105,7 +105,7 @@
         "required": false,
         "order": 2,
         "type": "Text",
-        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData/PROMPTDATA2"
+        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData"
       },
       {
         "name": "PROMPTDATA3",
@@ -114,7 +114,7 @@
         "required": false,
         "order": 3,
         "type": "Text",
-        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData/PROMPTDATA3"
+        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData"
       },
       {
         "name": "PROMPTDATA4",
@@ -123,7 +123,7 @@
         "required": false,
         "order": 4,
         "type": "Text",
-        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData/PROMPTDATA4"
+        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData"
       },
       {
         "name": "PROMPTDATA5",
@@ -132,7 +132,7 @@
         "required": false,
         "order": 5,
         "type": "Text",
-        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData/PROMPTDATA5"
+        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData"
       },
       {
         "name": "PROMPTDATA6",
@@ -141,7 +141,7 @@
         "required": false,
         "order": 6,
         "type": "Text",
-        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData/PROMPTDATA6"
+        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData"
       }
     ]
   }
