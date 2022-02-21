@@ -37,5 +37,109 @@
         }
       }
     }
+  },
+  {
+    "name": "TrackingData_001",
+    "simple": "Add Tracking Data",
+    "group": "Tracking Data Management",
+    "role": "Tracking Data",
+    "body": {
+      "TrackingData": {
+        "verb": "Add",
+        "noun": "TrackingData",
+        "version": "001",
+        "Namespace": "http://schemas.datastream.net/MP_entities/TrackingData_001",
+        "TrackingData": {
+          "recordid":"0",
+          "Namespace": "http://schemas.datastream.net/MP_entities/TrackingData_001",
+          "TRANSCODE": {
+            "Namespace": "http://schemas.datastream.net/MP_fields"
+          },
+          "PROMPTDATA1": {
+            "Namespace": "http://schemas.datastream.net/MP_fields"
+          },
+          "PROMPTDATA2": {
+            "Namespace": "http://schemas.datastream.net/MP_fields"
+          },
+          "PROMPTDATA3": {
+            "Namespace": "http://schemas.datastream.net/MP_fields"
+          },
+          "PROMPTDATA4": {
+            "Namespace": "http://schemas.datastream.net/MP_fields"
+          },
+          "PROMPTDATA5": {
+            "Namespace": "http://schemas.datastream.net/MP_fields"
+          },
+          "PROMPTDATA6": {
+            "Namespace": "http://schemas.datastream.net/MP_fields"
+          }
+        }
+      }
+    },
+    "variable": [
+      {
+        "name": "TRANSCODE",
+        "field": "transcode",
+        "column": "transcode",
+        "required": true,
+        "order": 0,
+        "type": "Text",
+        "parent": "TrackingData/TrackingData/TRANSCODE"
+      },
+      {
+        "name": "PROMPTDATA1",
+        "field": "promtdata1",
+        "column": "promtdata1",
+        "required": false,
+        "order": 0,
+        "type": "Text",
+        "parent": "TrackingData/TrackingData/PROMPTDATA1"
+      },
+      {
+        "name": "PROMPTDATA2",
+        "field": "promtdata2",
+        "column": "promtdata2",
+        "required": false,
+        "order": 0,
+        "type": "Text",
+        "parent": "TrackingData/TrackingData/PROMPTDATA2"
+      },
+      {
+        "name": "PROMPTDATA3",
+        "field": "promtdata3",
+        "column": "promtdata3",
+        "required": false,
+        "order": 0,
+        "type": "Text",
+        "parent": "TrackingData/TrackingData/PROMPTDATA3"
+      },
+      {
+        "name": "PROMPTDATA4",
+        "field": "promtdata4",
+        "column": "promtdata4",
+        "required": false,
+        "order": 0,
+        "type": "Text",
+        "parent": "TrackingData/TrackingData/PROMPTDATA4"
+      },
+      {
+        "name": "PROMPTDATA5",
+        "field": "promtdata5",
+        "column": "promtdata5",
+        "required": false,
+        "order": 0,
+        "type": "Text",
+        "parent": "TrackingData/TrackingData/PROMPTDATA5"
+      },
+      {
+        "name": "PROMPTDATA6",
+        "field": "promtdata6",
+        "column": "promtdata6",
+        "required": false,
+        "order": 0,
+        "type": "Text",
+        "parent": "TrackingData/TrackingData/PROMPTDATA6"
+      }
+    ]
   }
 ]
