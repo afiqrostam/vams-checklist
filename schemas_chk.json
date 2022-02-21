@@ -79,8 +79,8 @@
     "variable": [
       {
         "name": "TRANSCODE",
-        "field": "transcode",
-        "column": "transcode",
+        "field": "TRANSCODE",
+        "column": "TRANSCODE",
         "required": true,
         "order": 0,
         "type": "Text",
@@ -88,8 +88,8 @@
       },
       {
         "name": "PROMPTDATA1",
-        "field": "promtdata1",
-        "column": "promtdata1",
+        "field": "PROMPTDATA1",
+        "column": "PROMPTDATA1",
         "required": false,
         "order": 0,
         "type": "Text",
@@ -97,8 +97,8 @@
       },
       {
         "name": "PROMPTDATA2",
-        "field": "promtdata2",
-        "column": "promtdata2",
+        "field": "PROMPTDATA2",
+        "column": "PROMPTDATA2",
         "required": false,
         "order": 0,
         "type": "Text",
@@ -106,8 +106,8 @@
       },
       {
         "name": "PROMPTDATA3",
-        "field": "promtdata3",
-        "column": "promtdata3",
+        "field": "PROMPTDATA3",
+        "column": "PROMPTDATA3",
         "required": false,
         "order": 0,
         "type": "Text",
@@ -115,8 +115,8 @@
       },
       {
         "name": "PROMPTDATA4",
-        "field": "promtdata4",
-        "column": "promtdata4",
+        "field": "PROMPTDATA4",
+        "column": "PROMPTDATA4",
         "required": false,
         "order": 0,
         "type": "Text",
@@ -124,8 +124,8 @@
       },
       {
         "name": "PROMPTDATA5",
-        "field": "promtdata5",
-        "column": "promtdata5",
+        "field": "PROMPTDATA5",
+        "column": "PROMPTDATA5",
         "required": false,
         "order": 0,
         "type": "Text",
@@ -133,8 +133,8 @@
       },
       {
         "name": "PROMPTDATA6",
-        "field": "promtdata6",
-        "column": "promtdata6",
+        "field": "PROMPTDATA6",
+        "column": "PROMPTDATA6",
         "required": false,
         "order": 0,
         "type": "Text",
