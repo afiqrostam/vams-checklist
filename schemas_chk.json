@@ -52,30 +52,28 @@
         "InterfaceTransactions": {
           "recordid": "0",
           "Namespace": "http://schemas.datastream.net/MP_entities/InterfaceTransactions_001",
-          "InterfaceTransactions": {
+          "TrackingData": {
             "Namespace": "http://schemas.datastream.net/MP_entities/TrackingData_001",
-            "Tracking Data": {
-              "TRANSCODE": {
-                "Namespace": "http://schemas.datastream.net/MP_fields"
-              },
-              "PROMPTDATA1": {
-                "Namespace": "http://schemas.datastream.net/MP_fields"
-              },
-              "PROMPTDATA2": {
-                "Namespace": "http://schemas.datastream.net/MP_fields"
-              },
-              "PROMPTDATA3": {
-                "Namespace": "http://schemas.datastream.net/MP_fields"
-              },
-              "PROMPTDATA4": {
-                "Namespace": "http://schemas.datastream.net/MP_fields"
-              },
-              "PROMPTDATA5": {
-                "Namespace": "http://schemas.datastream.net/MP_fields"
-              },
-              "PROMPTDATA6": {
-                "Namespace": "http://schemas.datastream.net/MP_fields"
-              }
+            "TRANSCODE": {
+              "Namespace": "http://schemas.datastream.net/MP_fields"
+            },
+            "PROMPTDATA1": {
+              "Namespace": "http://schemas.datastream.net/MP_fields"
+            },
+            "PROMPTDATA2": {
+              "Namespace": "http://schemas.datastream.net/MP_fields"
+            },
+            "PROMPTDATA3": {
+              "Namespace": "http://schemas.datastream.net/MP_fields"
+            },
+            "PROMPTDATA4": {
+              "Namespace": "http://schemas.datastream.net/MP_fields"
+            },
+            "PROMPTDATA5": {
+              "Namespace": "http://schemas.datastream.net/MP_fields"
+            },
+            "PROMPTDATA6": {
+              "Namespace": "http://schemas.datastream.net/MP_fields"
             }
           }
         }
@@ -89,61 +87,61 @@
         "required": true,
         "order": 0,
         "type": "Text",
-        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/InterfaceTransactions/Tracking Data/TRANSCODE"
+        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData/TRANSCODE"
       },
       {
         "name": "PROMPTDATA1",
         "field": "PROMPTDATA1",
         "column": "PROMPTDATA1",
         "required": false,
-        "order": 0,
+        "order": 1,
         "type": "Text",
-        "parent": "MP0808_SyncTrackingData_001/TrackingData/PROMPTDATA1"
+        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData/PROMPTDATA1"
       },
       {
         "name": "PROMPTDATA2",
         "field": "PROMPTDATA2",
         "column": "PROMPTDATA2",
         "required": false,
-        "order": 0,
+        "order": 2,
         "type": "Text",
-        "parent": "MP0808_SyncTrackingData_001/TrackingData/PROMPTDATA2"
+        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData/PROMPTDATA2"
       },
       {
         "name": "PROMPTDATA3",
         "field": "PROMPTDATA3",
         "column": "PROMPTDATA3",
         "required": false,
-        "order": 0,
+        "order": 3,
         "type": "Text",
-        "parent": "MP0808_SyncTrackingData_001/TrackingData/PROMPTDATA3"
+        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData/PROMPTDATA3"
       },
       {
         "name": "PROMPTDATA4",
         "field": "PROMPTDATA4",
         "column": "PROMPTDATA4",
         "required": false,
-        "order": 0,
+        "order": 4,
         "type": "Text",
-        "parent": "MP0808_SyncTrackingData_001/TrackingData/PROMPTDATA4"
+        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData/PROMPTDATA4"
       },
       {
         "name": "PROMPTDATA5",
         "field": "PROMPTDATA5",
         "column": "PROMPTDATA5",
         "required": false,
-        "order": 0,
+        "order": 5,
         "type": "Text",
-        "parent": "MP0808_SyncTrackingData_001/TrackingData/PROMPTDATA5"
+        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData/PROMPTDATA5"
       },
       {
         "name": "PROMPTDATA6",
         "field": "PROMPTDATA6",
         "column": "PROMPTDATA6",
         "required": false,
-        "order": 0,
+        "order": 6,
         "type": "Text",
-        "parent": "MP0808_SyncTrackingData_001/TrackingData/PROMPTDATA6"
+        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData/PROMPTDATA6"
       }
     ]
   }
