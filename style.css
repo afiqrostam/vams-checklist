@@ -26,3 +26,6 @@
 .min-vh-80 {
   min-height: 80vh !important;
 }
+.big {
+  font-size: 10rem;
+}

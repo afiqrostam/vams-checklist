@@ -33,6 +33,7 @@ var checklist_mod = {
     return {
       data: {},
       raw: [],
+      broken: false,
     }
   },
   methods: {
@@ -45,6 +46,9 @@ var checklist_mod = {
       if (input['ack_adjusted'] == undefined) { input['ack_adjusted'] = '' }
       if (input['ack_not_applicable'] == undefined) { input['ack_not_applicable'] = '' }
       if (input['ack_notes'] == undefined) { input['ack_notes'] = '' }
+      if (input['ack_value'] == undefined) { input['ack_value'] = '' }
+      else { input['ack_value'] = parseInt(input['ack_value'], 10) }
+      if (input['ack_uom'] == undefined) { input['ack_uom'] = '' }
       if (input['ack_taskchecklistcode_comments'] == undefined) { input['ack_taskchecklistcode_comments'] = '' }
       this.raw.push(input)
       if (Object.keys(this.data).length == 0) {
@@ -54,7 +58,6 @@ var checklist_mod = {
           url: dux + input['ack_event'],
           wo: input['ack_event'],
           desc: input['evt_desc'],
-          status: input['evt_status_desc'],
           activities: [{
             id: input['wo'] + '-' + input['ack_act'],
             act: input['ack_act'],
@@ -77,6 +80,8 @@ var checklist_mod = {
                 ack_adjusted: input['ack_adjusted'],
                 ack_yes: input['ack_yes'],
                 ack_no: input['ack_no'],
+                ack_value: input['ack_value'],
+                ack_uom: input['ack_uom'],
                 ack_not_applicable: input['ack_not_applicable'],
                 ack_sequence: input['ack_sequence'],
                 parentid: input['wo'] + '-' + input['ack_act'] + '-' + input['ack_group_label'],
@@ -127,6 +132,8 @@ var checklist_mod = {
           ack_adjusted: input['ack_adjusted'],
           ack_yes: input['ack_yes'],
           ack_no: input['ack_no'],
+          ack_value: input['ack_value'],
+          ack_uom: input['ack_uom'],
           ack_not_applicable: input['ack_not_applicable'],
           ack_sequence: input['ack_sequence'],
           parentid: input['wo'] + '-' + input['ack_act'] + '-' + input['ack_group_label'],
@@ -138,6 +145,7 @@ var checklist_mod = {
       var raw = this.raw[id];
       raw['ack_notes'] = item['ack_notes'];
       raw['ack_not_applicable'] = item['ack_not_applicable'];
+      raw['ack_value'] = item['ack_value'];
       raw['ack_yes'] = item['ack_yes'];
       if (item['ack_yes'] == '-') { item['ack_no'] = '+' }
       else if (item['ack_yes'] == '+') { item['ack_no'] = '-' }
@@ -147,18 +155,16 @@ var checklist_mod = {
       if (item['ack_ok'] == '-') { item['ack_adjusted'] = '+' }
       else if (item['ack_ok'] == '+') { item['ack_adjusted'] = '-' }
       raw['ack_adjusted'] = item['ack_adjusted'];
-      console.log(item);
-      console.log(this.raw[id]);
     },
     getItemCompleted(item) {
-      if ((item.ack_completed == '' || item.ack_completed == '-') && item.ack_ok == '' && item.ack_adjusted == '' && item.ack_yes == '' && item.ack_no == '' && item.ack_not_applicable == '') {
+      if ((item.ack_completed == '' || item.ack_completed == '-') && item.ack_value == '' && item.ack_ok == '' && item.ack_adjusted == '' && item.ack_yes == '' && item.ack_no == '' && item.ack_not_applicable == '') {
         return false
       }
       else { return true }
     },
     getGroupCompleted(group) {
       return group.items.filter(function (item) {
-        return !((item.ack_completed == '' || item.ack_completed == '-') && item.ack_ok == '' && item.ack_adjusted == '' && item.ack_yes == '' && item.ack_no == '' && item.ack_not_applicable == '')
+        return !((item.ack_completed == '' || item.ack_completed == '-') && item.ack_value == '' && item.ack_ok == '' && item.ack_adjusted == '' && item.ack_yes == '' && item.ack_no == '' && item.ack_not_applicable == '')
       }).length
     }
   }
