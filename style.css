@@ -20,6 +20,9 @@
 .opacity-95 {
   opacity: 0.95 !important;
 }
+.min-vh-95 {
+  min-height: 95vh !important;
+}
 .min-vh-90 {
   min-height: 90vh !important;
 }

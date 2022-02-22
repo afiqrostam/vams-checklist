@@ -38,14 +38,32 @@ var checklist_mod = {
   },
   methods: {
     addItems(input) {
+      input['updated'] = false;
+      input['process'] = false;
       input['wo'] = 'WO' + input['ack_event'];
       if (input['ack_completed'] == undefined) { input['ack_completed'] = '' }
+      if (input['ack_finding'] == undefined) { input['ack_finding'] = '' }
+      if (input['ack_possiblefindings'] == undefined) { input['ack_possiblefindings'] = '' }
+      else {
+        input['ack_possiblefindings'] = input['ack_possiblefindings'].split(',').map(
+          function (e) {
+            return {
+              value: e, text: findings.filter(
+                function (f) { return f.fnd_code == e }).pop().fnd_desc
+            }
+          }
+        )
+      }
       if (input['ack_yes'] == undefined) { input['ack_yes'] = '' }
       if (input['ack_no'] == undefined) { input['ack_no'] = '' }
+      if (input['ack_yes'] == '0' && input['ack_no'] == '0') { input['ack_yes'] = ''; input['ack_no'] = '' }
       if (input['ack_ok'] == undefined) { input['ack_ok'] = '' }
       if (input['ack_adjusted'] == undefined) { input['ack_adjusted'] = '' }
+      if (input['ack_ok'] == '-' && input['ack_adjusted'] == '-') { input['ack_ok'] = ''; input['ack_adjusted'] = '' }
       if (input['ack_not_applicable'] == undefined) { input['ack_not_applicable'] = '' }
+      if (input['ack_possible_na_options'] == undefined) { input['ack_possible_na_options'] = '' }
       if (input['ack_notes'] == undefined) { input['ack_notes'] = '' }
+      if (input['ack_freetext'] == undefined) { input['ack_freetext'] = '' }
       if (input['ack_value'] == undefined) { input['ack_value'] = '' }
       else { input['ack_value'] = parseInt(input['ack_value'], 10) }
       if (input['ack_uom'] == undefined) { input['ack_uom'] = '' }
@@ -69,6 +87,8 @@ var checklist_mod = {
               group_label: input['ack_group_label_desc'],
               parentid: input['wo'] + '-' + input['ack_act'],
               items: [{
+                updated: input['updated'],
+                process: input['process'],
                 ack_code: input['ack_code'],
                 ack_desc: input['ack_desc'],
                 ack_taskchecklistcode_comments: input['ack_taskchecklistcode_comments'],
@@ -76,6 +96,8 @@ var checklist_mod = {
                 ack_type: input['ack_type'],
                 ack_notes: input['ack_notes'],
                 ack_completed: input['ack_completed'],
+                ack_finding: input['ack_finding'],
+                ack_possiblefindings: input['ack_possiblefindings'],
                 ack_ok: input['ack_ok'],
                 ack_adjusted: input['ack_adjusted'],
                 ack_yes: input['ack_yes'],
@@ -83,6 +105,8 @@ var checklist_mod = {
                 ack_value: input['ack_value'],
                 ack_uom: input['ack_uom'],
                 ack_not_applicable: input['ack_not_applicable'],
+                ack_possible_na_options: input['ack_possible_na_options'],
+                ack_freetext: input['ack_freetext'],
                 ack_sequence: input['ack_sequence'],
                 parentid: input['wo'] + '-' + input['ack_act'] + '-' + input['ack_group_label'],
               }],
@@ -121,6 +145,8 @@ var checklist_mod = {
           return e.id == input['wo'] + '-' + input['ack_act'] + '-' + input['ack_group_label']
         });
         this.data.activities[activity].groups[group].items.push({
+          updated: input['updated'],
+          process: input['process'],
           ack_code: input['ack_code'],
           ack_desc: input['ack_desc'],
           ack_taskchecklistcode_comments: input['ack_taskchecklistcode_comments'],
@@ -128,6 +154,8 @@ var checklist_mod = {
           ack_type: input['ack_type'],
           ack_notes: input['ack_notes'],
           ack_completed: input['ack_completed'],
+          ack_finding: input['ack_finding'],
+          ack_possiblefindings: input['ack_possiblefindings'],
           ack_ok: input['ack_ok'],
           ack_adjusted: input['ack_adjusted'],
           ack_yes: input['ack_yes'],
@@ -135,6 +163,8 @@ var checklist_mod = {
           ack_value: input['ack_value'],
           ack_uom: input['ack_uom'],
           ack_not_applicable: input['ack_not_applicable'],
+          ack_possible_na_options: input['ack_possible_na_options'],
+          ack_freetext: input['ack_freetext'],
           ack_sequence: input['ack_sequence'],
           parentid: input['wo'] + '-' + input['ack_act'] + '-' + input['ack_group_label'],
         });
@@ -145,27 +175,112 @@ var checklist_mod = {
       var raw = this.raw[id];
       raw['ack_notes'] = item['ack_notes'];
       raw['ack_not_applicable'] = item['ack_not_applicable'];
+      raw['ack_freetext'] = item['ack_freetext'];
       raw['ack_value'] = item['ack_value'];
       raw['ack_yes'] = item['ack_yes'];
       if (item['ack_yes'] == '-') { item['ack_no'] = '+' }
-      else if (item['ack_yes'] == '+') { item['ack_no'] = '-' }
+      if (item['ack_yes'] == '+') { item['ack_no'] = '-' }
       raw['ack_no'] = item['ack_no'];
       raw['ack_completed'] = item['ack_completed'];
+      raw['ack_finding'] = item['ack_finding'];
       raw['ack_ok'] = item['ack_ok'];
       if (item['ack_ok'] == '-') { item['ack_adjusted'] = '+' }
-      else if (item['ack_ok'] == '+') { item['ack_adjusted'] = '-' }
+      if (item['ack_ok'] == '+') { item['ack_adjusted'] = '-' }
       raw['ack_adjusted'] = item['ack_adjusted'];
+      item['updated'] = raw['updated'] = true;
+      item['process'] = raw['process'] = false;
+      item['lastupdate'] = raw['lastupdate'] = Date.now();
+      setTimeout(
+        function (item) { form.processItems(item) }, 3000, item)
+    },
+    resetItems(item) {
+      if (item['ack_type'] == '01') { item['ack_completed'] = '' }
+      if (item['ack_type'] == '02') { item['ack_yes'] = ''; item['ack_no'] = '' }
+      if (item['ack_type'] == '03') { item['ack_finding'] = '' }
+      if (item['ack_type'] == '04') { item['ack_value'] = '' }
+      if (item['ack_type'] == '09') { item['ack_ok'] = ''; item['ack_adjusted'] = '' }
+      if (item['ack_type'] == '15') { item['ack_freetext'] = '' }
+      item['ack_notes'] = '';
+      item['ack_not_applicable'] = '';
+      form.snycItems(item)
     },
     getItemCompleted(item) {
-      if ((item.ack_completed == '' || item.ack_completed == '-') && item.ack_value == '' && item.ack_ok == '' && item.ack_adjusted == '' && item.ack_yes == '' && item.ack_no == '' && item.ack_not_applicable == '') {
+      if ((item.ack_completed == '' || item.ack_completed == '-') && item.ack_freetext == '' && item.ack_finding == '' && item.ack_value == '' && item.ack_ok == '' && item.ack_adjusted == '' && item.ack_yes == '' && item.ack_no == '' && item.ack_not_applicable == '') {
         return false
       }
       else { return true }
     },
     getGroupCompleted(group) {
       return group.items.filter(function (item) {
-        return !((item.ack_completed == '' || item.ack_completed == '-') && item.ack_value == '' && item.ack_ok == '' && item.ack_adjusted == '' && item.ack_yes == '' && item.ack_no == '' && item.ack_not_applicable == '')
+        return !((item.ack_completed == '' || item.ack_completed == '-') && item.ack_freetext == '' && item.ack_finding == '' && item.ack_value == '' && item.ack_ok == '' && item.ack_adjusted == '' && item.ack_yes == '' && item.ack_no == '' && item.ack_not_applicable == '')
       }).length
+    },
+    processItems(item) {
+      if (item['process'] == false && (Date.now() - item['lastupdate']) >= 3000) {
+        console.log('sending ' + item['ack_code'])
+        var one = '';
+        var two = '';
+        if (item['ack_type'] == '01') { one = item['ack_completed'] }
+        if (item['ack_type'] == '02') {
+          if (item['ack_yes'] == '' && item['ack_no'] == '') {
+            one = '0';
+            two = '0';
+          }
+          else {
+            one = item['ack_yes'];
+            two = item['ack_no'];
+          }
+        }
+        if (item['ack_type'] == '03') { one = item['ack_finding'] }
+        if (item['ack_type'] == '04') { one = item['ack_value'] }
+        if (item['ack_type'] == '09') {
+          if (item['ack_yes'] == '' && item['ack_no'] == '') {
+            one = '-';
+            two = '-';
+          }
+          else {
+            one = item['ack_ok'];
+            two = item['ack_adjusted'];
+          }
+        }
+        if (item['ack_type'] == '15') { one = item['ack_freetext'] }
+        var payload = {
+          'tenant': param.tenant,
+          'chkcode': item['ack_code'],
+          'chktype': item['ack_type'],
+          'chkdataone': one,
+          'chkdatatwo': two,
+          'chkdatanot': item['ack_not_applicable'],
+          'chkdatanotes': item['ack_notes']
+        }
+
+        var checklist_req = new Request(gas + '?process=upd_checklist', {
+          redirect: "follow",
+          method: 'POST',
+          body: JSON.stringify(payload),
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8",
+          },
+        });
+
+        fetch(checklist_req)
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            if (data.status != undefined && data.status === false) {
+              alert.add({
+                text: data.text,
+                type: 'error'
+              })
+            }
+            else {
+              var id = form.raw.findIndex(function (e) { return e['ack_code'] == item['ack_code'] });
+              var raw = form.raw[id];
+              item['process'] = raw['process'] = true;
+            }
+          });
+      }
     }
   }
 }
