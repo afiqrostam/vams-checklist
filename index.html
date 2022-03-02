@@ -25,7 +25,7 @@
       </div>
     </div>
   </div>
-  <div id="form" class="container p-1 mb-5">
+  <div id="form" class="container p-1 mb-1">
     <div class="card card min-vh-95 d-flex align-items-center justify-content-center bg-dark opacity-75"
       v-if="Object.keys(data).length == 0">
       <div class="spinner-border text-light" role="status" v-show="broken == false">
@@ -37,12 +37,17 @@
         </div>
       </div>
     </div>
-    <div class="card card min-vh-95" v-else>
-      <div class="card-header pre-line">
-        <button type="button" class="btn btn-sm btn-outline-secondary position-relative">{{
-          data.wo }}
-        </button>
-        <span class="float-end lead">{{ data.desc }}</span>
+    <div class="card min-vh-95" v-else>
+      <div class="px-3 pt-3 pb-2">
+        <span class="lead px-1">{{ data.desc }}</span>
+      </div>
+      <div class="bg-dark px-3 py-1 small font-monospace text-muted opacity-75">
+        <p class="px-1">
+          <span class="text-light">{{data.wo }}: </span>
+          <span> Work Order in status {{ data.status_desc }}. </span>
+          <span v-if="data.status">Unable to update checklist, please change work order status to enable
+            checklist</span>
+        </p>
       </div>
       <div class="accordion accordion-flush" :id="data.id">
         <div class="accordion-item" v-for="( activity, index ) in data.activities" :key="activity.id">
@@ -98,7 +103,7 @@
                           </div>
                           <div
                             v-bind="{ 'id': 'c'+item.ack_code, 'aria-labelledby': 'h'+item.ack_code, 'data-bs-parent': '#'+item.parentid  }"
-                            class="accordion-collapse collapse">
+                            class="accordion-collapse collapse" v-if="!data.status">
                             <div class="accordion-body">
                               <div class="d-grid gap-2 d-sm-flex mb-2">
                                 <div class="flex-fill" v-if="item.ack_type == '01'">
