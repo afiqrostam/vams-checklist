@@ -48,6 +48,23 @@
           <span v-if="data.status">Unable to update checklist, please change work order status to enable
             checklist</span>
         </p>
+        <p class="px-1 small m-0">When updating, the tickbox on each checklist items indicates:</p>
+        <span class="px-1 small d-block d-sm-inline">
+          <i class="bi bi-circle pe-2"></i>
+          <span>unanswered checklist;</span>
+        </span>
+        <span class="px-1 small d-block d-sm-inline">
+          <i class="bi bi-circle text-info pe-2"></i>
+          <span>unanswered checklist synced to VAMS;</span>
+        </span>
+        <span class="px-1 small d-block d-sm-inline">
+          <i class="bi bi-check-circle pe-2"></i>
+          <span>answered checklist;</span>
+        </span>
+        <span class="px-1 small d-block d-sm-inline">
+          <i class="bi bi-check-circle-fill text-info pe-2"></i>
+          <span>answered checklist synced to VAMS;</span>
+        </span>
       </div>
       <div class="accordion accordion-flush" :id="data.id">
         <div class="accordion-item" v-for="( activity, index ) in data.activities" :key="activity.id">
