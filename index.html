@@ -45,26 +45,16 @@
         <p class="px-1">
           <span class="text-light">{{data.wo }}: </span>
           <span> Work Order in status {{ data.status_desc }}. </span>
-          <span v-if="data.status">Unable to update checklist, please change work order status to enable
-            checklist</span>
+        <p class="text-warning" v-if="data.status">Unable to update checklist, please change work order status to enable
+          checklist</p>
         </p>
-        <p class="px-1 small m-0">When updating, the tickbox on each checklist items indicates:</p>
-        <span class="px-1 small d-block d-sm-inline">
-          <i class="bi bi-circle pe-2"></i>
-          <span>unanswered checklist;</span>
-        </span>
-        <span class="px-1 small d-block d-sm-inline">
-          <i class="bi bi-circle text-info pe-2"></i>
-          <span>unanswered checklist synced to VAMS;</span>
-        </span>
-        <span class="px-1 small d-block d-sm-inline">
-          <i class="bi bi-check-circle pe-2"></i>
-          <span>answered checklist;</span>
-        </span>
-        <span class="px-1 small d-block d-sm-inline">
-          <i class="bi bi-check-circle-fill text-info pe-2"></i>
-          <span>answered checklist synced to VAMS;</span>
-        </span>
+        <ul class="list-unstyled px-1 small">
+          <li>When updating, the tickbox on each checklist items indicates:</li>
+          <li><i class="bi bi-circle pe-2"></i><span>unanswered checklist;</span></li>
+          <li><i class="bi bi-circle text-info pe-2"></i><span>unanswered checklist synced to VAMS;</span></li>
+          <li><i class="bi bi-check-circle pe-2"></i><span>answered checklist;</span></li>
+          <li><i class="bi bi-check-circle-fill text-info pe-2"></i><span>answered checklist synced to VAMS;</span></li>
+        </ul>
       </div>
       <div class="accordion accordion-flush" :id="data.id">
         <div class="accordion-item" v-for="( activity, index ) in data.activities" :key="activity.id">
