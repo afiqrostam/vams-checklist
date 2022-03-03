@@ -25,7 +25,7 @@
       </div>
     </div>
   </div>
-  <div id="form" class="container p-1 mb-1">
+  <div id="form" class="container p-1 mb-5">
     <div class="card card min-vh-95 d-flex align-items-center justify-content-center bg-dark opacity-75"
       v-if="Object.keys(data).length == 0">
       <div class="spinner-border text-light" role="status" v-show="broken == false">
@@ -96,8 +96,9 @@
                       <div class="accordion accordion-flush" :id="group.id">
                         <div class="accordion-item" v-for="item in group.items" :key="item.ack_code">
                           <div class="accordion-header" :id="'h'+item.ack_code">
-                            <button class="accordion-button py-2 collapsed" type="button" data-bs-toggle="collapse"
-                              aria-expanded="false"
+                            <button
+                              :class="[ !data.status ? 'accordion-button py-2 collapsed' : 'form-static accordion-button py-2 collapsed' ]"
+                              type="button" data-bs-toggle="collapse" aria-expanded="false"
                               v-bind="{ 'data-bs-target': '#c'+item.ack_code, 'aria-controls': 'c'+item.ack_code }">
                               <div class="fw-light pe-2">
                                 <i class="bi bi-circle pe-2"
@@ -254,6 +255,10 @@
             payload = data;
             payload.forEach(function (e) {
               form.addItems(e);
+            });
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+              return new bootstrap.Tooltip(tooltipTriggerEl)
             })
           }
         });

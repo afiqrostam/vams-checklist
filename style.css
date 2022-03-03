@@ -32,3 +32,6 @@
 .big {
   font-size: 10rem;
 }
+.form-static.accordion-button::after {
+  background-image: none;
+}
