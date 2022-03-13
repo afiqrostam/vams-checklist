@@ -74,6 +74,9 @@
             },
             "PROMPTDATA6": {
               "Namespace": "http://schemas.datastream.net/MP_fields"
+            },
+            "PROMPTDATA7": {
+              "Namespace": "http://schemas.datastream.net/MP_fields"
             }
           }
         }
@@ -140,6 +143,15 @@
         "column": "PROMPTDATA6",
         "required": false,
         "order": 6,
+        "type": "Text",
+        "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData"
+      },
+      {
+        "name": "PROMPTDATA7",
+        "field": "PROMPTDATA7",
+        "column": "PROMPTDATA7",
+        "required": false,
+        "order": 7,
         "type": "Text",
         "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData"
       }
