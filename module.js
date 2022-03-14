@@ -77,7 +77,7 @@ var checklist_mod = {
           wo: input['ack_event'],
           desc: input['evt_desc'],
           status_desc: input['evt_status_desc'],
-          status: ['21PQ', '25TP', '35SB', '39QS'].indexOf(input['evt_status']) != -1,
+          status: ['21PQ', '25TP', '35SB', '39QS','55CA'].indexOf(input['evt_status']) != -1,
           activities: [{
             id: input['wo'] + '-' + input['ack_act'],
             act: input['ack_act'],
