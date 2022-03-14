@@ -49,6 +49,7 @@ function getAllUrlParams(url) {
 }
 
 function updateUrl(url, param) {
+  if (param['userid'] == undefined) { param['userid'] = '' }
   var param_keys = Object.keys(param);
   if (param_keys.length != 0) {
     param_keys.forEach(function (e, i) {

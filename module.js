@@ -253,7 +253,8 @@ var checklist_mod = {
           'chkdataone': one,
           'chkdatatwo': two,
           'chkdatanot': item['ack_not_applicable'],
-          'chkdatanotes': item['ack_notes']
+          'chkdatanotes': item['ack_notes'],
+          'userid': param.userid
         }
 
         var checklist_req = new Request(gas + '?process=upd_checklist', {

@@ -158,13 +158,13 @@
                                 <div class="flex-fill form-floating" v-if="item.ack_type == '15'">
                                   <input type="text" class="form-control" :id="'FREE'+item.ack_code" autocomplete="off"
                                     v-model="item.ack_freetext" :placeholder="item.ack_desc" @input="snycItems(item)">
-                                  <label :for="'FREE'+item.ack_code">Notes</label>
+                                  <label :for="'FREE'+item.ack_code">{{ item.ack_desc }}</label>
                                 </div>
-                                <div class="flex-fill">
+                                <div class="flex-fill d-flex">
                                   <input type="checkbox" class="btn-check" :id="'NA'+item.ack_code" autocomplete="off"
                                     v-model="item.ack_not_applicable" true-value="NA" false-value=""
                                     @change="snycItems(item)">
-                                  <label class="btn btn-outline-secondary d-block" :for="'NA'+item.ack_code">Not
+                                  <label class="btn btn-outline-secondary flex-fill" :for="'NA'+item.ack_code">Not
                                     Applicable</label>
                                 </div>
                               </div>
@@ -211,51 +211,67 @@
 
     var param;
     var dux = "com.infor.eam.dux://open?sr=WSJOBS&ds=100156&name=workordernum&value=";
-    var gas = "https://script.google.com/macros/s/AKfycbylMTYMX07YX1zbEcWZ76p9qJnTE_hc1pApMAl3R13lvxB8w3O_OO1tdO4viXVUpveIEw/exec";
+    var gas = "https://script.google.com/macros/s/AKfycbzFOUbeg3nZnXXO6W4Rq1J4FQ8TPMd0RIdlSsVVyqJRgTxPlPjIAaPb_TKM0dF8cOeULA/exec";
 
     (function () {
       param = getAllUrlParams();
-      fetch(updateUrl(gas, param))
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (data) {
-          if (data.status != undefined && data.status === false) {
-            alert.add({
-              text: data.text,
-              type: 'error'
-            })
-            form.broken = true;
-          }
-          else {
-            payload = data;
-            payload.forEach(function (e) {
-              form.addItems(e);
-            });
-          }
+      if (param.workorder == undefined || param.workorder == '' || param.org == undefined || param.org == '' || param.tenant == undefined || param.tenant == '') {
+        alert.add({
+          text: 'incomplete request',
+          type: 'error'
         });
-      var findings_req = new Request(gas + '?process=get_findings&tenant=' + param.tenant, {
-        redirect: "follow",
-        method: 'POST',
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8",
-        },
-      });
-      fetch(findings_req)
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (data) {
-          if (data.status != undefined && data.status === false) {
-            alert.add({
-              text: data.text,
-              type: 'error'
-            })
-          }
-          else {
-            findings = data;
-          }
+        form.broken = true;
+      }
+      else if (['WAU', 'NWA', 'WAR'].indexOf(param.org) == -1) {
+        alert.add({
+          text: 'This function not applicable for this organization',
+          type: 'error'
         });
+        form.broken = true;
+      }
+      else {
+        fetch(updateUrl(gas, param))
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            if (data.status != undefined && data.status === false) {
+              alert.add({
+                text: data.text,
+                type: 'error'
+              });
+              form.broken = true;
+            }
+            else {
+              payload = data;
+              payload.forEach(function (e) {
+                form.addItems(e);
+              });
+            }
+          });
+        var findings_req = new Request(gas + '?process=get_findings&tenant=' + param.tenant, {
+          redirect: "follow",
+          method: 'POST',
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8",
+          },
+        });
+        fetch(findings_req)
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            if (data.status != undefined && data.status === false) {
+              alert.add({
+                text: data.text,
+                type: 'error'
+              })
+            }
+            else {
+              findings = data;
+            }
+          })
+      }
     })();
   </script>
 </body>
