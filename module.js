@@ -77,7 +77,7 @@ var checklist_mod = {
           wo: input['ack_event'],
           desc: input['evt_desc'],
           status_desc: input['evt_status_desc'],
-          status: ['21PQ', '25TP', '35SB', '39QS','55CA'].indexOf(input['evt_status']) != -1,
+          status: ['21PQ', '25TP', '35SB', '39QS', '55CA'].indexOf(input['evt_status']) != -1,
           activities: [{
             id: input['wo'] + '-' + input['ack_act'],
             act: input['ack_act'],
@@ -172,7 +172,21 @@ var checklist_mod = {
         });
       }
     },
-    snycItems(item) {
+    expandTextArea(event) {
+      var target = event.target;
+      if (target.tagName != 'button') { target = target.closest('button') }
+      var id = target.getAttribute('aria-controls');
+      var text_area = document.getElementById(id).querySelector('textarea');
+      text_area.style.height = 'auto';
+      text_area.style.height = (text_area.scrollHeight) + 'px'
+    },
+    snycItems(item, event) {
+      if (event != undefined) {
+        if (event.target.nodeName == 'TEXTAREA') {
+          event.target.style.height = 'auto'
+          event.target.style.height = (event.target.scrollHeight) + 'px'
+        }
+      }
       var id = this.raw.findIndex(function (e) { return e['ack_code'] == item['ack_code'] });
       var raw = this.raw[id];
       raw['ack_notes'] = item['ack_notes'];
@@ -192,10 +206,10 @@ var checklist_mod = {
       item['updated'] = raw['updated'] = true;
       item['process'] = raw['process'] = false;
       item['lastupdate'] = raw['lastupdate'] = Date.now();
-      setTimeout(
-        function (item) { form.processItems(item) }, 3000, item)
+      setTimeout(function (item) { form.processItems(item) }, 3000, item)
     },
-    resetItems(item) {
+    resetItems(item, event) {
+
       if (item['ack_type'] == '01') { item['ack_completed'] = '' }
       if (item['ack_type'] == '02') { item['ack_yes'] = ''; item['ack_no'] = '' }
       if (item['ack_type'] == '03') { item['ack_finding'] = '' }
@@ -204,7 +218,9 @@ var checklist_mod = {
       if (item['ack_type'] == '15') { item['ack_freetext'] = '' }
       item['ack_notes'] = '';
       item['ack_not_applicable'] = '';
-      form.snycItems(item)
+      var parent = event.target.closest('div.accordion-body');
+      event.target = parent.querySelector('textarea')
+      form.snycItems(item, event)
     },
     getItemCompleted(item) {
       if ((item.ack_completed == '' || item.ack_completed == '-') && item.ack_freetext == '' && item.ack_finding == '' && item.ack_value == '' && item.ack_ok == '' && item.ack_adjusted == '' && item.ack_yes == '' && item.ack_no == '' && item.ack_not_applicable == '') {
@@ -286,4 +302,5 @@ var checklist_mod = {
       }
     }
   }
+
 }
