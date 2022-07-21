@@ -15,7 +15,21 @@ h1,h2,h3,h4,h5,h6 {font-family:"Segoe UI",sans-serif}
 <p>This is a paragraph.</p>
 <p>This is a another paragraph.</p>
   <script>
-(function () {console.log('hello')})();
+(function () {
+  console.log('hello');
+var payload = '<?xml version="1.0" encoding="UTF-8"?><Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/"><Header><Security xmlns="http://schemas.xmlsoap.org/ws/2002/04/secext"><UsernameToken><Username>VWA-AFIR@VEOLIA1_TST</Username><Password>4F!qrost4M86</Password></UsernameToken></Security><SessionScenario xmlns="http://schemas.datastream.net/headers">terminate</SessionScenario><Organization xmlns="http://schemas.datastream.net/headers">*</Organization></Header><Body /></Envelope>';
+          var cred_nine = new Request('https://eam-webservice.se2.inforcloudsuite.com/axis/services/EWSConnector', {
+          method: 'POST',
+          headers: {'Content-Type':'text/xml;charset=UTF-8'},
+            body:payload,
+        });
+  
+        fetch(cred_nine)
+          .then(function (response) { console.log(response) })
+          .then(function (data) { console.log(data) })
+
+
+})();
   </script>
 </body>
 </html>
