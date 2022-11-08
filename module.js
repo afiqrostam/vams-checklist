@@ -65,7 +65,7 @@ var checklist_mod = {
       if (input['ack_notes'] == undefined) { input['ack_notes'] = '' }
       if (input['ack_freetext'] == undefined) { input['ack_freetext'] = '' }
       if (input['ack_value'] == undefined) { input['ack_value'] = '' }
-      else { input['ack_value'] = parseInt(input['ack_value'], 10) }
+      else { input['ack_value'] = parseInt(input['ack_value'].replace(/[^\d.]/g,''), 10) }
       if (input['ack_uom'] == undefined) { input['ack_uom'] = '' }
       if (input['ack_taskchecklistcode_comments'] == undefined) { input['ack_taskchecklistcode_comments'] = '' }
       this.raw.push(input)
