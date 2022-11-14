@@ -273,7 +273,7 @@ var alert_mod = {
             }
           }
           if (item['ack_type'] == '13') { one = item['ack_checklistdate'] }
-          if (item['ack_type'] == '14') { one = item['ack_checklistdatetime'] }
+          if (item['ack_type'] == '14') { one = item['ack_checklistdatetime'].replace("T", " ") }
           if (item['ack_type'] == '15') { one = item['ack_freetext'] }
           var payload = {
             'tenant': param.tenant,
