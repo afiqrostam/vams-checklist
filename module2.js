@@ -66,6 +66,7 @@ var alert_mod = {
         if (input['ack_freetext'] == undefined) { input['ack_freetext'] = '' }
         if (input['ack_checklistdate'] == undefined) { input['ack_checklistdate'] = '' }
         if (input['ack_checklistdatetime'] == undefined) { input['ack_checklistdatetime'] = '' }
+        else { input['ack_checklistdatetime'] = new Date(input['ack_checklistdatetime']).toJSON().substr(0,16) }
         if (input['ack_value'] == undefined) { input['ack_value'] = '' }
         else { input['ack_value'] = parseInt(input['ack_value'], 10) }
         if (input['ack_uom'] == undefined) { input['ack_uom'] = '' }
