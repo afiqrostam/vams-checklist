@@ -156,5 +156,137 @@
         "parent": "MP0810_AddInterfaceTransactions_001/InterfaceTransactions/TrackingData"
       }
     ]
+  },
+  {
+    "name": "MP5727_AddOperatorChecklist_001",
+    "simple": "Add Operator Checklist",
+    "group": "Operator Checklist",
+    "role": "OC Upload",
+    "body": {
+      "MP5727_AddOperatorChecklist_001": {
+        "verb": "Add",
+        "noun": "OperatorChecklist",
+        "version": "001",
+        "Namespace": "http://schemas.datastream.net/MP_functions/MP5727_001",
+        "OperatorChecklist": {
+          "recordid":"0",
+          "_view_only_access": "false",
+          "_is_task_plan_prevent_performed_by_signature": "false",
+          "_is_task_plan_prevent_reviewed_by_signature": "false",
+          "Namespace": "http://schemas.datastream.net/MP_entities/OperatorChecklist_001",
+          "OPERATORCHECKLISTID": {
+            "Namespace": "http://schemas.datastream.net/MP_fields",
+            "ORGANIZATIONID": {
+              "entity": "OPCK"
+            }
+          },
+          "EQUIPMENTID": {
+            "Namespace": "http://schemas.datastream.net/MP_fields",
+            "ORGANIZATIONID": {
+              "entity": "OPCK"
+            }
+          },
+          "STATUS": {
+            "Namespace": "http://schemas.datastream.net/MP_fields",
+            "entity": "OPCK"
+          },
+          "CREATEDBY": {
+            "Namespace": "http://schemas.datastream.net/MP_fields"
+          }
+        }
+      }
+    },
+    "variable": [
+      {
+        "name": "OPERATORCHECKLISTCODE",
+        "field": "operator_checklist_code",
+        "column": "Operator\nChecklist Code",
+        "required": true,
+        "order": 0,
+        "type": "Text",
+        "parent": "MP5727_AddOperatorChecklist_001/OperatorChecklist/OPERATORCHECKLISTID"
+      },
+      {
+        "name": "ORGANIZATIONCODE",
+        "field": "organization_code",
+        "column": "Organization\nCode",
+        "required": true,
+        "order": 1,
+        "type": "Text",
+        "parent": "MP5727_AddOperatorChecklist_001/OperatorChecklist/OPERATORCHECKLISTID/ORGANIZATIONID"
+      },
+      {
+        "name": "EQUIPMENTCODE",
+        "field": "equipment_code",
+        "column": "Equipment\nCode",
+        "required": true,
+        "order": 2,
+        "type": "Text",
+        "parent": "MP5727_AddOperatorChecklist_001/OperatorChecklist/EQUIPMENTID"
+      },
+      {
+        "name": "ORGANIZATIONCODE",
+        "field": "equipment_organization_code",
+        "column": "Equipment\nOrganization\nCode",
+        "required": true,
+        "order": 3,
+        "type": "Text",
+        "parent": "MP5727_AddOperatorChecklist_001/OperatorChecklist/EQUIPMENTID/ORGANIZATIONID"
+      },
+      {
+        "name": "TASKCODE",
+        "field": "task_code",
+        "column": "Task\nCode",
+        "required": true,
+        "order": 4,
+        "type": "Text",
+        "parent": "MP5727_AddOperatorChecklist_001/OperatorChecklist/TASKLISTID"
+      },
+      {
+        "name": "TASKREVISION",
+        "field": "task_revision",
+        "column": "Task\nrevision",
+        "required": true,
+        "order": 5,
+        "type": "Text",
+        "parent": "MP5727_AddOperatorChecklist_001/OperatorChecklist/TASKLISTID"
+      },
+      {
+        "name": "STATUSCODE",
+        "field": "status",
+        "column": "Status",
+        "required": true,
+        "order": 6,
+        "type": "Text",
+        "parent": "MP5727_AddOperatorChecklist_001/OperatorChecklist/STATUS"
+      },
+      {
+        "name": "STARTDATE",
+        "field": "start_date",
+        "column": "Start\nDate",
+        "required": true,
+        "order": 7,
+        "type": "datetime",
+        "parent": "MP5727_AddOperatorChecklist_001/OperatorChecklist"
+      },
+      {
+        "name": "ENDDATE",
+        "field": "end_date",
+        "column": "End\nDate",
+        "required": false,
+        "order": 8,
+        "type": "datetime",
+        "parent": "MP5727_AddOperatorChecklist_001/OperatorChecklist"
+      },
+      {
+        "name": "USERCODE",
+        "field": "user_code",
+        "column": "User\nCode",
+        "required": false,
+        "order": 8,
+        "type": "Text",
+        "parent": "MP5727_AddOperatorChecklist_001/OperatorChecklist/CREATEDBY"
+      },
+    ]
   }
 ]
