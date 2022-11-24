@@ -100,6 +100,7 @@ var checklist_mod = {
       else { input['ack_value'] = parseInt(input['ack_value'], 10) }
       if (input['ack_uom'] == undefined) { input['ack_uom'] = '' }
       if (input['ack_taskchecklistcode_comments'] == undefined) { input['ack_taskchecklistcode_comments'] = '' }
+      if(input['ack_reference']=='PRE'){input['activity'] = 'Pre Start'}else{input['activity'] = 'Post Trip'}
       this.raw.push(input)
       if (Object.keys(this.data).length == 0) {
         var header = {
@@ -108,10 +109,10 @@ var checklist_mod = {
           wo: input['ock_code'],
           desc: input['obj_desc'],
           reference: input['ack_reference'],
-          status: ['C'].indexOf(input['ock_status']) != -1,
+          status: ['U'].indexOf(input['ock_status']) == -1,
           activities: [{
             id: input['wo'] + '-' + input['ack_reference'],
-            act_note: input['tsk_desc'],
+            act_note: input['tsk_desc']+' ('+input['activity']+')',
             parentid: input['wo'],
             groups: [{
               id: input['wo'] + '-' + input['ack_reference'] + '-' + input['ack_group_label'],
@@ -155,7 +156,7 @@ var checklist_mod = {
         }).length == 0) {
           this.data.activities.push({
             id: input['wo'] + '-' + input['ack_reference'],
-            act_note: input['tsk_desc'],
+            act_note: input['tsk_desc']+' ('+input['activity']+')',
             parentid: input['wo'],
             groups: []
           });
