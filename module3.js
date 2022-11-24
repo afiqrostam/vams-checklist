@@ -47,6 +47,7 @@ var form_mod = {
       if (target.tagName != 'button') { target = target.closest('button') }
       build_form(target.id)
     },
+    newForm(event) { build_new_form() },
     getData() {
       var data = this.data;
       return data
@@ -94,7 +95,7 @@ var checklist_mod = {
       if (input['ack_freetext'] == undefined) { input['ack_freetext'] = '' }
       if (input['ack_checklistdate'] == undefined) { input['ack_checklistdate'] = '' }
       if (input['ack_checklistdatetime'] == undefined) { input['ack_checklistdatetime'] = '' }
-      else { input['ack_checklistdatetime'] = new Date(input['ack_checklistdatetime']).toJSON().substr(0, 16) }
+      else { input['ack_checklistdatetime'] = (new Date(input['ack_checklistdatetime'])).toJSON().substring(0, 16) }
       if (input['ack_value'] == undefined) { input['ack_value'] = '' }
       else { input['ack_value'] = parseInt(input['ack_value'], 10) }
       if (input['ack_uom'] == undefined) { input['ack_uom'] = '' }
@@ -106,6 +107,7 @@ var checklist_mod = {
           org: input['obj_org'],
           wo: input['ock_code'],
           desc: input['obj_desc'],
+          reference: input['ack_reference'],
           status: ['C'].indexOf(input['ock_status']) != -1,
           activities: [{
             id: input['wo'] + '-' + input['ack_reference'],
@@ -220,7 +222,16 @@ var checklist_mod = {
       }
       var id = this.raw.findIndex(function (e) { return e['ack_code'] == item['ack_code'] });
       var raw = this.raw[id];
-      if (['','Z028','Z029','Z030'].indexOf(item['ack_finding']) != -1) { item['ack_notes'] = '' }
+      if (item['ack_desc'] === 'Registration No' && item['ack_freetext'] !== raw['obj_udfchar39']) {
+        item['ack_freetext'] = raw['obj_udfchar39'];
+      }
+      if (item['ack_desc'] === 'Unit/Fleet No' && item['ack_freetext'] !== raw['obj_udfchar16']) {
+        item['ack_freetext'] = raw['obj_udfchar16'];
+      }
+      if (item['ack_desc'] === 'Worker Name' && item['ack_freetext'] !== param.userid) {
+        item['ack_freetext'] = param.userid;
+      }
+      if (['', 'Z028', 'Z030'].indexOf(item['ack_finding']) != -1) { item['ack_notes'] = '' }
       raw['ack_notes'] = item['ack_notes'];
       raw['ack_not_applicable'] = item['ack_not_applicable'];
       raw['ack_freetext'] = item['ack_freetext'];
@@ -259,15 +270,67 @@ var checklist_mod = {
       form.snycItems(item, event)
     },
     getItemCompleted(item) {
-      if ((item.ack_completed == '' || item.ack_completed == '-') && item.ack_checklistdatetime == '' &&  item.ack_checklistdate == '' &&  item.ack_freetext == '' && item.ack_finding == '' && item.ack_value == '' && item.ack_ok == '' && item.ack_adjusted == '' && item.ack_yes == '' && item.ack_no == '' && item.ack_not_applicable == '') {
+      if ((item.ack_completed == '' || item.ack_completed == '-')
+        && item.ack_checklistdatetime == ''
+        && item.ack_checklistdate == ''
+        && item.ack_freetext == ''
+        && item.ack_finding == ''
+        && item.ack_value == ''
+        && item.ack_ok == ''
+        && item.ack_adjusted == ''
+        && item.ack_yes == ''
+        && item.ack_no == ''
+        && item.ack_not_applicable == '') {
         return false
       }
       else { return true }
     },
+    submitForm() { 
+      var input = {}; input.reference = this.data.reference; input.ock_code = this.data.wo; send_form(input) },
+    loadMeta() { var input = {}; input.reference = this.data.reference; input.ock_code = this.data.wo; loadmetadata(input) },
     getGroupCompleted(group) {
       return group.items.filter(function (item) {
-        return !((item.ack_completed == '' || item.ack_completed == '-') && item.ack_checklistdatetime == '' &&  item.ack_checklistdate == '' && item.ack_freetext == '' && item.ack_finding == '' && item.ack_value == '' && item.ack_ok == '' && item.ack_adjusted == '' && item.ack_yes == '' && item.ack_no == '' && item.ack_not_applicable == '')
+        return !((item.ack_completed == '' || item.ack_completed == '-')
+          && item.ack_checklistdatetime == ''
+          && item.ack_checklistdate == ''
+          && item.ack_freetext == ''
+          && item.ack_finding == ''
+          && item.ack_value == ''
+          && item.ack_ok == ''
+          && item.ack_adjusted == ''
+          && item.ack_yes == ''
+          && item.ack_no == ''
+          && item.ack_not_applicable == '')
       }).length
+    },
+    getAllCompleted() {
+      var collection = [];
+      this.data.activities.forEach(
+        function (e) {
+          e.groups.forEach(
+            function (f) {
+              f.items.forEach(
+                function (g) {
+                  var data = !((g.ack_completed == '' || g.ack_completed == '-')
+                    && g.ack_checklistdatetime == ''
+                    && g.ack_checklistdate == ''
+                    && g.ack_freetext == ''
+                    && g.ack_finding == ''
+                    && g.ack_value == ''
+                    && g.ack_ok == ''
+                    && g.ack_adjusted == ''
+                    && g.ack_yes == ''
+                    && g.ack_no == ''
+                    && g.ack_not_applicable == '');
+                  if ((g.updated === true && g.process === true) || (g.updated === false && g.process === false)) { var updated = true } else { var updated = false }
+                  collection.push(data && updated)
+                }
+              )
+            }
+          )
+        }
+      );
+      return collection.filter(function(e){return e}).length === this.raw.length
     },
     processItems(item) {
       if (item['process'] == false && (Date.now() - item['lastupdate']) >= 3000) {
@@ -310,7 +373,6 @@ var checklist_mod = {
           'chkdatanotes': item['ack_notes'],
           'userid': param.userid
         }
-        console.log(payload)
 
         var checklist_req = new Request(gas + '?process=upd_checklist', {
           redirect: "follow",
