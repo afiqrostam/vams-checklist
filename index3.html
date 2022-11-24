@@ -34,7 +34,8 @@
       </div>
     </div>
     <div v-else>
-      <div class="card mb-2">
+      <div class="alert alert-dismissible fade show mb-2">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         <div class="p-3 small">
           <ul class="list-unstyled px-1 m-0">
             <li>When updating, the tickbox on each checklist items indicates:</li>
@@ -49,9 +50,9 @@
       <div class="vstack gap-2" v-if="form != true">
         <button @click="loadForm" type="button" class="btn btn-primary" v-if="data.length != 0 " :id="dt['ock_code']"
           v-for="dt in data" :key="dt['ock_code']">
-          {{ dt['trunc_ock_created'] + ' ' + dt['state'] + ' (' + dt['ock_status_desc'] + ')'}}
+          {{ dt['trunc_ock_startdate'] + ' ' + dt['state'] + ' (' + dt['ock_status_desc'] + ')'}}
         </button>
-        <button type="button" class="btn btn-primary" id="new_checklist">New DVR</button>
+        <button @click="newForm" type="button" class="btn btn-primary" id="new_checklist">New DVR</button>
       </div>
     </div>
   </div>
@@ -67,13 +68,13 @@
           <p>Oh no! Something broken</p>
         </div>
       </div>
-      <div class="card min-vh-75" v-else>
+      <div class="card" v-else>
         <div class="accordion accordion-flush" :id="data.id">
           <div class="accordion-item" v-for="( activity, index ) in data.activities" :key="activity.id">
             <div class="accordion-header" :id="'h'+activity.id">
               <button :class="[ index == 0 ? 'accordion-button py-3' : 'accordion-button py-3 collapsed']" type="button"
                 data-bs-toggle="collapse" aria-expanded="false"
-                v-bind="{ 'data-bs-target': '#c'+activity.id, 'aria-controls': 'c'+activity.id }">
+                v-bind="{ 'data-bs-target': '#c'+activity.id, 'aria-controls': 'c'+activity.id }" @click="loadMeta()">
                 <span class="h6 p-0 m-0">{{ activity.act_note}}</span>
               </button>
             </div>
@@ -84,9 +85,9 @@
                 <div class="accordion accordion-flush" :id="activity.id">
                   <div class="accordion-item" v-for="group in activity.groups" :key="group.id">
                     <div class="accordion-header" :id="'h'+group.id">
-                      <button class="accordion-button py-2 collapsed" type="button" data-bs-toggle="collapse"
+                      <button class="accordion-button py-2 bg-light collapsed" type="button" data-bs-toggle="collapse"
                         aria-expanded="false"
-                        v-bind="{ 'data-bs-target': '#c'+group.id, 'aria-controls': 'c'+group.id }">
+                        v-bind="{ 'data-bs-target': '#c'+group.id, 'aria-controls': 'c'+group.id }" @click="loadMeta()">
                         <span class="w-100">{{ group.group_label}}</span>
                         <span class="small fw-light pe-2 text-nowrap">( {{ getGroupCompleted(group) }} of {{
                           group.items.length}} done )</span>
@@ -97,10 +98,10 @@
                       class="accordion-collapse collapse">
                       <template v-if="group.items !== undefined">
                         <div class="accordion accordion-flush" :id="group.id">
-                          <div class="accordion-item" v-for="item in group.items" :key="item.ack_code">
+                          <div :class="[ item.ack_type == 14 ? 'accordion-item d-none' : 'accordion-item']"
+                            v-for="item in group.items" :key="item.ack_code">
                             <div class="accordion-body py-2 row">
-                              <div class="col text-nowrap"
-                                v-if="['03','04','13','14','15'].indexOf(item.ack_type) != -1">
+                              <div class="col" v-if="['03','04','13','14','15'].indexOf(item.ack_type) != -1">
                                 <span>{{ item.ack_desc }}</span>
                                 <p v-if="item.ack_taskchecklistcode_comments != ''" class="pre-line m-0">{{
                                   item.ack_taskchecklistcode_comments }}</p>
@@ -118,7 +119,7 @@
                                 <input v-if="item.ack_type == 15" type="text"
                                   class="form-control border-0 border-bottom" :id="'FREE'+item.ack_code"
                                   autocomplete="off" v-model="item.ack_freetext" @input="snycItems(item)"
-                                  :disabled="data.status">
+                                  :disabled="data.status || ['Unit/Fleet No','Registration No','Worker Name'].indexOf(item.ack_desc) != -1">
                                 <select v-if="item.ack_type == 03" type="checkbox"
                                   class="form-select border-0 border-bottom" :id="'FREE'+item.ack_code"
                                   autocomplete="off" v-model="item.ack_finding" @change="snycItems(item)"
@@ -131,10 +132,13 @@
                                 <div class="input-group" v-if="item.ack_type == '04'">
                                   <input type="number" v-model="item.ack_value" @input="snycItems(item)"
                                     class="form-control border-0 border-end border-bottom" :placeholder="item.ack_desc"
-                                    v-bind="{'aria-describedby' : 'FREE'+item.ack_code }">
-                                  <span class="input-group-text border-0 bg-light border-bottom" :id="'FREE'+item.ack_code">{{ item.ack_uom }}</span>
+                                    :id="'FREE'+item.ack_code">
+                                  <span class="input-group-text border-0 bg-light border-bottom">{{ item.ack_uom
+                                    }}</span>
                                 </div>
-                                <button type="button" class="btn btn-sm rounded-circle btn-outline-secondary"
+                                <button type="button" :id="'REFRESH'+item.ack_code"
+                                  :class="[ ['Unit/Fleet No','Registration No','Worker Name'].indexOf(item.ack_desc) != -1 ? 'btn btn-sm rounded-circle btn-outline-secondary d-none' : 'btn btn-sm rounded-circle btn-outline-secondary']"
+                                  class="btn btn-sm rounded-circle btn-outline-secondary"
                                   @click="resetItems(item,$event)"><i class="bi bi-arrow-repeat"></i></button>
                                 <i class="bi bi-circle pe-2"
                                   v-if="!getItemCompleted(item) && !item.updated && !item.process"></i>
@@ -150,7 +154,7 @@
                                   v-if="getItemCompleted(item) && item.updated && item.process"></i>
                               </div>
                               <div class="mt-2 form-floating"
-                                v-if="['03'].indexOf(item.ack_type) != -1 && ['','Z028','Z030','Z029'].indexOf(item.ack_finding) == -1">
+                                v-if="['03'].indexOf(item.ack_type) != -1 && ['','Z028','Z030'].indexOf(item.ack_finding) == -1">
                                 <textarea :ref="'NOTES'+item.ack_code" :id="'NOTES'+item.ack_code" class="form-control"
                                   v-model="item.ack_notes" @input="snycItems(item,$event)" placeholder="..."></textarea>
                                 <label class="ps-4" :for="'NOTES'+item.ack_code">Notes</label>
@@ -163,12 +167,13 @@
                                   <label class="btn btn-outline-primary d-block" :for="'FREE'+item.ack_code"><i
                                       class="bi bi-check-lg"></i></label>
                                 </div>
-                                <div class="col text-nowrap" v-if="['01'].indexOf(item.ack_type) != -1">
+                                <div class="col" v-if="['01'].indexOf(item.ack_type) != -1">
                                   <span>{{ item.ack_desc }}</span>
                                   <p v-if="item.ack_taskchecklistcode_comments != ''" class="pre-line m-0">{{
                                     item.ack_taskchecklistcode_comments }}</p>
                                 </div>
-                                <button type="button" class="btn btn-sm rounded-circle btn-outline-secondary"
+                                <button type="button" :id="'REFRESH'+item.ack_code"
+                                  class="btn btn-sm rounded-circle btn-outline-secondary"
                                   @click="resetItems(item,$event)"><i class="bi bi-arrow-repeat"></i></button>
                                 <i class="bi bi-circle pe-2"
                                   v-if="!getItemCompleted(item) && !item.updated && !item.process"></i>
@@ -190,6 +195,8 @@
               </template>
             </div>
           </div>
+          <div class="accordion-item bg-light text-center p-3"><button type="button" @click="submitForm()"
+              :disabled="!getAllCompleted()" class="btn col-12 col-sm-6 btn-primary">Submit</button></div>
         </div>
         </template>
       </div>
@@ -207,6 +214,7 @@
 
     var payload = [];
     var list = [];
+    var metadata = [];
     var findings;
     var alert_id = 0;
     var alert = Vue.createApp(alert_mod).mount("#alert");
@@ -223,7 +231,6 @@
       if (new_state === 'Post-Trip') { new_state = 'POST' }
       var new_data = payload.filter(function (e) { return e['ock_code'] == input });
       if (new_state !== '') { new_data = new_data.filter(function (e) { return e['ack_reference'] == new_state }) }
-      console.log(new_data)
       new_data.forEach(function (e) {
         form.addItems(e);
       });
@@ -231,6 +238,118 @@
       form.loaded = true;
       checklist.form = true;
     }
+
+    function loadmetadata(input) {
+      payload.filter(
+        function (e) { return ['Unit/Fleet No', 'Registration No', 'Worker Name'].indexOf(e.ack_desc) != -1 }).filter(
+          function (e) {
+            if (e['ack_desc'] === 'Registration No' && e['ack_freetext'] !== e['obj_udfchar39']) { return e }
+            if (e['ack_desc'] === 'Unit/Fleet No' && e['ack_freetext'] !== e['obj_udfchar16']) { return e }
+            if (e['ack_desc'] === 'Worker Name' && e['ack_freetext'] !== param.userid) { return e }
+          }).map(
+            function (e) { return e.ack_code }).forEach(
+              function (e) { document.getElementById('REFRESH' + e).click() });
+      payload.filter(
+        function (e) {
+          return e.ack_desc === 'Date'
+            && e.ack_checklistdatetime === ''
+            && e.ack_reference == input.reference
+            && e.ock_code == input.ock_code
+        }).map(
+          function (e) { return e.ack_code }).forEach(
+            function (e) {
+              var input_time = document.getElementById('FREE' + e);
+              input_time.value = (new Date()).toJSON().substring(0, 16);
+              var evt = new Event('input');
+              input_time.dispatchEvent(evt)
+            });
+    }
+
+    function build_new_form() {
+      checklist.loaded = false;
+      var req_param = gas + '?process=add_checklist&tenant=' + param.tenant + '&organization='
+        + param.organization + '&equipmentno=' + param.equipmentno;
+      if (param.userid !== undefined && param.userid !== '') { req_param = req_param + '&userid=' + param.userid }
+      var new_req = new Request(req_param, {
+        redirect: "follow",
+        method: 'POST',
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        },
+      });
+      fetch(new_req)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          if (data.status != undefined && data.status === false) {
+            alert.add({
+              text: data.text,
+              type: 'error'
+            })
+          }
+          else { location.reload() }
+        })
+    }
+
+    function send_form(input) {
+      checklist.loaded = false;
+      form.loaded = false
+      payload.filter(
+        function (e) {
+          return e.ack_desc === 'Date'
+            && e.ack_reference == input.reference
+            && e.ock_code == input.ock_code
+        }).map(
+          function (e) { return e.ack_code }).forEach(
+            function (e) {
+              var input_time = document.getElementById('FREE' + e);
+              input_time.value = (new Date()).toJSON().substring(0, 16);
+              var evt = new Event('input');
+              input_time.dispatchEvent(evt)
+            });
+      var check = function () {
+        if (form.getAllCompleted()) {
+          var payload = {
+            'tenant': param.tenant,
+            'chkcode': input.ock_code,
+            'chktype': 'OPCK',
+            'chkdataone': 'C',
+            'chkdatatwo': '',
+            'chkdatanot': '',
+            'chkdatanotes': '',
+            'userid': param.userid
+          }
+
+          var upd_checklist_req = new Request(gas + '?process=upd_checklist', {
+            redirect: "follow",
+            method: 'POST',
+            body: JSON.stringify(payload),
+            headers: {
+              "Content-Type": "text/plain;charset=utf-8",
+            },
+          });
+
+          fetch(upd_checklist_req)
+            .then(function (response) {
+              return response.json();
+            })
+            .then(function (data) {
+              if (data.status != undefined && data.status === false) {
+                alert.add({
+                  text: data.text,
+                  type: 'error'
+                })
+              }
+              else { location.reload() }
+            });
+        }
+        else { setTimeout(check, 250) }
+      }
+      check();
+    }
+
+
 
     (function () {
       param = getAllUrlParams();
@@ -267,6 +386,9 @@
             else {
               if (data.text === 'query returns null') { data = [] }
               data = data.filter(function (e) { return e['ock_code'] != undefined });
+              data.forEach(function (e) {
+                if (e['ack_value'] != undefined) { e['ack_value'] = e['ack_value'].replaceAll(',', '') }
+              });
               payload = payload.concat(data);
               var reform = payload.map(function (e) {
                 var rep = {};
@@ -276,7 +398,7 @@
                 rep['obj_udfchar39'] = e['obj_udfchar39'];
                 rep['ock_status'] = e['ock_status'];
                 rep['ock_status_desc'] = e['ock_status_desc'];
-                rep['trunc_ock_created'] = e['trunc_ock_created'];
+                rep['trunc_ock_startdate'] = e['trunc_ock_startdate'];
                 rep['ock_code'] = e['ock_code'];
                 return rep
               });
@@ -286,11 +408,11 @@
               if (new_ref.length > 0) {
                 new_ref.forEach(function (e) {
                   if (e['ock_status'] == 'U') {
-                    var req = payload.filter(function (f) { return f['ack_requiredtoclose'] === 'YES' });
-                    var req_pre = req.filter(function (f) { return f['ack_reference'] === 'PRE' });
-                    var req_post = req.filter(function (f) { return f['ack_reference'] === 'POST' });
+                    var req = payload.filter(function (f) { return f['ack_requiredtoclose'] === 'YES' && f['ock_code'] === e['ock_code'] });
+                    var req_pre = req.filter(function (f) { return f['ack_reference'] === 'PRE' && f['ock_code'] === e['ock_code'] });
+                    var req_post = req.filter(function (f) { return f['ack_reference'] === 'POST' && f['ock_code'] === e['ock_code'] });
                     var current_pre = req_pre.filter(function (f) {
-                      if (f['ack_type'] == '01' && f['ack_completed'] != undefined) { return f }
+                      if (f['ack_type'] == '01' && f['ack_completed'] != undefined && f['ack_completed'] != '-') { return f }
                       if (f['ack_type'] == '02' && f['ack_yes'] != undefined && f['ack_no'] != undefined) { return f }
                       if (f['ack_type'] == '03' && f['ack_finding'] != undefined) { return f }
                       if (f['ack_type'] == '04' && f['ack_value'] != undefined) { return f }
@@ -316,6 +438,28 @@
             }
           });
         var findings_req = new Request(gas + '?process=get_findings&tenant=' + param.tenant, {
+          redirect: "follow",
+          method: 'POST',
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8",
+          },
+        });
+        fetch(findings_req)
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            if (data.status != undefined && data.status === false) {
+              alert.add({
+                text: data.text,
+                type: 'error'
+              })
+            }
+            else {
+              findings = data;
+            }
+          })
+        var meta_req = new Request(gas + '?process=get_metadata&tenant=' + param.tenant, {
           redirect: "follow",
           method: 'POST',
           headers: {
