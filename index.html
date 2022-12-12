@@ -6,8 +6,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <link href="style.css" rel="stylesheet" />
   <title>VAMS Checklist</title>
   <link rel="icon" href="https://afiqrostam.github.io/vams-checklist/icon.png" size="64x64" type="image/png">
@@ -169,13 +169,19 @@
                                 </div>
                               </div>
                               <div class="mb-2 form-floating">
-                                <textarea :ref="'NOTES'+item.ack_code" :id="'NOTES'+item.ack_code" class="form-control" v-model="item.ack_notes"
-                                  @input="snycItems(item,$event)" placeholder="..."></textarea>
+                                <textarea :ref="'NOTES'+item.ack_code" :id="'NOTES'+item.ack_code" class="form-control"
+                                  v-model="item.ack_notes" @input="snycItems(item,$event)" placeholder="..."></textarea>
                                 <label :for="'NOTES'+item.ack_code">Notes</label>
                               </div>
                               <div class="d-flex justify-content-between">
-                                <div class="text-danger"><i class="bi bi-exclamation-triangle-fill"
-                                    v-if="item.ack_requiredtoclose != 'NO'"></i></div>
+                                <div class="hstack gap-1">
+                                  <span class="badge text-bg-danger"
+                                    v-show="item.ack_requiredtoclose != 'NO'">required</span>
+                                  <Transition mode="out-in">
+                                    <span class="font-monospace" v-if="item.updated !== item.process">syncing..</span>
+                                    <span class="font-monospace" v-else>synced</span>
+                                  </Transition>
+                                </div>
                                 <button type="button" class="btn btn-sm rounded-circle btn-outline-secondary"
                                   @click="resetItems(item,$event)"><i class="bi bi-arrow-clockwise"></i></button>
                               </div>
@@ -183,20 +189,22 @@
                           </div>
                         </div>
                       </div>
+                    </template>
                   </div>
+                </div>
+              </div>
             </template>
           </div>
         </div>
       </div>
-      </template>
     </div>
   </div>
   <!-- Optional JavaScript; choose one of the two! -->
   <!-- Option 1: Bootstrap Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
     crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/vue@3.2.31/dist/vue.global.prod.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script src="script.js"></script>
   <script src="module.js"></script>
   <script>
@@ -219,7 +227,7 @@
         });
         form.broken = true;
       }
-      else if (['WAU', 'NWA', 'WAR', 'TAS', 'VIC', 'SAU','NSW'].indexOf(param.org) == -1) {
+      else if (['WAU', 'NWA', 'WAR', 'TAS', 'VIC', 'SAU', 'NSW'].indexOf(param.org) == -1) {
         alert.add({
           text: 'This function not applicable for this organization',
           type: 'error'
@@ -272,4 +280,5 @@
     })();
   </script>
 </body>
+
 </html>

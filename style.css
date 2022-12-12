@@ -58,3 +58,16 @@ textarea {
   resize: none;
   overflow: hidden;
 }
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.25s ease-in-out;
+}
+.v-enter-from {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.v-leave-to {
+  opacity: 0;
+  transform: translateY(-30px);
+}

@@ -65,7 +65,7 @@ var checklist_mod = {
       if (input['ack_notes'] == undefined) { input['ack_notes'] = '' }
       if (input['ack_freetext'] == undefined) { input['ack_freetext'] = '' }
       if (input['ack_value'] == undefined) { input['ack_value'] = '' }
-      else { input['ack_value'] = parseInt(input['ack_value'].replace(/[^\d.]/g,''), 10) }
+      else { input['ack_value'] = parseInt(input['ack_value'].replace(/[^\d.]/g, ''), 10) }
       if (input['ack_uom'] == undefined) { input['ack_uom'] = '' }
       if (input['ack_taskchecklistcode_comments'] == undefined) { input['ack_taskchecklistcode_comments'] = '' }
       this.raw.push(input)
@@ -189,24 +189,27 @@ var checklist_mod = {
       }
       var id = this.raw.findIndex(function (e) { return e['ack_code'] == item['ack_code'] });
       var raw = this.raw[id];
-      raw['ack_notes'] = item['ack_notes'];
-      raw['ack_not_applicable'] = item['ack_not_applicable'];
-      raw['ack_freetext'] = item['ack_freetext'];
-      raw['ack_value'] = item['ack_value'];
-      raw['ack_yes'] = item['ack_yes'];
+      var update = false;
+      if (raw['ack_notes'] !== item['ack_notes']) { update = true; raw['ack_notes'] = item['ack_notes'] }
+      if (raw['ack_not_applicable'] !== item['ack_not_applicable']) { update = true; raw['ack_not_applicable'] = item['ack_not_applicable'] }
+      if (raw['ack_freetext'] !== item['ack_freetext']) { update = true; raw['ack_freetext'] = item['ack_freetext'] }
+      if (raw['ack_value'] !== item['ack_value']) { update = true; raw['ack_value'] = item['ack_value'] }
+      if (raw['ack_yes'] !== item['ack_yes']) { update = true; raw['ack_yes'] = item['ack_yes'] }
+      if (raw['ack_no'] !== item['ack_no']) { update = true; raw['ack_no'] = item['ack_no'] }
       if (item['ack_yes'] == '-') { item['ack_no'] = '+' }
       if (item['ack_yes'] == '+') { item['ack_no'] = '-' }
-      raw['ack_no'] = item['ack_no'];
-      raw['ack_completed'] = item['ack_completed'];
-      raw['ack_finding'] = item['ack_finding'];
-      raw['ack_ok'] = item['ack_ok'];
+      if (raw['ack_completed'] !== item['ack_completed']) { update = true; raw['ack_completed'] = item['ack_completed'] }
+      if (raw['ack_finding'] !== item['ack_finding']) { update = true; raw['ack_finding'] = item['ack_finding'] }
+      if (raw['ack_ok'] !== item['ack_ok']) { update = true; raw['ack_ok'] = item['ack_ok'] }
+      if (raw['ack_adjusted'] !== item['ack_adjusted']) { update = true; raw['ack_adjusted'] = item['ack_adjusted'] }
       if (item['ack_ok'] == '-') { item['ack_adjusted'] = '+' }
       if (item['ack_ok'] == '+') { item['ack_adjusted'] = '-' }
-      raw['ack_adjusted'] = item['ack_adjusted'];
-      item['updated'] = raw['updated'] = true;
-      item['process'] = raw['process'] = false;
-      item['lastupdate'] = raw['lastupdate'] = Date.now();
-      setTimeout(function (item) { form.processItems(item) }, 3000, item)
+      if (update === true) {
+        item['updated'] = raw['updated'] = true;
+        item['process'] = raw['process'] = false;
+        item['lastupdate'] = raw['lastupdate'] = Date.now();
+        setTimeout(function (item) { form.processItems(item) }, 3000, item)
+      }
     },
     resetItems(item, event) {
 
@@ -302,5 +305,4 @@ var checklist_mod = {
       }
     }
   }
-
 }
