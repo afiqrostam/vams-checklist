@@ -181,7 +181,7 @@
         "required": true,
         "order": 0,
         "type": "Text",
-        "parent": "MP7914_GetWorkOrderActivityCheckList_001/CHECKLISTCODE"
+        "parent": "MP7914_GetWorkOrderActivityCheckList_001"
       }
     ]
   },
