@@ -158,6 +158,34 @@
     ]
   },
   {
+    "name": "MP7914_GetWorkOrderActivityCheckList_001",
+    "simple": "Get WO Checklist",
+    "group": "WO Checklist Upload",
+    "role": "WO Checklist",
+    "body": {
+      "MP7914_GetWorkOrderActivityCheckList_001": {
+        "verb": "Get",
+        "noun": "WorkOrderActivityCheckList",
+        "version": "001",
+        "Namespace": "http://schemas.datastream.net/MP_functions/MP7914_001",
+        "CHECKLISTCODE": {
+          "Namespace": "http://schemas.datastream.net/MP_fields"
+        }
+      }
+    },
+    "variable": [
+      {
+        "name": "CHECKLISTCODE",
+        "field": "CHECKLISTCODE",
+        "column": "CHECKLISTCODE",
+        "required": true,
+        "order": 0,
+        "type": "Text",
+        "parent": "MP7914_GetWorkOrderActivityCheckList_001/CHECKLISTCODE"
+      }
+    ]
+  },
+  {
     "name": "MP5727_AddOperatorChecklist_001",
     "simple": "Add Operator Checklist",
     "group": "Operator Checklist",
