@@ -96,7 +96,7 @@ var checklist_mod = {
       if (input['ack_checklistdate'] == undefined) { input['ack_checklistdate'] = '' }
       if (input['ack_checklistdatetime'] == undefined) { input['ack_checklistdatetime'] = '' }
       else { input['ack_checklistdatetime'] = (new Date(input['ack_checklistdatetime'])).toJSON().substring(0, 16) }
-      if (input['ack_value'] == undefined) { input['ack_value'] = '' }
+      if(isNaN(parseInt(item['ack_value'], 10))){ item['ack_value'] = ' '}
       else { input['ack_value'] = parseInt(input['ack_value'], 10) }
       if (input['ack_uom'] == undefined) { input['ack_uom'] = '' }
       if (input['ack_taskchecklistcode_comments'] == undefined) { input['ack_taskchecklistcode_comments'] = '' }
@@ -238,6 +238,7 @@ var checklist_mod = {
       raw['ack_freetext'] = item['ack_freetext'];
       raw['ack_checklistdate'] = item['ack_checklistdate'];
       raw['ack_checklistdatetime'] = item['ack_checklistdatetime'];
+      if(isNaN(parseInt(item['ack_value'], 10))){ item['ack_value'] = ' '}
       raw['ack_value'] = item['ack_value'];
       raw['ack_yes'] = item['ack_yes'];
       if (item['ack_yes'] == '-') { item['ack_no'] = '+' }
