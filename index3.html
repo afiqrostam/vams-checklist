@@ -52,7 +52,7 @@
           v-for="dt in data" :key="dt['ock_code']">
           {{ dt['trunc_ock_startdate'] + ' ' + dt['state'] + ' (' + dt['ock_status_desc'] + ')'}}
         </button>
-        <button @click="newForm" type="button" class="btn btn-primary" v-else id="new_checklist">New DVR</button>
+        <button @click="newForm" type="button" class="btn btn-primary" id="new_checklist">New DVR</button>
       </div>
     </div>
   </div>
