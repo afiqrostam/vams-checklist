@@ -34,13 +34,24 @@ var form_mod = {
       data: [],
       broken: false,
       loaded: false,
-      form: false
+      form: false,
+      new: true
     }
   },
   methods: {
     addItems(input) {
-      this.data.push(input)
-
+      this.data.push(input);
+      var curent = getData();
+      if (current.filter(
+        function (e) {
+          return (new Date(e.trunc_ock_startdate)).toDateString() === (new Date(new Date().toLocaleDateString('en-GB', {
+            year: "numeric",
+            month: "short",
+            day: "numeric"
+          }).toLocaleUpperCase().replaceAll(' ', '-'))).toDateString()
+        }
+      ).length === 0) { this.new = true }
+      else { this.new = false }
     },
     loadForm(event) {
       var target = event.target;
@@ -51,7 +62,7 @@ var form_mod = {
     getData() {
       var data = this.data;
       return data
-    },
+    }
   }
 }
 
@@ -96,11 +107,11 @@ var checklist_mod = {
       if (input['ack_checklistdate'] == undefined) { input['ack_checklistdate'] = '' }
       if (input['ack_checklistdatetime'] == undefined) { input['ack_checklistdatetime'] = '' }
       else { input['ack_checklistdatetime'] = (new Date(input['ack_checklistdatetime'])).toJSON().substring(0, 16) }
-      if(isNaN(parseInt(input['ack_value'], 10))){ input['ack_value'] = ' '}
+      if (isNaN(parseInt(input['ack_value'], 10))) { input['ack_value'] = ' ' }
       else { input['ack_value'] = parseInt(input['ack_value'], 10) }
       if (input['ack_uom'] == undefined) { input['ack_uom'] = '' }
       if (input['ack_taskchecklistcode_comments'] == undefined) { input['ack_taskchecklistcode_comments'] = '' }
-      if(input['ack_reference']=='PRE'){input['activity'] = 'Pre Start'}else{input['activity'] = 'Post Trip'}
+      if (input['ack_reference'] == 'PRE') { input['activity'] = 'Pre Start' } else { input['activity'] = 'Post Trip' }
       this.raw.push(input)
       if (Object.keys(this.data).length == 0) {
         var header = {
@@ -112,7 +123,7 @@ var checklist_mod = {
           status: ['U'].indexOf(input['ock_status']) == -1,
           activities: [{
             id: input['wo'] + '-' + input['ack_reference'],
-            act_note: input['tsk_desc']+' ('+input['activity']+')',
+            act_note: input['tsk_desc'] + ' (' + input['activity'] + ')',
             parentid: input['wo'],
             groups: [{
               id: input['wo'] + '-' + input['ack_reference'] + '-' + input['ack_group_label'],
@@ -156,7 +167,7 @@ var checklist_mod = {
         }).length == 0) {
           this.data.activities.push({
             id: input['wo'] + '-' + input['ack_reference'],
-            act_note: input['tsk_desc']+' ('+input['activity']+')',
+            act_note: input['tsk_desc'] + ' (' + input['activity'] + ')',
             parentid: input['wo'],
             groups: []
           });
@@ -238,7 +249,7 @@ var checklist_mod = {
       raw['ack_freetext'] = item['ack_freetext'];
       raw['ack_checklistdate'] = item['ack_checklistdate'];
       raw['ack_checklistdatetime'] = item['ack_checklistdatetime'];
-      if(isNaN(parseInt(item['ack_value'], 10))){ item['ack_value'] = ' '}
+      if (isNaN(parseInt(item['ack_value'], 10))) { item['ack_value'] = ' ' }
       raw['ack_value'] = item['ack_value'];
       raw['ack_yes'] = item['ack_yes'];
       if (item['ack_yes'] == '-') { item['ack_no'] = '+' }
@@ -287,8 +298,9 @@ var checklist_mod = {
       }
       else { return true }
     },
-    submitForm() { 
-      var input = {}; input.reference = this.data.reference; input.ock_code = this.data.wo; send_form(input) },
+    submitForm() {
+      var input = {}; input.reference = this.data.reference; input.ock_code = this.data.wo; send_form(input)
+    },
     loadMeta() { var input = {}; input.reference = this.data.reference; input.ock_code = this.data.wo; loadmetadata(input) },
     getGroupCompleted(group) {
       return group.items.filter(function (item) {
@@ -332,7 +344,7 @@ var checklist_mod = {
           )
         }
       );
-      return collection.filter(function(e){return e}).length === this.raw.length
+      return collection.filter(function (e) { return e }).length === this.raw.length
     },
     processItems(item) {
       if (item['process'] == false && (Date.now() - item['lastupdate']) >= 3000) {
