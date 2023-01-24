@@ -53,7 +53,7 @@
           {{ dt['trunc_ock_startdate'] + ' ' + dt['state'] + ' (' + dt['ock_status_desc'] + ')'}}
         </button>
         <button @click="newForm" type="button" class="btn btn-primary"
-          v-if="new" id="new_checklist">New DVR</button>
+          v-else id="new_checklist">New DVR</button>
       </div>
     </div>
   </div>
