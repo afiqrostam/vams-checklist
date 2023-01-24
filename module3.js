@@ -34,23 +34,12 @@ var form_mod = {
       data: [],
       broken: false,
       loaded: false,
-      form: false,
-      new: true
+      form: false
     }
   },
   methods: {
     addItems(input) {
-      this.data.push(input);
-      if (this.data.filter(
-        function (e) {
-          return (new Date(e.trunc_ock_startdate)).toDateString() === (new Date(new Date().toLocaleDateString('en-GB', {
-            year: "numeric",
-            month: "short",
-            day: "numeric"
-          }).toLocaleUpperCase().replaceAll(' ', '-'))).toDateString()
-        }
-      ).length === 0) { this.new = true }
-      else { this.new = false }
+      this.data.push(input)
     },
     loadForm(event) {
       var target = event.target;
