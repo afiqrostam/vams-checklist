@@ -319,5 +319,57 @@
         "parent": "MP5727_AddOperatorChecklist_001/OperatorChecklist/CREATEDBY"
       }
     ]
+  },
+  {
+    "name": "MP5730_CompleteOperatorChecklist_001",
+    "simple": "Complete Operator Checklist",
+    "group": "Operator Checklist",
+    "role": "OC Upload",
+    "body": {
+      "MP5730_CompleteOperatorChecklist_001": {
+        "verb": "Complete",
+        "noun": "OperatorChecklist",
+        "version": "001",
+        "Namespace": "http://schemas.datastream.net/MP_functions/MP5730_001",
+        "OPERATORCHECKLISTID": {
+          "Namespace":"http://schemas.datastream.net/MP_fields",
+          "ORGANIZATIONID": {
+            "entity": "User"
+          }
+        },
+        "FUNCTIONCODE": {
+          "Namespace":"http://schemas.datastream.net/MP_fields"
+        }
+      }
+    },
+    "variable": [
+      {
+        "name": "OPERATORCHECKLISTCODE",
+        "field": "operator_checklist_code",
+        "column": "Operator\nChecklist Code",
+        "required": true,
+        "order": 0,
+        "type": "Text",
+        "parent": "MP5730_CompleteOperatorChecklist_001/OPERATORCHECKLISTID"
+      },
+      {
+        "name": "ORGANIZATIONCODE",
+        "field": "organization_code",
+        "column": "Organization\nCode",
+        "required": true,
+        "order": 1,
+        "type": "Text",
+        "parent": "MP5730_CompleteOperatorChecklist_001/OPERATORCHECKLISTID/ORGANIZATIONID"
+      },
+      {
+        "name": "FUNCTIONCODE",
+        "field": "function_code",
+        "column": "Function\nCode",
+        "required": true,
+        "order": 2,
+        "type": "Text",
+        "parent": "MP5730_CompleteOperatorChecklist_001"
+      }
+    ]
   }
 ]
