@@ -336,9 +336,6 @@
           "ORGANIZATIONID": {
             "entity": "User"
           }
-        },
-        "FUNCTIONCODE": {
-          "Namespace":"http://schemas.datastream.net/MP_fields"
         }
       }
     },
@@ -360,15 +357,6 @@
         "order": 1,
         "type": "Text",
         "parent": "MP5730_CompleteOperatorChecklist_001/OPERATORCHECKLISTID/ORGANIZATIONID"
-      },
-      {
-        "name": "FUNCTIONCODE",
-        "field": "function_code",
-        "column": "Function\nCode",
-        "required": true,
-        "order": 2,
-        "type": "Text",
-        "parent": "MP5730_CompleteOperatorChecklist_001"
       }
     ]
   }
