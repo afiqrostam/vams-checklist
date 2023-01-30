@@ -336,7 +336,7 @@ var checklist_mod = {
                     && g.ack_no == ''
                     && g.ack_not_applicable == '');
                   if ((g.updated === true && g.process === true) || (g.updated === false && g.process === false)) { var updated = true } else { var updated = false }
-                  collection.push(data && updated)
+                  collection.push({res: data && updated, ack_code: g.ack_code})
                 }
               )
             }
@@ -345,6 +345,12 @@ var checklist_mod = {
       );
       console.log(collection)
       console.log(collection.filter(function (e) { return e }).length)
+      console.log(this.raw.filter(
+        function(j){return j.ack_requiredtoclose === 'YES' || (j.ack_requiredtoclose === 'NO' && j.updated === true)}
+      ))
+      console.log(this.raw.filter(
+        function(j){return j.ack_requiredtoclose === 'YES' || (j.ack_requiredtoclose === 'NO' && j.updated === true)}
+      ).length)
       return collection.filter(function (e) { return e }).length === this.raw.filter(
         function(j){return j.ack_requiredtoclose === 'YES' || (j.ack_requiredtoclose === 'NO' && j.updated === true)}
       ).length
