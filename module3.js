@@ -343,7 +343,9 @@ var checklist_mod = {
           )
         }
       );
-      return collection.filter(function (e) { return e }).length === this.raw.length
+      return collection.filter(function (e) { return e }).length === this.raw.filter(
+        function(j){return j.ack_requiredtoclose === 'YES' || (j.ack_requiredtoclose === 'NO' && j.updated === true)}
+      ).length
     },
     processItems(item) {
       if (item['process'] == false && (Date.now() - item['lastupdate']) >= 3000) {
