@@ -48,7 +48,7 @@ var form_mod = {
           day: "numeric"
         }).toLocaleUpperCase().replaceAll(' ', '-'))).toDateString()
       }).length === 0) { this.new_form = true }
-      else{ this.new_form = false}
+      else { this.new_form = false }
     },
     loadForm(event) {
       var target = event.target;
@@ -336,24 +336,17 @@ var checklist_mod = {
                     && g.ack_no == ''
                     && g.ack_not_applicable == '');
                   if ((g.updated === true && g.process === true) || (g.updated === false && g.process === false)) { var updated = true } else { var updated = false }
-                  collection.push({res: data && updated, ack_code: g.ack_code})
+                  collection.push({ res: data && updated, ack_code: g.ack_code })
                 }
               )
             }
           )
         }
       );
-      console.log(collection)
-      console.log(collection.filter(function (e) { return e }).length)
-      console.log(this.raw.filter(
-        function(j){return j.ack_requiredtoclose === 'YES' || (j.ack_requiredtoclose === 'NO' && j.updated === true)}
-      ))
-      console.log(this.raw.filter(
-        function(j){return j.ack_requiredtoclose === 'YES' || (j.ack_requiredtoclose === 'NO' && j.updated === true)}
-      ).length)
-      return collection.filter(function (e) { return e }).length === this.raw.filter(
-        function(j){return j.ack_requiredtoclose === 'YES' || (j.ack_requiredtoclose === 'NO' && j.updated === true)}
-      ).length
+      var min_req = this.raw.filter(
+        function (j) { return j.ack_requiredtoclose === 'YES' || (j.ack_requiredtoclose === 'NO' && j.updated === true) }
+      ).map(function (j) { return j.ack_code });
+      return collection.filter(function (e) { return e.res && min_req.indexOf(e.ack_code) !== -1 }).length === min_req.length
     },
     processItems(item) {
       if (item['process'] == false && (Date.now() - item['lastupdate']) >= 3000) {
