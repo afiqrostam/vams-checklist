@@ -169,7 +169,7 @@
                                 </button>
                               </div>
                               <div class="hstack gap-2 fw-light" v-if="['01'].indexOf(item.ack_type) != -1 &&
-                                 item.ack_group_label_desc.search(/condition/gi) === -1">
+                                 item.ack_group_label_desc.search('Condition') === -1">
                                 <div class="" v-if="item.ack_type == '01'">
                                   <input type="checkbox" class="btn-check" :id="'FREE'+item.ack_code" autocomplete="off"
                                     v-model="item.ack_completed" true-value="+" false-value="-" :disabled="data.status"
