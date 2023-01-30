@@ -152,6 +152,7 @@ var checklist_mod = {
                 ack_checklistdatetime: input['ack_checklistdatetime'],
                 ack_sequence: input['ack_sequence'],
                 ack_reference: input['ack_reference'],
+                ack_group_label_desc: input['ack_group_label_desc'],
                 parentid: input['wo'] + '-' + input['ack_reference'] + '-' + input['ack_group_label'],
               }],
             }],
@@ -212,6 +213,7 @@ var checklist_mod = {
           ack_checklistdatetime: input['ack_checklistdatetime'],
           ack_sequence: input['ack_sequence'],
           ack_reference: input['ack_reference'],
+          ack_group_label_desc: input['ack_group_label_desc'],
           parentid: input['wo'] + '-' + input['ack_reference'] + '-' + input['ack_group_label'],
         });
       }
