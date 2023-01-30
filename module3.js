@@ -343,6 +343,8 @@ var checklist_mod = {
           )
         }
       );
+      console.log(collection)
+      console.log(collection.filter(function (e) { return e }).length)
       return collection.filter(function (e) { return e }).length === this.raw.filter(
         function(j){return j.ack_requiredtoclose === 'YES' || (j.ack_requiredtoclose === 'NO' && j.updated === true)}
       ).length
