@@ -153,6 +153,7 @@ var checklist_mod = {
                 ack_sequence: input['ack_sequence'],
                 ack_reference: input['ack_reference'],
                 ack_group_label_desc: input['ack_group_label_desc'],
+                ack_group_label: input['ack_group_label'],
                 parentid: input['wo'] + '-' + input['ack_reference'] + '-' + input['ack_group_label'],
               }],
             }],
@@ -214,6 +215,7 @@ var checklist_mod = {
           ack_sequence: input['ack_sequence'],
           ack_reference: input['ack_reference'],
           ack_group_label_desc: input['ack_group_label_desc'],
+          ack_group_label: input['ack_group_label'],
           parentid: input['wo'] + '-' + input['ack_reference'] + '-' + input['ack_group_label'],
         });
       }
@@ -300,7 +302,15 @@ var checklist_mod = {
       else { return true }
     },
     getdisplay(item) {
-      if (ack_type === '14') { return false }
+      if (item.ack_type === '14') { return false }
+      if (item.ack_type === '01'
+        && item.ack_group_label === 'F-200105'
+        && this.raw.filter(
+          function (e) {
+            return e.ack_group_label === 'F-200105'
+              && e.ack_desc === item.ack_desc
+              && e.ack_completed === ''
+          }).map(function (e) { return e.ack_code }).indexOf(item.ack_code) !== 0 ){ return false }
       return true
     },
     submitForm() {
