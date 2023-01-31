@@ -100,7 +100,7 @@
                       class="accordion-collapse collapse">
                       <template v-if="group.items !== undefined">
                         <div class="accordion accordion-flush" :id="group.id">
-                          <div :class="[ item.ack_type == 14 ? 'accordion-item d-none' : 'accordion-item']"
+                          <div :class="[ getdisplay(item) ? 'accordion-item d-none' : 'accordion-item']"
                             v-for="item in group.items" :key="item.ack_code">
                             <div class="accordion-body py-2 row">
                               <div class="col" v-if="['03','04','13','14','15'].indexOf(item.ack_type) != -1">

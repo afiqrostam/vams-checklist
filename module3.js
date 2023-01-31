@@ -299,6 +299,10 @@ var checklist_mod = {
       }
       else { return true }
     },
+    getdisplay(item) {
+      if (ack_type === '14') { return false }
+      return true
+    },
     submitForm() {
       var input = {}; input.reference = this.data.reference; input.ock_code = this.data.wo; send_form(input)
     },
