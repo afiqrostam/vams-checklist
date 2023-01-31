@@ -321,8 +321,10 @@ var checklist_mod = {
           }).map(function (e) { return e.ack_code }).indexOf(item.ack_code) !== 0) { return false }
       return true
     },
-    isFaultType(item) {
+    hasTextArea(item) {
       if (item.ack_type === '01' && item.ack_group_label === 'F-200105') { return true }
+      if (item.ack_type === '03' && item.ack_reference !== 'POST'
+        && ['', 'Z028', 'Z030'].indexOf(item.ack_finding) == -1) { return true }
       return false
     },
     submitForm() {

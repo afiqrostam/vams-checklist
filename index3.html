@@ -155,23 +155,10 @@
                                 <i class="bi bi-check-circle-fill text-info pe-2"
                                   v-if="getItemCompleted(item) && item.updated && item.process"></i>
                               </div>
-                              <div class="hstack gap-2 py-2"
-                                v-if="['03'].indexOf(item.ack_type) != -1 && ['','Z028','Z030'].indexOf(item.ack_finding) == -1">
-                                <div class="w-100 form-floating me-auto">
-                                  <textarea :ref="'NOTES'+item.ack_code" :id="'NOTES'+item.ack_code"
-                                    class="form-control" :disabled="data.status" v-model="item.ack_notes"
-                                    @input="snycItems(item,$event)" placeholder="..."></textarea>
-                                  <label class="ps-4" :for="'NOTES'+item.ack_code">Notes</label>
-                                </div>
-                                <button :id="'PHOTO'+item.ack_code" type="button"
-                                  class="btn btn-sm btn-outline-primary">
-                                  <i class="bi bi-camera fs-4"></i>
-                                </button>
-                              </div>
                               <div class="hstack gap-2 fw-light" v-if="['01'].indexOf(item.ack_type) != -1">
                                 <div class="" v-if="item.ack_type == '01'">
                                   <input type="checkbox" class="btn-check" :id="'FREE'+item.ack_code" autocomplete="off"
-                                    v-model="item.ack_completed" true-value="+" false-value="-" :disabled="data.status || isFaultType(item)"
+                                    v-model="item.ack_completed" true-value="+" false-value="-" :disabled="data.status"
                                     @change="snycItems(item)">
                                   <label class="btn btn-outline-primary d-block" :for="'FREE'+item.ack_code"><i
                                       class="bi bi-check-lg"></i></label>
@@ -197,7 +184,7 @@
                                 <i class="bi bi-check-circle-fill text-info pe-2"
                                   v-if="getItemCompleted(item) && item.updated && item.process"></i>
                               </div>
-                              <div class="hstack gap-2 py-2" v-if="isFaultType">
+                              <div class="hstack gap-2 py-2" v-if="hasTextArea(item)">
                                 <div class="w-100 form-floating me-auto">
                                   <textarea :ref="'NOTES'+item.ack_code" :id="'NOTES'+item.ack_code"
                                     class="form-control" :disabled="data.status" v-model="item.ack_notes"
