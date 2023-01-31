@@ -317,8 +317,8 @@ var checklist_mod = {
           function (e) {
             return e.ack_group_label === 'F-200105'
               && e.ack_desc === item.ack_desc
-              && e.ack_completed === '+')
-          }){ return true }
+              && e.ack_completed === '+'
+          }).map(function (e) { return e.ack_code }).indexOf(item.ack_code) !== -1) { return true }
       return true
     },
     submitForm() {
