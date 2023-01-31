@@ -34,9 +34,9 @@
       </div>
     </div>
     <div v-else>
-      <div class="alert alert-dismissible fade show mb-2">
+      <div class="alert alert-info alert-dismissible fade show mb-2">
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        <div class="p-3 small">
+        <div class="small">
           <ul class="list-unstyled px-1 m-0">
             <li>When updating, the tickbox on each checklist items indicates:</li>
             <li><i class="bi bi-circle pe-2"></i><span>unanswered checklist;</span></li>
@@ -100,7 +100,7 @@
                       class="accordion-collapse collapse">
                       <template v-if="group.items !== undefined">
                         <div class="accordion accordion-flush" :id="group.id">
-                          <div :class="[ getdisplay(item) ? 'accordion-item d-none' : 'accordion-item']"
+                          <div :class="[ getdisplay(item) ? 'accordion-item' : 'accordion-item d-none']"
                             v-for="item in group.items" :key="item.ack_code">
                             <div class="accordion-body py-2 row">
                               <div class="col" v-if="['03','04','13','14','15'].indexOf(item.ack_type) != -1">
