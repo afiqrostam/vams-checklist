@@ -339,9 +339,10 @@ var checklist_mod = {
           }).map(
             function (e) { return { 'text': e.ack_desc, 'value': e.ack_code } })
     },
-    selectFault(event){
-      console.log(event)
-
+    selectFault(event) {
+      var target = event.target;
+      var selected = target.value;
+      if (selected !== '') { document.getElementById('FREE' & selected).click() }
     },
     submitForm() {
       var input = {}; input.reference = this.data.reference; input.ock_code = this.data.wo; send_form(input)
