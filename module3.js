@@ -342,7 +342,16 @@ var checklist_mod = {
     selectFault(event) {
       var target = event.target;
       var selected = target.value;
-      if (selected !== '') { document.getElementById('FREE' + selected).click() }
+      if (selected !== '') {
+        document.getElementById('FREE' + selected).click();
+        setTimeout(
+          function (selected) {
+            if (document.getElementById('NOTES' + selected).value === '') {
+              document.getElementById('FREE' + selected).click()
+            }
+            form.processItems(item)
+          }, 3000, selected)
+      }
       target.value = '';
     },
     submitForm() {
