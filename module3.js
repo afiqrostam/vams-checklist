@@ -342,9 +342,7 @@ var checklist_mod = {
     selectFault(event) {
       var target = event.target;
       var selected = target.value;
-      console.log(selected)
-      console.log(event)
-      if (selected !== '') { document.getElementById('FREE' & selected).click() }
+      if (selected !== '') { document.getElementById('FREE' + selected).click() }
     },
     submitForm() {
       var input = {}; input.reference = this.data.reference; input.ock_code = this.data.wo; send_form(input)
