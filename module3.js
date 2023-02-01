@@ -343,6 +343,7 @@ var checklist_mod = {
       var target = event.target;
       var selected = target.value;
       if (selected !== '') { document.getElementById('FREE' + selected).click() }
+      target.value = '';
     },
     submitForm() {
       var input = {}; input.reference = this.data.reference; input.ock_code = this.data.wo; send_form(input)
