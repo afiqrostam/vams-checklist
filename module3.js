@@ -327,6 +327,22 @@ var checklist_mod = {
         && ['', 'Z028', 'Z030'].indexOf(item.ack_finding) == -1) { return true }
       return false
     },
+    openFaults() {
+      return this.raw.filter(
+        function (e) {
+          return e.ack_group_label === 'F-200105'
+            && (e.ack_completed === '' || e.ack_completed === '-')
+        }).filter(
+          function (e, i, a) {
+            return e.ack_code === a.filter(
+              function (f) { return f.ack_desc === e.ack_desc })[0].ack_code
+          }).map(
+            function (e) { return { 'text': e.ack_desc, 'value': e.ack_code } })
+    },
+    selectFault(event){
+      console.log(event)
+
+    },
     submitForm() {
       var input = {}; input.reference = this.data.reference; input.ock_code = this.data.wo; send_form(input)
     },
