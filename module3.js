@@ -248,7 +248,7 @@ var checklist_mod = {
       if (item['ack_desc'] === 'Worker Name' && item['ack_freetext'] !== param.userid) {
         item['ack_freetext'] = param.userid;
       }
-      if (['', 'Z028', 'Z030'].indexOf(item['ack_finding']) != -1) { item['ack_notes'] = '' }
+      if (['', 'Z028', 'Z030'].indexOf(item['ack_finding']) != -1 && item.ack_type === '14') { item['ack_notes'] = '' }
       raw['ack_notes'] = item['ack_notes'];
       raw['ack_not_applicable'] = item['ack_not_applicable'];
       raw['ack_freetext'] = item['ack_freetext'];
@@ -320,7 +320,7 @@ var checklist_mod = {
             return e.ack_group_label === 'F-200105'
               && e.ack_desc === item.ack_desc
               && (e.ack_completed === '' || e.ack_completed === '-')
-          }).map(function (e) { return e.ack_code }).indexOf(item.ack_code) !== 0) { return false }
+          }).map(function (e) { return e.ack_code }).indexOf(item.ack_code) !== -1) { return false }
       return true
     },
     hasTextArea(item) {
@@ -345,7 +345,7 @@ var checklist_mod = {
       var target = event.target;
       var selected = target.value;
       if (selected !== '') {
-        
+        document.getElementById('FREE'+selected).click()
       }
       target.value = '';
     },
