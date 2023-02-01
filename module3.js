@@ -343,13 +343,7 @@ var checklist_mod = {
       var target = event.target;
       var selected = target.value;
       if (selected !== '') {
-        document.getElementById('FREE' + selected).click();
-        setTimeout(
-          function (selected) {
-            if (document.getElementById('NOTES' + selected).value === '') {
-              document.getElementById('FREE' + selected).click()
-            }
-          }, 3000, selected)
+        document.getElementById('FREE' + selected).click()
       }
       target.value = '';
     },
