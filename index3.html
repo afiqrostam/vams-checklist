@@ -100,6 +100,13 @@
                       class="accordion-collapse collapse">
                       <template v-if="group.items !== undefined">
                         <div class="accordion accordion-flush" :id="group.id">
+                          <div class="accordion-item" v-if="group.group_code === 'F-200104'">
+                            <div class="accordion-body py-2 row">
+                              <div class="hstack gap-2 fw-light">
+                                <div class="col"><span>Enter faults indentified in the Faults section</span></div>
+                              </div>
+                            </div>
+                          </div>
                           <div :class="[ getdisplay(item) ? 'accordion-item' : 'accordion-item d-none']"
                             v-for="item in group.items" :key="item.ack_code">
                             <div class="accordion-body py-2 row">
@@ -122,10 +129,9 @@
                                   class="form-control border-0 border-bottom" :id="'FREE'+item.ack_code"
                                   autocomplete="off" v-model="item.ack_freetext" @input="snycItems(item)"
                                   :disabled="data.status || ['Unit/Fleet No','Registration No','Worker Name'].indexOf(item.ack_desc) != -1">
-                                <select v-if="item.ack_type == 03"
-                                  class="form-select border-0 border-bottom" :id="'FREE'+item.ack_code"
-                                  autocomplete="off" v-model="item.ack_finding" @change="snycItems(item)"
-                                  :disabled="data.status">
+                                <select v-if="item.ack_type == 03" class="form-select border-0 border-bottom"
+                                  :id="'FREE'+item.ack_code" autocomplete="off" v-model="item.ack_finding"
+                                  @change="snycItems(item)" :disabled="data.status">
                                   <option disabled value="">select one</option>
                                   <option v-for="option in item.ack_possiblefindings" :value="option.value">
                                     {{ option.text }}
@@ -201,9 +207,8 @@
                           <div class="accordion-item" v-if="group.group_code === 'F-200105'">
                             <div class="accordion-body py-2 row">
                               <div class="col-md hstack gap-2 fw-light">
-                                <select class="form-select border-0 border-bottom"
-                                  autocomplete="off"  @change="selectFault"
-                                  :disabled="data.status">
+                                <select class="form-select border-0 border-bottom" autocomplete="off"
+                                  @change="selectFault" :disabled="data.status">
                                   <option value="">select a fault category</option>
                                   <option v-for="option in openFaults()" :value="option.value">
                                     {{ option.text }}
