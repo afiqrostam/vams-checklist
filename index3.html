@@ -205,7 +205,7 @@
                                   autocomplete="off"  @change="selectFault"
                                   :disabled="data.status">
                                   <option disabled="" value="">select one</option>
-                                  <option v-for="option in openFaults" :value="option.value">
+                                  <option v-for="option in openFaults()" :value="option.value">
                                     {{ option.text }}
                                   </option>
                                 </select>
