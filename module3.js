@@ -320,7 +320,7 @@ var checklist_mod = {
             return e.ack_group_label === 'F-200105'
               && e.ack_desc === item.ack_desc
               && (e.ack_completed === '' || e.ack_completed === '-')
-          }).map(function (e) { return e.ack_code }).indexOf(item.ack_code) !== -1) { return false }
+          }).map(function (e) { return e.ack_code }).indexOf(item.ack_code) !== 0) { return false }
       return true
     },
     hasTextArea(item) {
@@ -345,7 +345,7 @@ var checklist_mod = {
       var target = event.target;
       var selected = target.value;
       if (selected !== '') {
-        document.getElementById('FREE' + selected).click()
+        
       }
       target.value = '';
     },
