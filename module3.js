@@ -311,14 +311,6 @@ var checklist_mod = {
               && e.ack_desc === item.ack_desc
               && e.ack_completed === '+'
           }).map(function (e) { return e.ack_code }).indexOf(item.ack_code) !== -1) { return true }
-      if (item.ack_type === '01'
-        && item.ack_group_label === 'F-200105'
-        && this.raw.filter(
-          function (e) {
-            return e.ack_group_label === 'F-200105'
-              && e.ack_desc === item.ack_desc
-              && (e.ack_completed === '' || e.ack_completed === '-')
-          }).map(function (e) { return e.ack_code }).indexOf(item.ack_code) !== 0) { return false }
       return true
     },
     hasTextArea(item) {
