@@ -349,7 +349,6 @@ var checklist_mod = {
             if (document.getElementById('NOTES' + selected).value === '') {
               document.getElementById('FREE' + selected).click()
             }
-            form.processItems(item)
           }, 3000, selected)
       }
       target.value = '';
