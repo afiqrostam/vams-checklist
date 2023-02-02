@@ -332,7 +332,7 @@ var checklist_mod = {
       return this.raw.filter(
         function (e) {
           return e.ack_group_label === 'F-200105'
-            && (e.ack_completed === '' || e.ack_completed === '-')
+            && e.ack_notes === ''
         }).filter(
           function (e, i, a) {
             return e.ack_code === a.filter(
