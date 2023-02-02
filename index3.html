@@ -499,28 +499,6 @@
                   findings = data;
                 }
               })
-            var meta_req = new Request(gas + '?process=get_metadata&tenant=' + param.tenant, {
-              redirect: "follow",
-              method: 'POST',
-              headers: {
-                "Content-Type": "text/plain;charset=utf-8",
-              },
-            });
-            fetch(findings_req)
-              .then(function (response) {
-                return response.json();
-              })
-              .then(function (data) {
-                if (data.status != undefined && data.status === false) {
-                  alert.add({
-                    text: data.text,
-                    type: 'error'
-                  })
-                }
-                else {
-                  findings = data;
-                }
-              })
           }
         })();
       </script>
