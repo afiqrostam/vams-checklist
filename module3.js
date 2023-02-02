@@ -109,8 +109,8 @@ var checklist_mod = {
       if (input['ack_uom'] == undefined) { input['ack_uom'] = '' }
       if (input['ack_taskchecklistcode_comments'] == undefined) { input['ack_taskchecklistcode_comments'] = '' }
       if (input['ack_reference'] == 'PRE') { input['activity'] = 'Pre Start' }
-      else if (input['ack_reference'] == 'FAULT') { input['activity'] = 'Faults' }
-      else { input['activity'] = 'Post Trip' }
+      if (input['ack_reference'] == 'FAULTS') { input['activity'] = 'Faults' }
+      if (input['ack_reference'] == 'POST') { input['activity'] = 'Post Trip' }
       this.raw.push(input)
       if (Object.keys(this.data).length == 0) {
         var header = {
