@@ -250,7 +250,6 @@ var checklist_mod = {
       if (item['ack_desc'] === 'Worker Name' && item['ack_freetext'] !== param.userid) {
         item['ack_freetext'] = param.userid;
       }
-      if (['', 'Z028', 'Z030'].indexOf(item['ack_finding']) != -1 && item.ack_type === '14') { item['ack_notes'] = '' }
       raw['ack_notes'] = item['ack_notes'];
       raw['ack_not_applicable'] = item['ack_not_applicable'];
       raw['ack_freetext'] = item['ack_freetext'];
@@ -327,8 +326,6 @@ var checklist_mod = {
     },
     hasTextArea(item) {
       if (item.ack_type === '01' && item.ack_group_label === 'F-200105') { return true }
-      if (item.ack_type === '03' && item.ack_reference !== 'POST'
-        && ['', 'Z028', 'Z030'].indexOf(item.ack_finding) == -1) { return true }
       return false
     },
     openFaults() {
