@@ -341,9 +341,16 @@ var checklist_mod = {
     selectFault(event) {
       var target = event.target;
       var selected = target.value;
-      if (selected !== '' 
-        && this.raw.filter(function(e){return e.ack_code === selected && e.ack_completed !== '+'}).length > 0 ) {
-        document.getElementById('FREE' + selected).click()
+      if (selected !== ''
+        && this.raw.filter(function (e) { return e.ack_code === selected && e.ack_completed !== '+' }).length > 0) {
+        document.getElementById('FREE' + selected).click();
+        this.raw.filter(
+          function (e) {
+            return e.ack_group_label === 'F-200105'
+              && e.ack_notes === '' && e.ack_completed === '+' && e.ack_code !== selected
+          }).forEach(function(e){
+            document.getElementById('FREE' + e).click();
+          })
       }
       target.value = '';
     },
