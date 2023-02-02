@@ -263,7 +263,7 @@
           if (new_state === 'Pre-Trip') { new_state = 'PRE' }
           if (new_state === 'Post-Trip') { new_state = 'POST' }
           var new_data = payload.filter(function (e) { return e['ock_code'] == input });
-          if (new_state !== '') { new_data = new_data.filter(function (e) { return e['ack_reference'] == new_state }) }
+          if (new_state !== '') { new_data = new_data.filter(function (e) { return e['ack_reference'] == new_state }) || e['ack_group_label'] === 'F-200105' }
           new_data.forEach(function (e) {
             form.addItems(e);
           });
