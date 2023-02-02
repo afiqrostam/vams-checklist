@@ -113,7 +113,7 @@ var checklist_mod = {
         else { input['activity'] = 'Post Trip' }
       }
       else {
-        if (this.raw[0]['ack_reference'] == 'PRE' && input['ack_group_label'] == 'F-200105') { input['activity'] = 'Pre Start' }
+        if (this.raw.length !== 0 && this.raw[0]['ack_reference'] == 'PRE' && input['ack_group_label'] == 'F-200105') { input['activity'] = 'Pre Start' }
         else if (input['ack_reference'] == 'PRE') { input['activity'] = 'Pre Start' }
         else { input['activity'] = 'Post Trip' }
       }
