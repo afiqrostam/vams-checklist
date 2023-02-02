@@ -341,7 +341,8 @@ var checklist_mod = {
     selectFault(event) {
       var target = event.target;
       var selected = target.value;
-      if (selected !== '') {
+      if (selected !== '' 
+        && this.raw.filter(function(e){return e.ack_code === selected && e.ack_completed !== '+'}).length > 0 ) {
         document.getElementById('FREE' + selected).click()
       }
       target.value = '';
