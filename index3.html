@@ -196,8 +196,9 @@
                               <div class="hstack gap-2 py-2" v-if="hasTextArea(item)">
                                 <div class="w-100 form-floating me-auto">
                                   <textarea :ref="'NOTES'+item.ack_code" :id="'NOTES'+item.ack_code"
-                                    class="form-control" :disabled="data.status" v-model="item.ack_notes"
-                                    @input="snycItems(item,$event)" placeholder="..."></textarea>
+                                    :class="[ item.ack_notes == '' ? 'form-control bg-warning-subtle' : 'form-control']"
+                                    :disabled="data.status" v-model="item.ack_notes" @input="snycItems(item,$event)"
+                                    placeholder="..."></textarea>
                                   <label class="ps-4" :for="'NOTES'+item.ack_code">Notes</label>
                                 </div>
                                 <button :id="'PHOTO'+item.ack_code" type="button"
