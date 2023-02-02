@@ -349,7 +349,7 @@ var checklist_mod = {
             return e.ack_group_label === 'F-200105'
               && e.ack_notes === '' && e.ack_completed === '+' && e.ack_code !== selected
           }).forEach(function(e){
-            document.getElementById('FREE' + e).click();
+            document.getElementById('FREE' + e.ack_code).click();
           })
       }
       target.value = '';
