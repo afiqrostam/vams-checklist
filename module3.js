@@ -336,7 +336,7 @@ var checklist_mod = {
         }).filter(
           function (e, i, a) {
             return e.ack_code === a.filter(
-              function (f) { return f.ack_desc === e.ack_desc }).pop().ack_code
+              function (f) { return f.ack_desc === e.ack_desc })[0].ack_code
           }).map(
             function (e) { return { 'text': e.ack_desc, 'value': e.ack_code } })
     },
