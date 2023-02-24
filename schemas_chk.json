@@ -379,38 +379,13 @@
           "printOnPO":"-",
           "createAndCopyToWO":"-",
           "Namespace":"http://schemas.datastream.net/MP_fields",
-          "DOCUMENTENTITYID": {}
+          "DOCUMENTENTITYID": {
+            "document":"",
+            "rentity":"",
+            "code":""
+          }
         }
       }
-    },
-    "variable": [
-      {
-        "name": "document",
-        "field": "document_code",
-        "column": "Document Code",
-        "required": true,
-        "order": 0,
-        "type": "Text",
-        "parent": "MP0112_AddDocumentAssociation_001/DOCUMENTENTITY/DOCUMENTENTITYID"
-      },
-      {
-        "name": "rentity",
-        "field": "rentity",
-        "column": "REntity",
-        "required": true,
-        "order": 1,
-        "type": "Text",
-        "parent": "MP0112_AddDocumentAssociation_001/DOCUMENTENTITY/DOCUMENTENTITYID"
-      },
-      {
-        "name": "code",
-        "field": "entity_code",
-        "column": "Entity Code",
-        "required": true,
-        "order": 2,
-        "type": "Text",
-        "parent": "MP0112_AddDocumentAssociation_001/DOCUMENTENTITY/DOCUMENTENTITYID"
-      }
-    ]
+    }
   }
 ]
