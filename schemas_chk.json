@@ -359,5 +359,58 @@
         "parent": "MP5730_CompleteOperatorChecklist_001/OPERATORCHECKLISTID/ORGANIZATIONID"
       }
     ]
+  },
+  {
+    "name": "MP0112_AddDocumentAssociation_001",
+    "simple": "Add Document Association",
+    "group": "Document Association",
+    "role": "Document Update",
+    "body": {
+      "MP0112_AddDocumentAssociation_001": {
+        "verb": "Add",
+        "noun": "DocumentAssociation",
+        "version": "001",
+        "Namespace": "http://schemas.datastream.net/MP_functions/MP0112_001",
+        "DOCUMENTENTITY": {
+          "type":"*",
+          "copyToWO":"-",
+          "printOnWO":"+",
+          "copyToPO":"-",
+          "printOnPO":"-",
+          "createAndCopyToWO":"-",
+          "Namespace":"http://schemas.datastream.net/MP_fields",
+          "DOCUMENTENTITYID": {}
+        }
+      }
+    },
+    "variable": [
+      {
+        "name": "document",
+        "field": "document_code",
+        "column": "Document Code",
+        "required": true,
+        "order": 0,
+        "type": "Text",
+        "parent": "MP0112_AddDocumentAssociation_001/DOCUMENTENTITY/DOCUMENTENTITYID"
+      },
+      {
+        "name": "rentity",
+        "field": "rentity",
+        "column": "REntity",
+        "required": true,
+        "order": 1,
+        "type": "Text",
+        "parent": "MP0112_AddDocumentAssociation_001/DOCUMENTENTITY/DOCUMENTENTITYID"
+      },
+      {
+        "name": "code",
+        "field": "entity_code",
+        "column": "Entity Code",
+        "required": true,
+        "order": 2,
+        "type": "Text",
+        "parent": "MP0112_AddDocumentAssociation_001/DOCUMENTENTITY/DOCUMENTENTITYID"
+      }
+    ]
   }
 ]
