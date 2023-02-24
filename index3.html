@@ -314,7 +314,6 @@
           var req_param = gas + '?process=add_checklist&tenant=' + param.tenant + '&organization='
             + param.organization + '&equipmentno=' + param.equipmentno;
           if (param.userid !== undefined && param.userid !== '') { req_param = req_param + '&userid=' + param.userid }
-          console.log(req_param)
           var new_req = new Request(req_param, {
             redirect: "follow",
             method: 'POST',
@@ -371,11 +370,9 @@
                 });
                 fetch(upd_checklist_req)
                   .then(function (response) {
-                    console.log(JSON.stringify(response));
                     return response.json();
                   })
                   .then(function (data) {
-                    console.log(JSON.stringify(data));
                     if (data.status != undefined && data.status === false) {
                       alert.add({
                         text: data.text,
