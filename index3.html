@@ -198,6 +198,7 @@
                                   <textarea :ref="'NOTES'+item.ack_code" :id="'NOTES'+item.ack_code"
                                     :class="[ item.ack_notes == '' ? 'form-control bg-warning-subtle' : 'form-control']"
                                     :disabled="data.status" v-model="item.ack_notes" @input="snycItems(item,$event)"
+                                    @focus="snycItems(item,$event)" @blur="snycItems(item,$event)" @keyup="snycItems(item,$event)"
                                     placeholder="..."></textarea>
                                   <label class="ps-4" :for="'NOTES'+item.ack_code">Notes</label>
                                 </div>

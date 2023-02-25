@@ -231,7 +231,8 @@ var checklist_mod = {
       text_area.style.height = (text_area.scrollHeight) + 'px'
     },
     snycItems(item, event) {
-      console.log(event)
+      console.log(event.type)
+      console.log(event.target.value)
       if (event != undefined) {
         if (event.target.nodeName == 'TEXTAREA') {
           event.target.style.height = 'auto'
