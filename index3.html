@@ -122,26 +122,30 @@
                                 v-if="['03','04','13','14','15'].indexOf(item.ack_type) != -1">
                                 <input v-if="item.ack_type == 13" type="date"
                                   class="form-control border-0 border-bottom" :id="'FREE'+item.ack_code"
-                                  autocomplete="off" v-model="item.ack_checklistdate" @input="snycItems(item)"
+                                  autocomplete="off" v-model="item.ack_checklistdate" @input="snycItems(item,$event)"
+                                  @focus="snycItems(item,$event)" @blur="snycItems(item,$event)" @keyup="snycItems(item,$event)"
                                   :disabled="data.status">
                                 <input v-if="item.ack_type == 14" type="datetime-local"
                                   class="form-control border-0 border-bottom" :id="'FREE'+item.ack_code"
-                                  autocomplete="off" v-model="item.ack_checklistdatetime" @input="snycItems(item)"
+                                  autocomplete="off" v-model="item.ack_checklistdatetime" @input="snycItems(item,$event)"
+                                  @focus="snycItems(item,$event)" @blur="snycItems(item,$event)" @keyup="snycItems(item,$event)"
                                   :disabled="data.status">
                                 <input v-if="item.ack_type == 15" type="text"
                                   class="form-control border-0 border-bottom" :id="'FREE'+item.ack_code"
-                                  autocomplete="off" v-model="item.ack_freetext" @input="snycItems(item)"
+                                  autocomplete="off" v-model="item.ack_freetext" @input="snycItems(item,$event)"
+                                  @focus="snycItems(item,$event)" @blur="snycItems(item,$event)" @keyup="snycItems(item,$event)"
                                   :disabled="data.status || ['Unit/Fleet No','Registration No','Worker Name'].indexOf(item.ack_desc) != -1">
                                 <select v-if="item.ack_type == 03" class="form-select border-0 border-bottom"
                                   :id="'FREE'+item.ack_code" autocomplete="off" v-model="item.ack_finding"
-                                  @change="snycItems(item)" :disabled="data.status">
+                                  @change="snycItems(item,$event)" :disabled="data.status">
                                   <option disabled value="">select one</option>
                                   <option v-for="option in item.ack_possiblefindings" :value="option.value">
                                     {{ option.text }}
                                   </option>
                                 </select>
                                 <div class="input-group" v-if="item.ack_type == '04'">
-                                  <input type="number" v-model="item.ack_value" @input="snycItems(item)"
+                                  <input type="number" v-model="item.ack_value" @input="snycItems(item,$event)"
+                                  @focus="snycItems(item,$event)" @blur="snycItems(item,$event)" @keyup="snycItems(item,$event)"
                                     class="form-control border-0 border-end border-bottom" :placeholder="item.ack_desc"
                                     :disabled="data.status" :id="'FREE'+item.ack_code">
                                   <span class="input-group-text border-0 bg-light border-bottom">{{ item.ack_uom
@@ -168,7 +172,7 @@
                                 <div class="" v-if="item.ack_type == '01'">
                                   <input type="checkbox" class="btn-check" :id="'FREE'+item.ack_code" autocomplete="off"
                                     v-model="item.ack_completed" true-value="+" false-value="-" :disabled="data.status"
-                                    @change="snycItems(item)">
+                                    @change="snycItems(item,$event)">
                                   <label class="btn btn-outline-primary d-block" :for="'FREE'+item.ack_code"><i
                                       class="bi bi-check-lg"></i></label>
                                 </div>
