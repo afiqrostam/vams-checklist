@@ -361,6 +361,46 @@
     ]
   },
   {
+    "name": "MP5731_CancelOperatorChecklist_001",
+    "simple": "Cancel Operator Checklist",
+    "group": "Operator Checklist",
+    "role": "OC Upload",
+    "body": {
+      "MP5731_CancelOperatorChecklist_001": {
+        "verb": "Cancel",
+        "noun": "OperatorChecklist",
+        "version": "001",
+        "Namespace": "http://schemas.datastream.net/MP_functions/MP5731_001",
+        "OPERATORCHECKLISTID": {
+          "Namespace":"http://schemas.datastream.net/MP_fields",
+          "ORGANIZATIONID": {
+            "entity": "User"
+          }
+        }
+      }
+    },
+    "variable": [
+      {
+        "name": "OPERATORCHECKLISTCODE",
+        "field": "operator_checklist_code",
+        "column": "Operator\nChecklist Code",
+        "required": true,
+        "order": 0,
+        "type": "Text",
+        "parent": "MP5731_CancelOperatorChecklist_001/OPERATORCHECKLISTID"
+      },
+      {
+        "name": "ORGANIZATIONCODE",
+        "field": "organization_code",
+        "column": "Organization\nCode",
+        "required": true,
+        "order": 1,
+        "type": "Text",
+        "parent": "MP5731_CancelOperatorChecklist_001/OPERATORCHECKLISTID/ORGANIZATIONID"
+      }
+    ]
+  },
+  {
     "name": "MP0112_AddDocumentAssociation_001",
     "simple": "Add Document Association",
     "group": "Document Association",
