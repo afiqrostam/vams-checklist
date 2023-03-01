@@ -421,6 +421,7 @@
                 return response.json();
               })
               .then(function (data) {
+                console.log(data)
                 if (data.status != undefined && data.status === false && data.text !== 'query returns null') {
                   alert.add({
                     text: data.text,
