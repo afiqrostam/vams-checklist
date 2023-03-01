@@ -421,7 +421,6 @@
                 return response.json();
               })
               .then(function (data) {
-                console.log(data)
                 if (data.status != undefined && data.status === false && data.text !== 'query returns null') {
                   alert.add({
                     text: data.text,
@@ -432,11 +431,12 @@
                 }
                 else {
                   if (data.text === 'query returns null') { data = [] }
-                  data = data.text.filter(function (e) { return e['ock_code'] != undefined });
+                  else { data = data.text }
+                  data = data.filter(function (e) { return e['ock_code'] != undefined });
                   data.forEach(function (e) {
                     if (e['ack_value'] != undefined) { e['ack_value'] = e['ack_value'].replaceAll(',', '') }
                   });
-                  payload = payload.concat(data.text);
+                  payload = payload.concat(data);
                   var reform = payload.map(function (e) {
                     var rep = {};
                     rep['obj_org'] = e['obj_org'];
