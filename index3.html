@@ -238,12 +238,14 @@
             </div>
           </div>
         </div>
-        <div class="card-footer bg-light text-center p-3">
+        <div class="card-footer hstack gap-2 bg-light text-center p-3">
           <button v-show="!data.status" type="button" @click="submitForm()" :disabled="!getAllCompleted()"
-            class="btn col-12 col-sm-6 btn-primary"><span v-if="!getAllCompleted()">...</span><span
+            class="btn mx-auto w-50 btn-primary"><span v-if="!getAllCompleted()">...</span><span
               v-else>Submit</span></button>
+          <button v-show="!data.status" type="button" @click="cancelForm()"
+            class="btn mx-auto w-50 btn-primary"><span>Cancel</span></button>
           <button v-show="data.status" type="button" onclick="closeForm()"
-            class="btn col-12 col-sm-6 btn-primary">Close</button>
+            class="btn mx-auto w-50 btn-primary">Close</button>
         </div>
       </div>
       <!-- Optional JavaScript; choose one of the two! -->
@@ -395,7 +397,55 @@
           check();
         }
 
+        function cancel_form(input) {
+          checklist.loaded = false;
+          form.loaded = false
+          var req_comp_param = gas + '?process=cancel_checklist&tenant=' + param.tenant + '&organization='
+            + param.organization + '&checklist=' + input.ock_code + '&userid=' + param.userid;
 
+          var upd_checklist_req = new Request(req_comp_param, {
+            redirect: "follow",
+            method: 'POST',
+            headers: {
+              "Content-Type": "text/plain;charset=utf-8",
+            },
+          });
+          fetch(upd_checklist_req)
+            .then(function (response) {
+              return response.json();
+            })
+            .then(function (data) {
+              if (data.status != undefined && data.status === false) {
+                alert.add({
+                  text: data.text,
+                  type: 'error'
+                })
+              }
+              else { location.reload() }
+            });
+        }
+
+        function fix_time(org) {
+          var date = new Date();
+          var option = {
+            year: "numeric",
+            month: "short",
+            day: "numeric"
+          };
+          var orgs = ['TAS', 'VIC', 'WAR', 'WAU', 'NWA', 'SAU', 'NSW'];
+          var options = {};
+          orgs.forEach(function (e) {
+            options[e] = JSON.parse(JSON.stringify(option))
+          });
+          options['TAS']['timeZone'] = 'Australia/Hobart';
+          options['VIC']['timeZone'] = 'Australia/Melbourne';
+          options['WAR']['timeZone'] = 'Australia/Perth';
+          options['WAU']['timeZone'] = 'Australia/Perth';
+          options['NWA']['timeZone'] = 'Australia/Perth';
+          options['SAU']['timeZone'] = 'Australia/Adelaide';
+          options['NSW']['timeZone'] = 'Australia/Sydney';
+          return (date).toLocaleString('en-GB', options[org]).toUpperCase()
+        }
 
         (function () {
           param = getAllUrlParams();

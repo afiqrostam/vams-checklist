@@ -42,11 +42,7 @@ var form_mod = {
     addItems(input) {
       this.data.push(input);
       if (this.data.filter(function (e) {
-        return (new Date(e.trunc_ock_startdate)).toDateString() === (new Date(new Date().toLocaleDateString('en-GB', {
-          year: "numeric",
-          month: "short",
-          day: "numeric"
-        }).toLocaleUpperCase().replaceAll(' ', '-'))).toDateString()
+        return (new Date(e.trunc_ock_startdate)).toDateString() === (new Date(fix_time(e.obj_org))).toDateString()
       }).length === 0) { this.new_form = true }
       else { this.new_form = false }
     },
@@ -356,6 +352,9 @@ var checklist_mod = {
     },
     submitForm() {
       var input = {}; input.reference = this.data.reference; input.ock_code = this.data.wo; send_form(input)
+    },
+    cancelForm() {
+      var input = {}; input.reference = this.data.reference; input.ock_code = this.data.wo; cancel_form(input)
     },
     loadMeta() { var input = {}; input.reference = this.data.reference; input.ock_code = this.data.wo; loadmetadata(input) },
     getGroupCompleted(group) {
