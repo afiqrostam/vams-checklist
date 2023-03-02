@@ -42,7 +42,7 @@ var form_mod = {
     addItems(input) {
       this.data.push(input);
       if (this.data.filter(function (e) {
-        return (new Date(e.trunc_ock_startdate)).toDateString() === (new Date(fix_time(e.obj_org))).toDateString()
+        return e.ock_status === 'U'
       }).length === 0) { this.new_form = true }
       else { this.new_form = false }
     },
