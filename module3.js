@@ -77,7 +77,7 @@ var open_jobs_mod = {
       var fetch = this.data.filter(function (e) { return e['evt_code'] === item['evt_code'] });
       if (fetch.length === 1) {
         var target_date = new Date(fetch[0].evt_created);
-        return Math.floor((new Date() - target_date) / (1000 * 60 * 60 * 24))
+        return Math.ceil((new Date() - target_date) / (1000 * 60 * 60 * 24))
       }
       else { return 0 }
     },
@@ -106,7 +106,7 @@ var past_dvr_mod = {
       var fetch = this.data.filter(function (e) { return e['dae_document'] === item['dae_document'] });
       if (fetch.length === 1) {
         var target_date = new Date(fetch[0].ock_startdate);
-        return Math.floor((new Date() - target_date) / (1000 * 60 * 60 * 24))
+        return Math.ceil((new Date() - target_date) / (1000 * 60 * 60 * 24))
       }
       else { return 0 }
     },
