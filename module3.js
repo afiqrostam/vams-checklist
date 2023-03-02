@@ -146,13 +146,14 @@ var past_dvr_mod = {
       if (fetch.length === 1) {
         var input = fetch[0];
         if (input.url !== undefined) {
-          var link = document.createElement('a');
-          link.setAttribute('href', input.url);
-          link.setAttribute('download', input.doc_filename);
-          link.style.display = 'none';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
+          var container = document.getElementById('FRAME_' + item['dae_document']);
+          if (container.childElementCount > 0) { container.innerHTML = '' }
+          else {
+            var iframe = document.createElement('iframe');
+            iframe.setAttribute('class', 'w-100 rounded');
+            iframe.height = '75vh';
+            iframe.src = input.url;
+          }
         }
       }
     }
