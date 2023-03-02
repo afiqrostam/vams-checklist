@@ -68,8 +68,13 @@ var open_jobs_mod = {
   },
   methods: {
     addItems(input) { this.data.push(input) },
-    closeModal() { 
-      console.log('open_jobs');this.loaded = false}
+    closeModal() {
+       this.loaded = false
+    },
+    getData() {
+      var data = this.data;
+      return data
+    }
   }
 }
 
@@ -82,7 +87,11 @@ var past_dvr_mod = {
   },
   methods: {
     addItems(input) { this.data.push(input) },
-    closeModal() { console.log('past_dvr');this.loaded = false}
+    closeModal() { this.loaded = false },
+    getData() {
+      var data = this.data;
+      return data
+    }
   }
 }
 
@@ -371,7 +380,7 @@ var checklist_mod = {
           function (e) {
             return e.ack_group_label === 'F-200105'
               && e.ack_notes === '' && e.ack_completed === '+' && e.ack_code !== selected
-          }).forEach(function(e){
+          }).forEach(function (e) {
             document.getElementById('FREE' + e.ack_code).click();
           })
       }
