@@ -56,7 +56,7 @@
               </div>
               <div class="list-group-item list-group-item-action" v-for="dt in data" :key="dt['dae_document']"
                 :id="'FORMS_'+dt['dae_document']">
-                <div class="hstack gap-2">
+                <div class="hstack gap-2 mb-1">
                   <div class="hstack gap-1">
                     <button @click="download(dt)"
                       :class="[ dt['url'] == undefined ? 'btn btn-primary disabled' : 'btn btn-primary']"
