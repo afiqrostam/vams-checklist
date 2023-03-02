@@ -720,6 +720,7 @@
                         }
                         open_jobs = [];
                         var count = jobs_mgmt.getData().length;
+                        document.getElementById('openjobmodalcount').innerHTML = count;
                         if (count > 0) { job_button.classList.remove('disabled') }
                       }
                       else {
@@ -728,6 +729,7 @@
                           jobs_mgmt.addItems(e);
                         });
                         var count = jobs_mgmt.getData().length;
+                        document.getElementById('openjobmodalcount').innerHTML = count;
                         if (count > 0) { job_button.classList.remove('disabled') }
                       }
                     });
@@ -760,6 +762,7 @@
                         }
                         dvr_forms = [];
                         var count = dvr_mgmt.getData().length;
+                        document.getElementById('pastdvrmodalcount').innerHTML = count;
                         if (count > 0) { dvr_button.classList.remove('disabled') }
                       }
                       else {
@@ -768,6 +771,7 @@
                           dvr_mgmt.addItems(e);
                         });
                         var count = dvr_mgmt.getData().length;
+                        document.getElementById('pastdvrmodalcount').innerHTML = count;
                         if (count > 0) { dvr_button.classList.remove('disabled') }
                       }
                     });
