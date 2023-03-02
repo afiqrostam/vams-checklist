@@ -68,7 +68,8 @@ var open_jobs_mod = {
   },
   methods: {
     addItems(input) { this.data.push(input) },
-    closeModal() { this.loaded = false}
+    closeModal() { 
+      console.log('open_jobs');this.loaded = false}
   }
 }
 
@@ -81,7 +82,7 @@ var past_dvr_mod = {
   },
   methods: {
     addItems(input) { this.data.push(input) },
-    closeModal() { this.loaded = false}
+    closeModal() { console.log('past_dvr');this.loaded = false}
   }
 }
 
