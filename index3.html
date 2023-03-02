@@ -56,11 +56,12 @@
                 :id="'FORMS_'+dt['dae_document']">
                 <div class="d-flex w-100 justify-content-between">
                   <p class="mb-1">
-                    <a href="#" target="_blank" @click="download(dt)"
+                    <button target="_blank" @click="download(dt)"
                     :class="[ dt['url'] == undefined ? 'btn btn-primary disabled' : 'btn btn-primary']"
-                    :id="'LINK_'+dt['dae_document']" tabindex="-1" role="button" aria-disabled="true"><i
-                        class="bi bi-file-earmark-pdf-fill"></i>
-                    </a>
+                    :id="'LINK_'+dt['dae_document']" tabindex="-1" role="button" aria-disabled="true">
+                        <span v-if="dt['url'] == undefined " class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                        <i v-else class="bi bi-file-earmark-pdf-fill"></i>
+                  </button>
                     {{ dt['ock_startdate'] }}
                   </p>
                   <small class="text-muted">{{ get_days(dt) }} days ago</small>
