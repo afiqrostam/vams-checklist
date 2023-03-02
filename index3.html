@@ -317,7 +317,7 @@
         var alert = Vue.createApp(alert_mod).mount("#alert");
         var checklist = Vue.createApp(form_mod).mount("#check");
         var form = Vue.createApp(checklist_mod).mount("#form");
-        var jobs_mgmt = Vue.createApp(open_jobs_mod).mount("#openjobsmodal");
+        var jobs_mgmt = Vue.createApp(open_jobs_mod).mount("#openjobmodal");
         var job_button = document.getElementById('openjobmodalbutton');
         job_button.addEventListener("click", function (event) { jobs_mgmt.loaded = true });
 
