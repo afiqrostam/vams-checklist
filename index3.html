@@ -314,12 +314,12 @@
         var checklist = Vue.createApp(form_mod).mount("#check");
         var form = Vue.createApp(checklist_mod).mount("#form");
         var jobs_mgmt = Vue.createApp(open_jobs_mod).mount("#openjobsmodal");
-        var job_button = Document.getElementById('openjobmodalbutton');
+        var job_button = document.getElementById('openjobmodalbutton');
         job_button.addEventListener("click",function(event){jobs_mgmt.loaded = true});
 
 
         var dvr_mgmt = Vue.createApp(past_dvr_mod).mount("#pastdvrmodal");
-        var dvr_button = Document.getElementById('openjobmodalbutton');
+        var dvr_button = document.getElementById('openjobmodalbutton');
         dvr_button.addEventListener("click",function(event){dvr_mgmt.loaded = true});
 
         var param;
