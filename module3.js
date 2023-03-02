@@ -59,6 +59,32 @@ var form_mod = {
   }
 }
 
+var open_jobs_mod = {
+  data() {
+    return {
+      data: [],
+      loaded: false,
+    }
+  },
+  methods: {
+    addItems(input) { this.data.push(input) },
+    closeModal() { this.loaded = false}
+  }
+}
+
+var past_dvr_mod = {
+  data() {
+    return {
+      data: [],
+      loaded: false,
+    }
+  },
+  methods: {
+    addItems(input) { this.data.push(input) },
+    closeModal() { this.loaded = false}
+  }
+}
+
 
 var checklist_mod = {
   data() {
