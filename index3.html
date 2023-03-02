@@ -22,16 +22,6 @@
       <div id="openjobmodal">
         <div v-if="loaded == true" class="modal-content">
           <div class="modal-body">
-            <div class="card">
-              <div class="card-header fs-3">Open Jobs</div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item  d-flex justify-content-between align-items-center" v-for="dt in data"
-                  :key="dt['evt_code']" :id="'JOBS_'+dt['evt_code']">
-                  <span>{{ dt['evt_desc'] + ' on ' + dt['evt_created'] }}</span>
-                  <span class="badge bg-primary rounded-pill">{{ dt['evt_status_desc'] }}</span>
-                </li>
-              </ul>
-            </div>
             <div class="list-group">
               <div class="list-group-item list-group-item-action list-group-item-dark " aria-current="true">
                 <div class="d-flex w-100 justify-content-between">
@@ -45,7 +35,6 @@
                   <small class="text-muted">{{ get_days(dt) }}days ago</small>
                 </div>
                 <small class="text-muted">{{ dt['evt_status_desc'] }}</small>
-                </a>
               </div>
             </div>
             <div class="modal-footer">
