@@ -69,7 +69,15 @@ var open_jobs_mod = {
   methods: {
     addItems(input) { this.data.push(input) },
     closeModal() {
-       this.loaded = false
+      this.loaded = false
+    },
+    get_days(item) {
+      var fetch = this.data.filter(function (e) { return e['evt_code'] === item['evt_code'] });
+      if (fetch.length === 1) {
+        var target_date = new Date(fetch[0].evt_created);
+        return Math.floor((new Date() - target_date) / (1000 * 60 * 60 * 24))
+      }
+      else { return 0 }
     },
     getData() {
       var data = this.data;
