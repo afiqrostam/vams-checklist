@@ -33,9 +33,9 @@
                 <div class="hstack gap-2">
                   <div class="vstack gap-1">
                     <span>{{ dt['evt_desc'] }}</span>
-                    <small class="ms-auto text-muted">{{ dt['evt_status_desc'] }}</small>
+                    <small class="text-muted">{{ dt['evt_status_desc'] }}</small>
                   </div>
-                  <small class="text-muted">{{ get_days(dt) }} days ago</small>
+                  <small class="ms-auto text-muted">{{ get_days(dt) }} day{{[ get_days(dt) > 1 ? 's' : '']}} ago</small>
                 </div>
               </div>
             </div>
