@@ -45,12 +45,21 @@
       </div>
       <div id="pastdvrmodal">
         <div v-if="loaded == true" class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="newPageTitle">Past DVRs</h1>
-
-          </div>
           <div class="modal-body">
-            ...
+            <div class="list-group">
+              <div class="list-group-item list-group-item-action list-group-item-dark " aria-current="true">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mt-3 mb-2">Past DVRs</h5>
+                </div>
+              </div>
+              <div class="list-group-item list-group-item-action" v-for="dt in data" :key="dt['dae_document']"
+                :id="'FORMS_'+dt['dae_document']">
+                <div class="d-flex w-100 justify-content-between">
+                  <p class="mb-1">{{ dt['ock_startdate'] }}</p>
+                  <small class="text-muted">{{ get_days(dt) }} days ago</small>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" @click="closeModal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -65,9 +74,9 @@
         <i class="bi bi-menu-button-wide"></i>
       </button>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#" id="openjobmodalbutton" data-bs-toggle="modal"
+        <li><a class="dropdown-item disabled" href="#" id="openjobmodalbutton" data-bs-toggle="modal"
             data-bs-target="#newPage">Open Faults</a></li>
-        <li><a class="dropdown-item" href="#" id="pastdvrmodalbutton" data-bs-toggle="modal"
+        <li><a class="dropdown-item disabled" href="#" id="pastdvrmodalbutton" data-bs-toggle="modal"
             data-bs-target="#newPage">Past DVR</a></li>
       </ul>
     </div>
@@ -323,6 +332,7 @@
         var user_details;
         var equipment_details;
         var open_jobs;
+        var dvr_forms;
         var alert_id = 0;
         var alert = Vue.createApp(alert_mod).mount("#alert");
         var checklist = Vue.createApp(form_mod).mount("#check");
@@ -700,6 +710,42 @@
                           jobs_mgmt.addItems(e);
                         });
                       }
+                      job_button.classList.remove('disabled');
+                    });
+                  var dvr_forms_url = gas + '?process=get_forms&tenant=' + param.tenant +
+                    '&userid=' + param.userid + '&organization=' + param.organization;
+                  if (equipment_details['obj_position'] === undefined || equipment_details['obj_position'] === '') {
+                    dvr_forms_url = dvr_forms_url + '&parentcode=null' + '&equipmentno=' + param.equipmentno;
+                  }
+                  else {
+                    dvr_forms_url = dvr_forms_url + '&parentcode=' + equipment_details['obj_position'] + '&equipmentno=null';
+                  }
+                  var dvr_forms_req = new Request(dvr_forms_url, {
+                    redirect: "follow",
+                    method: 'POST',
+                    headers: {
+                      "Content-Type": "text/plain;charset=utf-8",
+                    },
+                  });
+                  fetch(dvr_forms_req)
+                    .then(function (response) {
+                      return response.json();
+                    })
+                    .then(function (data) {
+                      if (data.status != undefined && data.status === false) {
+                        alert.add({
+                          text: data.text,
+                          type: 'error'
+                        });
+                        dvr_forms = [];
+                      }
+                      else {
+                        dvr_forms = data.text;
+                        dvr_forms.forEach(function (e) {
+                          dvr_mgmt.addItems(e);
+                        });
+                      }
+                      dvr_button.classList.remove('disabled');
                     });
                 }
               });
