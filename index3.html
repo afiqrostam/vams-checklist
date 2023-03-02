@@ -712,10 +712,12 @@
                     })
                     .then(function (data) {
                       if (data.status != undefined && data.status === false) {
-                        alert.add({
-                          text: data.text,
-                          type: 'error'
-                        });
+                        if (data.text !== 'query returns null') {
+                          alert.add({
+                            text: data.text,
+                            type: 'error'
+                          });
+                        }
                         open_jobs = [];
                         var count = jobs_mgmt.getData().length;
                         if (count > 0) { job_button.classList.remove('disabled') }
@@ -750,10 +752,12 @@
                     })
                     .then(function (data) {
                       if (data.status != undefined && data.status === false) {
-                        alert.add({
-                          text: data.text,
-                          type: 'error'
-                        });
+                        if (data.text !== 'query returns null') {
+                          alert.add({
+                            text: data.text,
+                            type: 'error'
+                          });
+                        }
                         dvr_forms = [];
                         var count = dvr_mgmt.getData().length;
                         if (count > 0) { dvr_button.classList.remove('disabled') }

@@ -70,7 +70,7 @@ var open_jobs_mod = {
     addItems(input) { 
       this.data.push(input);
       var count = this.data.length;
-      document.getElementById('openjobmodalcount').innerHTML(count);
+      document.getElementById('openjobmodalcount').innerHTML = count;
     },
     closeModal() { this.loaded = false },
     get_days(item) {
@@ -99,7 +99,7 @@ var past_dvr_mod = {
     addItems(input) {
       this.data.push(input);
       var count = this.data.length;
-      document.getElementById('pastdvrmodalcount').innerHTML(count);
+      document.getElementById('pastdvrmodalcount').innerHTML = count;
     },
     closeModal() { this.loaded = false },
     get_days(item) {
