@@ -607,7 +607,7 @@
                   })
                 }
                 else {
-                  user_details = data.text;
+                  user_details = data.text.pop();
                 }
               });
             var equipment_details_req = new Request(gas + '?process=get_equipment_details&tenant=' + param.tenant +
@@ -630,7 +630,38 @@
                   })
                 }
                 else {
-                  equipment_details = data.text;
+                  equipment_details = data.text.pop();
+                  var open_jobs_url = gas + '?process=get_open_jobs&tenant=' + param.tenant +
+                    '&userid=' + param.userid + '&organization=' + param.organization;
+                  if(equipment_details['obj_position'] === undefined || equipment_details['obj_position'] === '' ){
+                    open_jobs_url = open_jobs_url + '&parentcode=null' + '&equipmentno=' + param.equipmentno;
+                  }
+                  else {
+                    open_jobs_url = open_jobs_url + '&parentcode=' + equipment_details['obj_position'] + '&equipmentno=null';
+                  }
+                  var open_jobs_req = new Request(open_jobs_url, {
+                    redirect: "follow",
+                    method: 'POST',
+                    headers: {
+                      "Content-Type": "text/plain;charset=utf-8",
+                    },
+                  });
+                  fetch(open_jobs_req)
+                    .then(function (response) {
+                      return response.json();
+                    })
+                    .then(function (data) {
+                      if (data.status != undefined && data.status === false) {
+                        alert.add({
+                          text: data.text,
+                          type: 'error'
+                        });
+                        open_jobs = [];
+                      }
+                      else {
+                        open_jobs = data.text;
+                      }
+                    });
                 }
               });
           }
