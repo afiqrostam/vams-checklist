@@ -324,7 +324,7 @@
               function (e) {
                 if (e['ack_desc'] === 'Registration No' && e['ack_freetext'] !== e['obj_udfchar39']) { return e }
                 if (e['ack_desc'] === 'Unit/Fleet No' && e['ack_freetext'] !== e['obj_udfchar16']) { return e }
-                if (e['ack_desc'] === 'Worker Name' && e['ack_freetext'] !== param.userid) { return e }
+                if (e['ack_desc'] === 'Worker Name' && e['ack_freetext'] !== user_details['usr_desc']) { return e }
               });
           if (def.length != 0) {
             def.map(
