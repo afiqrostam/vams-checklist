@@ -56,9 +56,8 @@
                 :id="'FORMS_'+dt['dae_document']">
                 <div class="d-flex w-100 justify-content-between">
                   <p class="mb-1">
-                    <a :href="[ dt['url'] == undefined ? '#' : dt['url'] ]"
+                    <a href="#" target="_blank" @click="download(dt)"
                     :class="[ dt['url'] == undefined ? 'btn btn-primary disabled' : 'btn btn-primary']"
-                    :download="dt['test.doc_filename']" target="_blank"
                     :id="'LINK_'+dt['dae_document']" tabindex="-1" role="button" aria-disabled="true"><i
                         class="bi bi-file-earmark-pdf-fill"></i>
                     </a>

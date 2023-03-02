@@ -121,9 +121,9 @@ var past_dvr_mod = {
             })
           }
           else {
-            var fetch = dvr_mgmt.getData().filter(function(e){return e.dae_document == data.text.doc_id});
+            var fetch = dvr_mgmt.getData().filter(function (e) { return e.dae_document == data.text.doc_id });
             if (fetch.length === 1) {
-              fetch[0].url = 'data:application/pdf;base64,'+data.text.base;
+              fetch[0].url = 'data:application/pdf;base64,' + data.text.base;
             }
           }
         });
@@ -140,10 +140,24 @@ var past_dvr_mod = {
     getData() {
       var data = this.data;
       return data
+    },
+    download(item) {
+      var fetch = this.data.filter(function (e) { return e['dae_document'] === item['dae_document'] });
+      if (fetch.length === 1) {
+        var input = fetch[0];
+        if (input.url !== undefined) {
+          var link = document.createElement('a');
+          link.setAttribute('href', input.url);
+          link.setAttribute('download', doc_filename);
+          link.style.display = 'none';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+      }
     }
   }
 }
-
 
 var checklist_mod = {
   data() {
