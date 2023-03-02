@@ -19,28 +19,32 @@
   <div class="bg-light modal fade" id="newPage" tabindex="-1" aria-labelledby="newPage" data-bs-keyboard="false"
     data-bs-backdrop="static" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen-lg-down modal-dialog-scrollable modal-xl">
-      <div id="openjobmodal" v-if="loaded == true" class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="newPageTitle">Open Jobs</h1>
+      <div id="openjobmodal">
+        <div v-if="loaded == true" class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="newPageTitle">Open Jobs</h1>
 
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" @click="closeModal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" @click="closeModal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
         </div>
       </div>
-      <div id="pastdvrmodal" v-if="loaded == true" class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="newPageTitle">Past DVRs</h1>
+      <div id="pastdvrmodal">
+        <div v-if="loaded == true" class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="newPageTitle">Past DVRs</h1>
 
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" @click="closeModal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" @click="closeModal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
         </div>
       </div>
     </div>
@@ -315,12 +319,12 @@
         var form = Vue.createApp(checklist_mod).mount("#form");
         var jobs_mgmt = Vue.createApp(open_jobs_mod).mount("#openjobsmodal");
         var job_button = document.getElementById('openjobmodalbutton');
-        job_button.addEventListener("click",function(event){jobs_mgmt.loaded = true});
+        job_button.addEventListener("click", function (event) { jobs_mgmt.loaded = true });
 
 
         var dvr_mgmt = Vue.createApp(past_dvr_mod).mount("#pastdvrmodal");
         var dvr_button = document.getElementById('pastdvrmodalbutton');
-        dvr_button.addEventListener("click",function(event){dvr_mgmt.loaded = true});
+        dvr_button.addEventListener("click", function (event) { dvr_mgmt.loaded = true });
 
         var param;
         var gas = "https://script.google.com/macros/s/AKfycbxgyf6QTyfjMV46G2tvIOVEfB4vF9JbfP8dF18i-ZTLuUqm64ng5GCqRLYVcUKxYo1P/exec";
