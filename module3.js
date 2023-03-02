@@ -153,6 +153,7 @@ var past_dvr_mod = {
             iframe.setAttribute('class', 'w-100 rounded');
             iframe.height = '75vh';
             iframe.src = input.url;
+            container.appendChild(iframe);
           }
         }
       }
