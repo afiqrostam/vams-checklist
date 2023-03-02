@@ -151,7 +151,7 @@ var past_dvr_mod = {
           else {
             var iframe = document.createElement('iframe');
             iframe.setAttribute('class', 'w-100 rounded');
-            iframe.height = '75vh';
+            iframe.style.height = 75vh;
             iframe.src = input.url;
             container.appendChild(iframe);
           }
