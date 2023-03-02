@@ -67,7 +67,11 @@ var open_jobs_mod = {
     }
   },
   methods: {
-    addItems(input) { this.data.push(input) },
+    addItems(input) { 
+      this.data.push(input);
+      var count = this.data.length;
+      document.getElementById('openjobmodalcount').innerHTML(count);
+    },
     closeModal() { this.loaded = false },
     get_days(item) {
       var fetch = this.data.filter(function (e) { return e['evt_code'] === item['evt_code'] });
@@ -92,7 +96,11 @@ var past_dvr_mod = {
     }
   },
   methods: {
-    addItems(input) { this.data.push(input) },
+    addItems(input) {
+      this.data.push(input);
+      var count = this.data.length;
+      document.getElementById('pastdvrmodalcount').innerHTML(count);
+    },
     closeModal() { this.loaded = false },
     get_days(item) {
       var fetch = this.data.filter(function (e) { return e['dae_document'] === item['dae_document'] });

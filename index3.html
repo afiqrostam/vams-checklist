@@ -717,16 +717,17 @@
                           type: 'error'
                         });
                         open_jobs = [];
+                        var count = jobs_mgmt.getData().length;
+                        if (count > 0) { job_button.classList.remove('disabled') }
                       }
                       else {
                         open_jobs = data.text;
                         open_jobs.forEach(function (e) {
                           jobs_mgmt.addItems(e);
                         });
+                        var count = jobs_mgmt.getData().length;
+                        if (count > 0) { job_button.classList.remove('disabled') }
                       }
-                      var count = jobs_mgmt.getData().length;
-                      document.getElementById('openjobmodalcount').innerHTML(count);
-                      if (count > 0) { job_button.classList.remove('disabled') }
                     });
                   var dvr_forms_url = gas + '?process=get_forms&tenant=' + param.tenant +
                     '&userid=' + param.userid + '&organization=' + param.organization;
@@ -754,16 +755,17 @@
                           type: 'error'
                         });
                         dvr_forms = [];
+                        var count = dvr_mgmt.getData().length;
+                        if (count > 0) { dvr_button.classList.remove('disabled') }
                       }
                       else {
                         dvr_forms = data.text;
                         dvr_forms.forEach(function (e) {
                           dvr_mgmt.addItems(e);
                         });
+                        var count = dvr_mgmt.getData().length;
+                        if (count > 0) { dvr_button.classList.remove('disabled') }
                       }
-                      var count = dvr_mgmt.getData().length;
-                      document.getElementById('pastdvrmodalcount').innerHTML(count);
-                      if (count > 0) { dvr_button.classList.remove('disabled') }
                     });
                 }
               });
