@@ -121,6 +121,7 @@ var past_dvr_mod = {
             })
           }
           else {
+            console.log(this.data)
             var fetch = this.data.filter(function(e){return e.dae_document == data.text.doc_id});
             if (fetch.length === 1) {
               fetch[0].url = 'data:application/pdf;base64,'+data.text.base;
