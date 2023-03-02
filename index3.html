@@ -56,13 +56,27 @@
                 :id="'FORMS_'+dt['dae_document']">
                 <div class="d-flex w-100 justify-content-between">
                   <p class="mb-1">
-                    <button target="_blank" @click="download(dt)"
+                    <button @click="download(dt)"
                       :class="[ dt['url'] == undefined ? 'btn btn-primary disabled' : 'btn btn-primary']"
-                      :id="'LINK_'+dt['dae_document']" tabindex="-1" role="button" aria-disabled="true">
+                      :id="'PREV_'+dt['dae_document']">
                       <span v-if="dt['url'] == undefined " class="spinner-grow spinner-grow-sm" role="status"
                         aria-hidden="true"></span>
                       <i v-else class="bi bi-file-earmark-pdf-fill"></i>
                     </button>
+                    <button @click="downloadfile(dt)" v-if="isMob()"
+                      :class="[ dt['url'] == undefined ? 'btn btn-primary disabled' : 'btn btn-primary']"
+                      :id="'LINK_'+dt['dae_document']">
+                      <span v-if="dt['url'] == undefined " class="spinner-grow spinner-grow-sm" role="status"
+                        aria-hidden="true"></span>
+                      <i v-else class="bi bi-archive-fill"></i>
+                    </button>
+                    <a target="_blank" :href="[ dt['url'] == undefined ? '#' : dt['url']]" v-else
+                      :class="[ dt['url'] == undefined ? 'btn btn-primary disabled' : 'btn btn-primary']"
+                      :id="'LINKMOB_'+dt['dae_document']">
+                      <span v-if="dt['url'] == undefined " class="spinner-grow spinner-grow-sm" role="status"
+                        aria-hidden="true"></span>
+                      <i v-else class="bi bi-archive-fill"></i>
+                    </a>
                     {{ dt['ock_startdate'] }}
                   </p>
                   <small class="text-muted">{{ get_days(dt) }} days ago</small>

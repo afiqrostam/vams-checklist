@@ -156,7 +156,23 @@ var past_dvr_mod = {
           }
         }
       }
-    }
+    },
+    downloadfile(item) {
+      var fetch = this.data.filter(function (e) { return e['dae_document'] === item['dae_document'] });
+      if (fetch.length === 1) {
+        var input = fetch[0];
+        if (input.url !== undefined) {
+          var link = document.createElement('a');
+          link.setAttribute('href', input.url);
+          link.setAttribute('download', doc_filename);
+          link.setAttribute('download', input.doc_filename);
+          link.style.display = 'none';
+          document.body.appendChild(link);
+          link.click();
+        }
+      }
+    },
+    isMob() { return isMobile() }
   }
 }
 
