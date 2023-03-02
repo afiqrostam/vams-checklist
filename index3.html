@@ -21,12 +21,15 @@
     <div class="modal-dialog modal-fullscreen-lg-down modal-dialog-scrollable modal-xl">
       <div id="openjobmodal">
         <div v-if="loaded == true" class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="newPageTitle">Open Jobs</h1>
-
-          </div>
-          <div class="modal-body">
-            ...
+          <div class="card">
+            <div class="card-header fs-3">Open Jobs</div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item  d-flex justify-content-between align-items-center v-for=" dt in data"
+                :key="dt['evt_code']" :id="'JOBS_'+dt['evt_code']">
+                <span>{{ dt['evt_desc'] + ' on ' + dt['evt_created'] }}</span>
+                <span class="badge bg-primary rounded-pill">{{ dt['evt_status_desc'] }}</span>
+              </li>
+            </ul>
           </div>
           <div class="modal-footer">
             <button type="button" @click="closeModal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -686,6 +689,9 @@
                       }
                       else {
                         open_jobs = data.text;
+                        open_jobs.forEach(function (e) {
+                          jobs_mgmt.addItems(e);
+                        });
                       }
                     });
                 }
