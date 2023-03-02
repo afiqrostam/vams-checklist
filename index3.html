@@ -55,7 +55,15 @@
               <div class="list-group-item list-group-item-action" v-for="dt in data" :key="dt['dae_document']"
                 :id="'FORMS_'+dt['dae_document']">
                 <div class="d-flex w-100 justify-content-between">
-                  <p class="mb-1">{{ dt['ock_startdate'] }}</p>
+                  <p class="mb-1">
+                    <a :href="[ dt['url'] == undefined ? '#' : dt['url'] ]"
+                    :class="[ dt['url'] == undefined ? 'btn btn-primary disabled' : 'btn btn-primary']"
+                    :download="dt['test.doc_filename']"
+                    :id="'LINK_'+dt['dae_document']" tabindex="-1" role="button" aria-disabled="true"><i
+                        class="bi bi-file-earmark-pdf-fill"></i>
+                    </a>
+                    {{ dt['ock_startdate'] }}
+                  </p>
                   <small class="text-muted">{{ get_days(dt) }} days ago</small>
                 </div>
               </div>

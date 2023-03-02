@@ -67,7 +67,7 @@ var open_jobs_mod = {
     }
   },
   methods: {
-    addItems(input) { 
+    addItems(input) {
       this.data.push(input);
       var count = this.data.length;
       document.getElementById('openjobmodalcount').innerHTML = count;
@@ -100,6 +100,33 @@ var past_dvr_mod = {
       this.data.push(input);
       var count = this.data.length;
       document.getElementById('pastdvrmodalcount').innerHTML = count;
+      var doc_id = input.dae_document;
+      var doc_req = new Request(gas + '?process=download_doc_attachment&tenant=' + param.tenant +
+        '&doc_id=' + input.dae_document, {
+        redirect: "follow",
+        method: 'POST',
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        },
+      });
+      fetch(doc_req)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          if (data.status != undefined && data.status === false) {
+            alert.add({
+              text: data.text,
+              type: 'error'
+            })
+          }
+          else {
+            var fetch = this.data.filter(function(e){return e.dae_document == data.text.doc_id});
+            if (fetch.length === 1) {
+              fetch[0].url = 'data:application/pdf;base64,'+data.text.base;
+            }
+          }
+        });
     },
     closeModal() { this.loaded = false },
     get_days(item) {
