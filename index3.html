@@ -82,7 +82,8 @@
                     </a>
                     {{ dt['ock_startdate'] }}
                   </div>
-                  <small class="ms-auto text-muted">{{ get_days(dt) }} days ago</small>
+                  <small v-if="get_days(dt) > 1" class="ms-auto text-muted">{{ get_days(dt) }} days ago</small>
+                  <small v-else class="ms-auto text-muted">{{ get_days(dt) }} day ago</small>
                 </div>
                 <div :id="'FRAME_'+dt['dae_document']"></div>
               </div>
