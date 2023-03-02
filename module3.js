@@ -150,8 +150,7 @@ var past_dvr_mod = {
           if (container.childElementCount > 0) { container.innerHTML = '' }
           else {
             var iframe = document.createElement('iframe');
-            iframe.setAttribute('class', 'w-100 rounded');
-            iframe.style.height = 75vh;
+            iframe.setAttribute('class', 'w-100 rounded min-vh-75');
             iframe.src = input.url;
             container.appendChild(iframe);
           }
