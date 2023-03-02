@@ -241,8 +241,8 @@ var checklist_mod = {
       if (item['ack_desc'] === 'Unit/Fleet No' && item['ack_freetext'] !== raw['obj_udfchar16']) {
         item['ack_freetext'] = raw['obj_udfchar16'];
       }
-      if (item['ack_desc'] === 'Worker Name' && item['ack_freetext'] !== param.userid) {
-        item['ack_freetext'] = param.userid;
+      if (item['ack_desc'] === 'Worker Name' && item['ack_freetext'] !== user_details['usr_desc']) {
+        item['ack_freetext'] = user_details['usr_desc'];
       }
       raw['ack_notes'] = item['ack_notes'];
       raw['ack_not_applicable'] = item['ack_not_applicable'];
