@@ -73,7 +73,8 @@
                       <i v-else class="bi bi-archive-fill"></i>
                     </button>
                     {{ dt['ock_startdate'] }}
-                    <a target="_blank" :href="[ dt['url'] == undefined ? '#' : dt['url']]" v-if="!isMob()"
+                    <a :href="[ dt['url'] == undefined ? '#' : dt['url']]" v-if="!isMob()"
+                      :download="[ dt['url'] == undefined ? '' : dt['doc_filename']]"
                       :class="[ dt['url'] == undefined ? 'btn btn-primary disabled' : 'btn btn-primary']"
                       :id="'LINKMOB_'+dt['dae_document']">
                       <span v-if="dt['url'] == undefined " class="spinner-grow spinner-grow-sm" role="status"
