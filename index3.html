@@ -16,8 +16,8 @@
 </head>
 
 <body class="bg-light">
-  <div class="bg-light modal fade" id="newPage" tabindex="-1" aria-labelledby="newPage"
-    data-bs-keyboard="false" data-bs-backdrop="static" aria-hidden="true">
+  <div class="bg-light modal fade" id="newPage" tabindex="-1" aria-labelledby="newPage" data-bs-keyboard="false"
+    data-bs-backdrop="static" aria-hidden="true">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
@@ -293,6 +293,9 @@
         var list = [];
         var metadata = [];
         var findings;
+        var user_details;
+        var equipment_details;
+        var open_jobs;
         var alert_id = 0;
         var alert = Vue.createApp(alert_mod).mount("#alert");
         var checklist = Vue.createApp(form_mod).mount("#check");
@@ -584,7 +587,52 @@
                 else {
                   findings = data.text;
                 }
+              });
+            var user_details_req = new Request(gas + '?process=get_user_details&tenant=' + param.tenant + '&userid=' + param.userid, {
+              redirect: "follow",
+              method: 'POST',
+              headers: {
+                "Content-Type": "text/plain;charset=utf-8",
+              },
+            });
+            fetch(user_details_req)
+              .then(function (response) {
+                return response.json();
               })
+              .then(function (data) {
+                if (data.status != undefined && data.status === false) {
+                  alert.add({
+                    text: data.text,
+                    type: 'error'
+                  })
+                }
+                else {
+                  user_details = data.text;
+                }
+              });
+            var equipment_details_req = new Request(gas + '?process=get_equipment_details&tenant=' + param.tenant +
+              '&userid=' + param.userid + '&organization=' + param.organization + '&equipmentno=' + param.equipmentno, {
+              redirect: "follow",
+              method: 'POST',
+              headers: {
+                "Content-Type": "text/plain;charset=utf-8",
+              },
+            });
+            fetch(equipment_details_req)
+              .then(function (response) {
+                return response.json();
+              })
+              .then(function (data) {
+                if (data.status != undefined && data.status === false) {
+                  alert.add({
+                    text: data.text,
+                    type: 'error'
+                  })
+                }
+                else {
+                  equipment_details = data.text;
+                }
+              });
           }
         })();
       </script>
