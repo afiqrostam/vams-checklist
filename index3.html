@@ -30,11 +30,13 @@
               </div>
               <div class="list-group-item list-group-item-action" v-for="dt in data" :key="dt['evt_code']"
                 :id="'JOBS_'+dt['evt_code']">
-                <div class="d-flex w-100 justify-content-between">
-                  <p class="mb-1">{{ dt['evt_desc'] }}</p>
+                <div class="hstack gap-2">
+                  <div class="vstack gap-1">
+                    <span>{{ dt['evt_desc'] }}</span>
+                    <small class="ms-auto text-muted">{{ dt['evt_status_desc'] }}</small>
+                  </div>
                   <small class="text-muted">{{ get_days(dt) }} days ago</small>
                 </div>
-                <small class="text-muted">{{ dt['evt_status_desc'] }}</small>
               </div>
             </div>
           </div>
@@ -54,8 +56,8 @@
               </div>
               <div class="list-group-item list-group-item-action" v-for="dt in data" :key="dt['dae_document']"
                 :id="'FORMS_'+dt['dae_document']">
-                <div class="d-flex w-100 justify-content-between">
-                  <p class="mb-1">
+                <div class="hstack gap-2">
+                  <div class="hstack gap-1">
                     <button @click="download(dt)"
                       :class="[ dt['url'] == undefined ? 'btn btn-primary disabled' : 'btn btn-primary']"
                       :id="'PREV_'+dt['dae_document']">
@@ -70,16 +72,16 @@
                         aria-hidden="true"></span>
                       <i v-else class="bi bi-archive-fill"></i>
                     </button>
-                    <a target="_blank" :href="[ dt['url'] == undefined ? '#' : dt['url']]" v-else
+                    {{ dt['ock_startdate'] }}
+                    <a target="_blank" :href="[ dt['url'] == undefined ? '#' : dt['url']]" v-if="!isMob()"
                       :class="[ dt['url'] == undefined ? 'btn btn-primary disabled' : 'btn btn-primary']"
                       :id="'LINKMOB_'+dt['dae_document']">
                       <span v-if="dt['url'] == undefined " class="spinner-grow spinner-grow-sm" role="status"
                         aria-hidden="true"></span>
                       <i v-else class="bi bi-archive-fill"></i>
                     </a>
-                    {{ dt['ock_startdate'] }}
-                  </p>
-                  <small class="text-muted">{{ get_days(dt) }} days ago</small>
+                  </div>
+                  <small class="ms-auto text-muted">{{ get_days(dt) }} days ago</small>
                 </div>
                 <div :id="'FRAME_'+dt['dae_document']"></div>
               </div>
