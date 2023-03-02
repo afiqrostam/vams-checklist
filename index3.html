@@ -73,7 +73,6 @@
                       <i v-else class="bi bi-archive-fill"></i>
                     </button>
                     <a target="_self" :href="[ dt['url'] == undefined ? '#' : dt['url']]" v-if="isMob()"
-                      :download="[ dt['url'] == undefined ? '' : dt['doc_filename']]"
                       :class="[ dt['url'] == undefined ? 'btn btn-primary disabled' : 'btn btn-primary']"
                       :id="'LINKMOB_'+dt['dae_document']">
                       <span v-if="dt['url'] == undefined " class="spinner-grow spinner-grow-sm" role="status"
@@ -81,7 +80,6 @@
                       <span v-else >self</span>
                     </a>
                     <a target="_blank" :href="[ dt['url'] == undefined ? '#' : dt['url']]" v-if="isMob()"
-                      :download="[ dt['url'] == undefined ? '' : dt['doc_filename']]"
                       :class="[ dt['url'] == undefined ? 'btn btn-primary disabled' : 'btn btn-primary']"
                       :id="'LINKMOB_'+dt['dae_document']">
                       <span v-if="dt['url'] == undefined " class="spinner-grow spinner-grow-sm" role="status"
@@ -89,7 +87,6 @@
                       <span v-else >blank</span>
                     </a>
                     <a target="_parent" :href="[ dt['url'] == undefined ? '#' : dt['url']]" v-if="isMob()"
-                      :download="[ dt['url'] == undefined ? '' : dt['doc_filename']]"
                       :class="[ dt['url'] == undefined ? 'btn btn-primary disabled' : 'btn btn-primary']"
                       :id="'LINKMOB_'+dt['dae_document']">
                       <span v-if="dt['url'] == undefined " class="spinner-grow spinner-grow-sm" role="status"
@@ -97,7 +94,6 @@
                       <span v-else >parent</span>
                     </a>
                     <a target="_top" :href="[ dt['url'] == undefined ? '#' : dt['url']]" v-if="isMob()"
-                      :download="[ dt['url'] == undefined ? '' : dt['doc_filename']]"
                       :class="[ dt['url'] == undefined ? 'btn btn-primary disabled' : 'btn btn-primary']"
                       :id="'LINKMOB_'+dt['dae_document']">
                       <span v-if="dt['url'] == undefined " class="spinner-grow spinner-grow-sm" role="status"
