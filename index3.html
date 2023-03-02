@@ -111,7 +111,12 @@
         @click="remove(data)"></button>
     </div>
   </div>
-  <div class="container my-5">&nbsp;</div>
+  <div class="container my-5">
+    <p><a href="https://google.com" target="_blank">_blank</a></p>
+    <p><a href="https://google.com" target="_parent">_parent</a></p>
+    <p><a href="https://google.com" target="_self">_self</a></p>
+    <p><a href="https://google.com" target="_top">_top</a></p>
+  </div>
   <div id="check" class="container p-1">
     <div class="min-vh-95 d-flex align-items-center justify-content-center" v-if="loaded == false">
       <div class="spinner-grow text-dark" role="status" v-show="broken == false">
