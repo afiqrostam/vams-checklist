@@ -72,7 +72,6 @@
                         aria-hidden="true"></span>
                       <i v-else class="bi bi-archive-fill"></i>
                     </button>
-                    {{ dt['ock_startdate'] }}
                     <a :href="[ dt['url'] == undefined ? '#' : dt['url']]" v-if="isMob()"
                       :download="[ dt['url'] == undefined ? '' : dt['doc_filename']]"
                       :class="[ dt['url'] == undefined ? 'btn btn-primary disabled' : 'btn btn-primary']"
@@ -81,6 +80,7 @@
                         aria-hidden="true"></span>
                       <i v-else class="bi bi-archive-fill"></i>
                     </a>
+                    {{ dt['ock_startdate'] }}
                   </div>
                   <small class="ms-auto text-muted">{{ get_days(dt) }} days ago</small>
                 </div>
