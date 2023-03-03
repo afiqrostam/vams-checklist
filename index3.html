@@ -418,7 +418,7 @@
                 if (e['ack_desc'] === 'Worker Name' &&
                   (e['ack_freetext'] === '' || e['ack_freetext'] === undefined)) { return e }
               });
-          console.log(def)
+          console.log(def);
           if (def.length != 0) {
             def.map(
               function (e) { return e.ack_code }).forEach(
