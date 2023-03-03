@@ -88,6 +88,25 @@ var open_jobs_mod = {
   }
 }
 
+var photo_mod = {
+  data() {
+    return {
+      data: [],
+      loaded: false,
+    }
+  },
+  methods: {
+    addItems(input) {
+      this.data.push(input);
+    },
+    closeModal() { this.loaded = false },
+    getData() {
+      var data = this.data;
+      return data
+    }
+  }
+}
+
 var past_dvr_mod = {
   data() {
     return {
@@ -341,6 +360,7 @@ var checklist_mod = {
       text_area.style.height = 'auto';
       text_area.style.height = (text_area.scrollHeight) + 'px'
     },
+    openPhoto(item) { console.log(item);photo_mgmt.loaded = true },
     snycItems(item, event) {
       if (event != undefined) {
         if (event.target.nodeName == 'TEXTAREA') {
