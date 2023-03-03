@@ -408,6 +408,7 @@
         }
 
         function loadmetadata(input) {
+          console.log(input);
           var def = payload.filter(
             function (e) { return ['Unit/Fleet No', 'Registration No', 'Worker Name'].indexOf(e.ack_desc) != -1 && e.ock_status == 'U' }).filter(
               function (e) {
