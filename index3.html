@@ -635,6 +635,7 @@
             else {
               if (data.text === 'query returns null') { data = [] }
               else { data = data.text }
+              console.log(data)
               data = data.filter(function (e) { return e['ock_code'] != undefined });
               data.forEach(function (e) {
                 if (e['ack_value'] != undefined) { e['ack_value'] = e['ack_value'].replaceAll(',', '') }
