@@ -334,7 +334,7 @@
                                   <label class="ps-4" :for="'NOTES'+item.ack_code">Notes</label>
                                 </div>
                                 <button :id="'PHOTO'+item.ack_code" type="button" class="btn btn-sm btn-outline-primary"
-                                  data-bs-toggle="modal" data-bs-target="#newPage">
+                                  data-bs-toggle="modal" data-bs-target="#newPage" @click="openPhoto(item)">
                                   <i class="bi bi-camera fs-4"></i>
                                 </button>
                               </div>
