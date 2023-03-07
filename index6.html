@@ -47,7 +47,7 @@
                 class="m-auto btn btn-primary">Authorize</button>
             </div>
           </template>
-          <template v-else>
+          <template v-if="logout">
             <div class="my-3">
               <p type="email" class="text-center">{{email}}</p>
             </div>
