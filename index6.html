@@ -150,7 +150,7 @@
         }
       }
       Object.keys(obj).forEach(function(e){
-        obj['e'] = decodeURI(obj['e'])
+        obj['e'] = decodeURIComponent(obj['e'])
       });
       return obj;
     }
