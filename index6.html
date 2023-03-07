@@ -177,6 +177,9 @@
           if(!data.status && data.text.tokenUrl !== undefined){
             login.updateLoading(false).updateTokenUrl(data.text.tokenUrl)
           }
+          else{
+            console.log(data.text)
+          }
         });
     })();
   </script>
