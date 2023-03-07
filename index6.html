@@ -114,7 +114,7 @@
         },
         logout() {
           this.loading = true;
-          param['logout'] = true;
+          param['logout'] = 'true';
           var log_out = new Request(updateUrl(gas, param), {
             redirect: "follow",
             method: 'POST',
@@ -211,7 +211,7 @@
         param['tenant'] = 'VEOLIA1_TST'
       }
       if (param['logout'] === undefined || param['logout'] === null) {
-        param['logout'] = false
+        param['logout'] = 'false'
       }
       if (store !== null) {
         store = JSON.parse(store);
