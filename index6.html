@@ -28,8 +28,8 @@
           <img src="https://afiqrostam.github.io/vams-checklist/icon.png" class="m-auto mb-5 veolia-logo">
         </div>
         <div class="my-3">
-          <input type="email" class="form-control text-center mw-300px" v-model="email" name="email" id="email">
-          <div id="emailHelp" class="text-center form-text">Enter your VAMS login to begin</div>
+          <input type="email" class="form-control text-center mw-300px" v-model="email" name="email" id="email"
+            placeholder="Enter your VAMS login to begin">
         </div>
         <div class="hstack mt-2"><button type="button" @click="update" class="m-auto btn btn-primary">login</button>
         </div>
@@ -43,10 +43,8 @@
             <p type="email" class="text-center">{{email}}</p>
           </div>
           <div class="hstack mt-2">
-            <button v-if="logout" type="button" @click="log_out"
-              class="m-auto btn btn-primary">Logout</button>
-              <button v-else type="button" @click="auth"
-                class="m-auto btn btn-primary">Authorize</button>
+            <button v-if="logout" type="button" @click="log_out" class="m-auto btn btn-primary">Logout</button>
+            <button v-else type="button" @click="auth" class="m-auto btn btn-primary">Authorize</button>
           </div>
         </div>
       </div>
