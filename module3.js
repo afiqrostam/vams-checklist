@@ -20,10 +20,7 @@ var alert_mod = {
       });
     },
     remove(info) {
-      var data = this.datas;
-      setTimeout(function (data, info) {
-        data = data.filter((t) => t !== info);
-      }, 200, data, info);
+      this.datas = this.datas.filter(function(e){return e.id !== info.id})
     }
   },
 };
