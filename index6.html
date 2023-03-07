@@ -69,6 +69,7 @@
         email: {
           handler(newValue, oldValue) {
             this.email = newValue.toUpperCase();
+            param['email'] = this.email;
           },
           deep: true
         }
@@ -80,9 +81,7 @@
         updateLogout(input) { this.logout = input; return this },
         updateTokenUrl(input) { this.tokenUrl = input; return this },
         update() {
-          var url = window.location.href
-          var queryParam = this.email;
-          window.location.replace(url + '?email=' + queryParam)
+          window.location.replace(updateUrl(headUrl, param))
         },
         auth() {
           var url = this.tokenUrl;
