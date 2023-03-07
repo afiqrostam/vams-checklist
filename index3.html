@@ -601,12 +601,6 @@
 
     (function () {
       param = getAllUrlParams();
-      Object.entries(param).forEach(function(e){
-        alert.add({
-          text: e[0]+' '+e[1],
-          type: 'success'
-        });
-      })
       if (param.equipmentno == undefined || param.equipmentno == '' || param.organization == undefined || param.organization == '' ||
         param.tenant == undefined || param.tenant == '' || param.userid == undefined || param.userid == '') {
         alert.add({
