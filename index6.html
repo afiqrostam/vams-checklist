@@ -135,23 +135,20 @@
             if (!obj[key]) obj[key] = [];
             if (paramName.match(/\[\d+\]$/)) {
               var index = /\[(\d+)\]/.exec(paramName)[1];
-              obj[key][index] = paramValue;
+              obj[key][index] = decodeURIComponent(paramValue);
             }
-            else { obj[key].push(paramValue) }
+            else { obj[key].push(decodeURIComponent(paramValue)) }
           }
           else {
-            if (!obj[paramName]) { obj[paramName] = paramValue}
+            if (!obj[paramName]) { obj[paramName] = decodeURIComponent(paramValue)}
             else if (obj[paramName] && typeof obj[paramName] === "string") {
               obj[paramName] = [obj[paramName]];
-              obj[paramName].push(paramValue);
+              obj[paramName].push(decodeURIComponent(paramValue));
             }
-            else { obj[paramName].push(paramValue) }
+            else { obj[paramName].push(decodeURIComponent(paramValue)) }
           }
         }
       }
-      Object.keys(obj).forEach(function(e){
-        obj['e'] = decodeURIComponent(obj['e'])
-      });
       return obj;
     }
 
