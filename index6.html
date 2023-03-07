@@ -20,7 +20,7 @@
   </style>
 </head>
 
-<body class="bg-light">
+<body id="main_body" class="bg-light" style="display:none!important">
   <div class="hstack gap-2 vh-100 vw-100">
     <div id="login" class="m-auto">
       <form v-if="new_login" class="card-body p-2">
@@ -161,6 +161,9 @@
     var headUrl = origin + window.location.pathname;
 
     (function () {
+      var body = document.getElementById('main_body');
+      body.style.display = null;
+
       var store = window.localStorage.getItem('access');
       param = getAllUrlParams();
       if (param['tenant'] === undefined || param['tenant'] === null) {
