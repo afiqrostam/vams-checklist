@@ -44,7 +44,7 @@
           </div>
           <div class="hstack mt-2">
             <button v-if="!logout" type="button" @click="[logout ? logout($event) : auth($event)]"
-              class="m-auto btn btn-primary">{{[logout ? 'Logout' : 'Authorize']}}</button>
+              class="m-auto btn btn-primary" v-html="[logout ? 'Logout' : 'Authorize']"></button>
           </div>
         </div>
       </div>
