@@ -50,7 +50,7 @@
           email: '',
           new_login: true,
           loading: true,
-          tokenUrl:''
+          tokenUrl: ''
         }
       },
       watch: {
@@ -155,8 +155,19 @@
     var param;
     var gas = 'https://script.google.com/macros/s/AKfycbyxS-QxsOYTVyJXUh1R7i38sjxk1R4L8uMqfU5S2Yfc-u6HkTV_u1R7ZuWeIPcR7DvvgQ/exec';
     var login = Vue.createApp(login_).mount('#login');
+    var store;
+    var headUrl = origin + document.location.pathname;
 
     (function () {
+      var store = localStorage.getItem('access');
+      if (store !== null) {
+        store = JSON.parse(store);
+        if (new Date(store['expiration'] * 1000) > new Date()) {
+          delete store['expiration'];
+          document.location.replace(updateUrl(headUrl, store))
+        }
+        else { localStorage.clear() }
+      }
       param = getAllUrlParams();
       if (param.email !== null) {
         login.addNewLogin(false).addUserId(param.email)
@@ -174,11 +185,15 @@
           return response.json();
         })
         .then(function (data) {
-          if(!data.status && data.text.tokenUrl !== undefined){
+          if (!data.status && data.text.tokenUrl !== undefined) {
             login.updateLoading(false).updateTokenUrl(data.text.tokenUrl)
           }
-          else{
-            console.log(data.text)
+          else {
+            if (data.status) {
+              var access = JSON.parse(JSON.stringify(param));
+              access['expiration'] = data.text.expiresAt;
+              localStorage.setItem('access', JSON.stringify(access));
+            }
           }
         });
     })();
