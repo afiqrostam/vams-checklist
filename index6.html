@@ -236,12 +236,12 @@
                 var access = JSON.parse(JSON.stringify(param));
                 access['expiration'] = data.text.expiresAt;
                 localStorage.setItem('access', JSON.stringify(access));
-                login.updateLogout(true)
+                login.updateLoading(false).updateLogout(true)
               }
             }
           })
       }
-      else { login.updateLogout(true) }
+      else { login.updateLoading(false).updateLogout(true) }
     })();
   </script>
 </body>
