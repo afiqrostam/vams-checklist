@@ -95,13 +95,13 @@
           return this
         },
         update() {
-          var url = document.location.href
+          var url = window.location.href
           var queryParam = this.email;
-          document.location.replace(url + '?email=' + queryParam)
+          window.location.replace(url + '?email=' + queryParam)
         },
         auth() {
           var url = this.tokenUrl;
-          document.location.replace(url)
+          window.location.replace(url)
         },
         logout() {
           this.loading = true;
@@ -119,8 +119,8 @@
             })
             .then(function (data) {
               if (data.status) {
-                localStorage.clear();
-                document.location.replace(headUrl);
+                window.localStorage.clear();
+                window.location.replace(headUrl);
               }
             });
         },
@@ -170,19 +170,15 @@
               // otherwise add the value to the end of the array
               obj[key].push(paramValue);
             }
-          } else {
+          } 
+          else {
             // we're dealing with a string
-            if (!obj[paramName]) {
-              // if it doesn't exist, create property
-              obj[paramName] = paramValue;
-            } else if (obj[paramName] && typeof obj[paramName] === "string") {
-              // if property does exist and it's a string, convert it to an array
+            if (!obj[paramName]) { obj[paramName] = paramValue } 
+            else if (obj[paramName] && typeof obj[paramName] === "string") {
               obj[paramName] = [obj[paramName]];
               obj[paramName].push(paramValue);
-            } else {
-              // otherwise add the property
-              obj[paramName].push(paramValue);
-            }
+            } 
+            else { obj[paramName].push(paramValue) }
           }
         }
       }
@@ -193,10 +189,11 @@
     var gas = 'https://script.google.com/macros/s/AKfycbyxS-QxsOYTVyJXUh1R7i38sjxk1R4L8uMqfU5S2Yfc-u6HkTV_u1R7ZuWeIPcR7DvvgQ/exec';
     var login = Vue.createApp(login_).mount('#login');
     var store;
-    var headUrl = origin + document.location.pathname;
+    var headUrl = origin + window.location.pathname;
 
     (function () {
-      var store = localStorage.getItem('access');
+      var store = window.localStorage
+        .getItem('access');
       param = getAllUrlParams();
       if (param['tenant'] === undefined || param['tenant'] === null) {
         param['tenant'] = 'VEOLIA1_TST'
@@ -209,10 +206,10 @@
         if (new Date(store['expiration'] * 1000) > new Date()) {
           delete store['expiration'];
           if (store.email !== param.email && store.tenant !== param.tenant) {
-            document.location.replace(updateUrl(headUrl, store))
+            window.location.replace(updateUrl(headUrl, store))
           }
         }
-        else { localStorage.clear() }
+        else { window.localStorage.clear() }
       }
       if (param.email !== undefined && param.email !== null) {
         login.addNewLogin(false).addUserId(param.email)
@@ -235,7 +232,8 @@
               if (data.status) {
                 var access = JSON.parse(JSON.stringify(param));
                 access['expiration'] = data.text.expiresAt;
-                localStorage.setItem('access', JSON.stringify(access));
+                window.localStorage
+                  .setItem('access', JSON.stringify(access));
                 login.updateLoading(false).updateLogout(true)
               }
             }
