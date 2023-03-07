@@ -30,11 +30,22 @@
           <span class="visually-hidden">Loading...</span>
         </div>
         <div v-else>
-          <div class="my-3">
-            <p type="email" class="text-center">{{email}}</p>
-          </div>
-          <div class="hstack mt-2"><button type="button" @click="auth" class="m-auto btn btn-primary">Authorize</button>
-          </div>
+          <template v-if="!logout">
+            <div class="my-3">
+              <p type="email" class="text-center">{{email}}</p>
+            </div>
+            <div class="hstack mt-2"><button type="button" @click="auth"
+                class="m-auto btn btn-primary">Authorize</button>
+            </div>
+          </template>
+          <template v-else>
+            <div class="my-3">
+              <p type="email" class="text-center">{{email}}</p>
+            </div>
+            <div class="hstack mt-2"><button type="button" @click="logout"
+                class="m-auto btn btn-primary">Logout</button>
+            </div>
+          </template>
         </div>
       </div>
     </div>
@@ -50,7 +61,8 @@
           email: '',
           new_login: true,
           loading: true,
-          tokenUrl: ''
+          tokenUrl: '',
+          logout: false
         }
       },
       watch: {
@@ -86,6 +98,27 @@
         auth() {
           var url = this.tokenUrl;
           document.location.replace(url)
+        },
+        logout() {
+          this.loading = true;
+          param['logout'] = true;
+          var log_out = new Request(updateUrl(gas, param), {
+            redirect: "follow",
+            method: 'POST',
+            headers: {
+              "Content-Type": "text/plain;charset=utf-8",
+            },
+          });
+          fetch(fetch_status)
+            .then(function (response) {
+              return response.json();
+            })
+            .then(function (data) {
+              if (data.status) {
+                localStorage.clear();
+                document.location.replace(headUrl);
+              }
+            });
         },
       }
     }
@@ -171,7 +204,7 @@
         }
         else { localStorage.clear() }
       }
-      if (param.email !== null) {
+      if (param.email !== undefined && param.email !== null) {
         login.addNewLogin(false).addUserId(param.email)
       }
 
