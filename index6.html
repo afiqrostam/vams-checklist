@@ -203,6 +203,9 @@
     (function () {
       var store = localStorage.getItem('access');
       param = getAllUrlParams();
+      if(param['tenant'] === undefined || param['tenant'] === null){
+        param['tenant'] = 'VEOLIA1_TST'
+      }
       if (store !== null) {
         store = JSON.parse(store);
         if (new Date(store['expiration'] * 1000) > new Date()) {
