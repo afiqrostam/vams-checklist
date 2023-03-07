@@ -43,7 +43,7 @@
             <p type="email" class="text-center">{{email}}</p>
           </div>
           <div class="hstack mt-2">
-            <button v-if="!logout" type="button" @click="[logout ? logout() : auth()]"
+            <button type="button" @click="[logout ? logout() : auth()]"
               class="m-auto btn btn-primary" v-html="[logout ? 'Logout' : 'Authorize']"></button>
           </div>
         </div>
