@@ -43,8 +43,8 @@
             <p type="email" class="text-center">{{email}}</p>
           </div>
           <div class="hstack mt-2">
-            <button v-if="!logout" type="button" @click="auth" class="m-auto btn btn-primary">Authorize</button>
-            <button v-else type="button" @click="logout" class="m-auto btn btn-primary">Logout</button>
+            <button v-if="!logout" type="button" @click="[logout ? logout($event) : auth($event)]"
+              class="m-auto btn btn-primary">{{[logout ? 'Logout' : 'Authorize']}}</button>
           </div>
         </div>
       </div>
@@ -79,16 +79,19 @@
         updateLoading(input) { this.loading = input; return this },
         updateLogout(input) { this.logout = input; return this },
         updateTokenUrl(input) { this.tokenUrl = input; return this },
-        update() {
+        update(event) {
+          event.preventDefault();
           var url = window.location.href
           var queryParam = this.email;
           window.location.replace(url + '?email=' + queryParam)
         },
-        auth() {
+        auth(event) {
+          event.preventDefault();
           var url = this.tokenUrl;
           window.location.replace(url)
         },
-        logout() {
+        logout(event) {
+          event.preventDefault();
           this.loading = true;
           param['logout'] = 'true';
           var log_out = new Request(updateUrl(gas, param), {
@@ -160,7 +163,7 @@
     var headUrl = origin + window.location.pathname;
 
     (function () {
-      var store = window.localStorage .getItem('access');
+      var store = window.localStorage.getItem('access');
       param = getAllUrlParams();
       if (param['tenant'] === undefined || param['tenant'] === null) {
         param['tenant'] = 'VEOLIA1_TST'
