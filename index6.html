@@ -164,7 +164,9 @@
         store = JSON.parse(store);
         if (new Date(store['expiration'] * 1000) > new Date()) {
           delete store['expiration'];
-          document.location.replace(updateUrl(headUrl, store))
+          if (store.email !== param.email && store.tenant !== param.tenant) {
+            document.location.replace(updateUrl(headUrl, store))
+          }
         }
         else { localStorage.clear() }
       }
