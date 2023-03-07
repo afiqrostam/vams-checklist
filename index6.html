@@ -95,6 +95,10 @@
           this.loading = input;
           return this
         },
+        updateLogout(input) {
+          this.logout = input;
+          return this
+        },
         updateTokenUrl(input) {
           this.tokenUrl = input;
           return this
@@ -240,6 +244,7 @@
               var access = JSON.parse(JSON.stringify(param));
               access['expiration'] = data.text.expiresAt;
               localStorage.setItem('access', JSON.stringify(access));
+              login.updateLogout(true)
             }
           }
         });
