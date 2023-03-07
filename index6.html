@@ -39,22 +39,13 @@
           <span class="visually-hidden">Loading...</span>
         </div>
         <div v-else>
-          <template v-if="!logout">
-            <div class="my-3">
-              <p type="email" class="text-center">{{email}}</p>
-            </div>
-            <div class="hstack mt-2"><button type="button" @click="auth"
-                class="m-auto btn btn-primary">Authorize</button>
-            </div>
-          </template>
-          <template v-if="logout">
-            <div class="my-3">
-              <p type="email" class="text-center">{{email}}</p>
-            </div>
-            <div class="hstack mt-2"><button type="button" @click="logout"
-                class="m-auto btn btn-primary">Logout</button>
-            </div>
-          </template>
+          <div class="my-3">
+            <p type="email" class="text-center">{{email}}</p>
+          </div>
+          <div class="hstack mt-2">
+            <button v-if="!logout" type="button" @click="auth" class="m-auto btn btn-primary">Authorize</button>
+            <button v-else type="button" @click="logout" class="m-auto btn btn-primary">Logout</button>
+          </div>
         </div>
       </div>
     </div>
