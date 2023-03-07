@@ -173,7 +173,7 @@
         store = JSON.parse(store);
         if (new Date(store['expiration'] * 1000) > new Date()) {
           delete store['expiration'];
-          if (store.email !== param.email && store.tenant !== param.tenant) {
+          if (store.email !== param.email || store.tenant !== param.tenant) {
             window.location.replace(updateUrl(headUrl, store))
           }
         }
