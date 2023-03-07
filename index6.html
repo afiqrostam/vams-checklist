@@ -43,8 +43,10 @@
             <p type="email" class="text-center">{{email}}</p>
           </div>
           <div class="hstack mt-2">
-            <button type="button" @click="[logout ? logout() : auth()]"
-              class="m-auto btn btn-primary" v-html="[logout ? 'Logout' : 'Authorize']"></button>
+            <button v-if="logout" type="button" @click="log_out"
+              class="m-auto btn btn-primary">Logout</button>
+              <button v-else type="button" @click="auth"
+                class="m-auto btn btn-primary">Authorize</button>
           </div>
         </div>
       </div>
@@ -87,7 +89,7 @@
           var url = this.tokenUrl;
           window.location.replace(url)
         },
-        logout() {
+        log_out() {
           this.loading = true;
           param['logout'] = 'true';
           var log_out = new Request(updateUrl(gas, param), {
