@@ -223,6 +223,7 @@
       if (param.email !== undefined && param.email !== null) {
         login.addNewLogin(false).addUserId(param.email)
       }
+      console.log(localStorage)
 
       var fetch_status = new Request(updateUrl(gas, param), {
         redirect: "follow",
