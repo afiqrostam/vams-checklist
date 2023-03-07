@@ -13,18 +13,31 @@
 
 <body class="bg-light">
   <div class="hstack gap-2 vh-100 vw-100">
-    <div id="login" class="m-auto card">
-      <form v-if="new_login" class="card-body">
-        <div class="hstack p-5">
-          <p class="m-auto display-1"><i class="bi bi-terminal-x"></i></p>
+    <div id="login" class="m-auto">
+      <form v-if="new_login" class="card-body p-2">
+        <div class="vstack gap-1 mb-5">
+          <img src="https://afiqrostam.github.io/vams-checklist/icon.png" class="m-auto mb-5 veolia-logo">
         </div>
-        <div class="mb-3">
-          <input type="email" v-model="userid" class="form-control" name="userid" id="email">
+        <div class="my-3">
+          <input type="email" class="form-control text-center mw-300px" v-model="userid" name="userid" id="email">
+          <div id="emailHelp" class="text-center form-text">Enter your VAMS login to begin</div>
         </div>
-        <div class="hstack mt-2">
-          <button type="button" @click="update" class="m-auto btn btn-primary">Submit</button>
+        <div class="hstack mt-2"><button type="button" @click="update" class="m-auto btn btn-primary">login</button>
         </div>
       </form>
+      <div v-else class="card-body p-2">
+        <div v-if="loading" class="spinner-grow">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <div v-else>
+          <div class="my-3">
+            <p type="email" class="text-center">{{userid}}</p>
+            <div id="emailHelp" class="text-center form-text">Enter your VAMS login to begin</div>
+          </div>
+          <div class="hstack mt-2"><button type="button" @click="update" class="m-auto btn btn-primary">login</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
@@ -32,14 +45,13 @@
     crossorigin="anonymous"></script>
   <script src="https://unpkg.com/vue@3.2.31/dist/vue.global.prod.js"></script>
   <script>
-    var params;
     var login_ = {
       data() {
         return {
           userid: '',
           new_login: true
         }
-      }, 
+      },
       watch: {
         userid: {
           handler(newValue, oldValue) {
@@ -60,19 +72,48 @@
         update() {
           var url = document.location.href
           var queryParam = this.userid;
-          document.location.replace(url+'?userid='+queryParam)
+          document.location.replace(url + '?userid=' + queryParam)
         },
       }
     }
 
+    function updateUrl(url, param) {
+      if (param['userid'] == undefined) { param['userid'] = '' }
+      var param_keys = Object.keys(param);
+      if (param_keys.length != 0) {
+        param_keys.forEach(function (e, i) {
+          if (i == 0) { url = url + "?" + e } else { url = url + "&" + e }
+          if (param[e] != '') { url = url + "=" + param[e] }
+        });
+      }
+      return url
+    }
+
+    var param;
+    var gas = 'https://script.google.com/macros/s/AKfycbyxS-QxsOYTVyJXUh1R7i38sjxk1R4L8uMqfU5S2Yfc-u6HkTV_u1R7ZuWeIPcR7DvvgQ/exec';
     var login = Vue.createApp(login_).mount('#login');
 
     (function () {
-      params = new URL(document.location).searchParams;
-      if (params.get('userid') !== null) {
-        login.addNewLogin(false).addUserId(params.get('userid'))
+      param = new URL(document.location).searchParams;
+      if (param.get('userid') !== null) {
+        login.addNewLogin(false).addUserId(param.get('userid'))
       }
-    })();
+
+      var fetch_status = new Request(updateUrl(url, param), {
+      redirect: "follow",
+        method: 'POST',
+          headers: {
+        "Content-Type": "text/plain;charset=utf-8",
+        },
+    });
+    fetch(fetch_status)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        console.log(data.text)
+      });
+    }) ();
   </script>
 </body>
 
