@@ -210,6 +210,9 @@
       if (param['tenant'] === undefined || param['tenant'] === null) {
         param['tenant'] = 'VEOLIA1_TST'
       }
+      if (param['logout'] === undefined || param['logout'] === null) {
+        param['logout'] = false
+      }
       if (store !== null) {
         store = JSON.parse(store);
         if (new Date(store['expiration'] * 1000) > new Date()) {
