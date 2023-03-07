@@ -160,6 +160,7 @@
 
     (function () {
       var store = localStorage.getItem('access');
+      param = getAllUrlParams();
       if (store !== null) {
         store = JSON.parse(store);
         if (new Date(store['expiration'] * 1000) > new Date()) {
@@ -170,7 +171,6 @@
         }
         else { localStorage.clear() }
       }
-      param = getAllUrlParams();
       if (param.email !== null) {
         login.addNewLogin(false).addUserId(param.email)
       }
