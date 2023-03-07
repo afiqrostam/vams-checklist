@@ -32,9 +32,8 @@
         <div v-else>
           <div class="my-3">
             <p type="email" class="text-center">{{email}}</p>
-            <div id="emailHelp" class="text-center form-text">Enter your VAMS login to begin</div>
           </div>
-          <div class="hstack mt-2"><button type="button" @click="update" class="m-auto btn btn-primary">login</button>
+          <div class="hstack mt-2"><button type="button" @click="auth" class="m-auto btn btn-primary">Authorize</button>
           </div>
         </div>
       </div>
@@ -50,7 +49,8 @@
         return {
           email: '',
           new_login: true,
-          loading: true
+          loading: true,
+          tokenUrl:''
         }
       },
       watch: {
@@ -70,10 +70,22 @@
           this.new_login = input;
           return this
         },
+        updateLoading(input) {
+          this.loading = input;
+          return this
+        },
+        updateTokenUrl(input) {
+          this.tokenUrl = input;
+          return this
+        },
         update() {
           var url = document.location.href
           var queryParam = this.email;
           document.location.replace(url + '?email=' + queryParam)
+        },
+        auth() {
+          var url = this.tokenUrl;
+          document.location.replace(url)
         },
       }
     }
@@ -162,7 +174,9 @@
           return response.json();
         })
         .then(function (data) {
-          console.log(data.text)
+          if(!data.status && data.text.tokenUrl !== undefined){
+            login.updateLoading(false).updateTokenUrl(data.text.tokenUrl)
+          }
         });
     })();
   </script>
