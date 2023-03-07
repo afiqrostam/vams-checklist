@@ -99,7 +99,7 @@
         login.addNewLogin(false).addUserId(param.get('userid'))
       }
 
-      var fetch_status = new Request(updateUrl(url, param), {
+      var fetch_status = new Request(updateUrl(gas, param), {
       redirect: "follow",
         method: 'POST',
           headers: {
