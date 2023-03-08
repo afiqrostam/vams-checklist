@@ -167,7 +167,7 @@
       param['tenant'] = 'VEOLIA1_TST';
       param['logout'] = 'false';
       param['url'] = headUrl;
-      
+
       if (store !== null) {
         store = JSON.parse(store);
         if (new Date(store['expiration'] * 1000) > new Date()) {
@@ -182,7 +182,7 @@
       if (param.email !== undefined && param.email !== null) {
         login.addNewLogin(false).addUserId(param.email)
       }
-      if (store == null) {
+      if (store == null && param.email !== undefined) {
         var fetch_status = new Request(updateUrl(gas, param), {
           redirect: "follow",
           method: 'POST',
