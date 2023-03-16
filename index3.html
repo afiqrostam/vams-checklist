@@ -564,11 +564,9 @@
             });
       var check = function () {
         if (form.getAllCompleted()) {
-          console.log('not start')
           if (input.reference == 'PRE') { location.reload() }
           else {
             if (!start) {
-              console.log('start');
               start = true;
               var req_comp_param = gas + '?process=complete_checklist&tenant=' + param.tenant + '&organization='
                 + param.organization + '&checklist=' + input.ock_code + '&userid=' + param.userid;
@@ -582,11 +580,9 @@
               });
               fetch(upd_checklist_req)
                 .then(function (response) {
-                  console.log(response)
                   return response.json();
                 })
                 .then(function (data) {
-                  console.log(data)
                   if (data.status != undefined && data.status === false) {
                     alert.add({
                       text: data.text,
