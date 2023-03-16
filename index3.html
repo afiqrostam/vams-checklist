@@ -205,7 +205,7 @@
       <div class="card" v-else>
         <div class="accordion accordion-flush" :id="data.id">
           <div class="accordion-item" v-for="( activity, index ) in data.activities" :key="activity.id">
-            <div class="accordion-header" v-show="showFaultRequired() && activity.id.search('FAULTS')!==-1" :id="'h'+activity.id">
+            <div class="accordion-header" v-show="showFaultRequired(activity.id)" :id="'h'+activity.id">
               <button :class="[ index == 0 ? 'accordion-button py-3' : 'accordion-button py-3 collapsed']" type="button"
                 data-bs-toggle="collapse" aria-expanded="false"
                 v-bind="{ 'data-bs-target': '#c'+activity.id, 'aria-controls': 'c'+activity.id }" @click="loadMeta()">

@@ -20,7 +20,7 @@ var alert_mod = {
       });
     },
     remove(info) {
-      this.datas = this.datas.filter(function(e){return e.id !== info.id})
+      this.datas = this.datas.filter(function (e) { return e.id !== info.id })
     }
   },
 };
@@ -167,7 +167,7 @@ var past_dvr_mod = {
           else {
             var iframe = document.createElement('iframe');
             iframe.setAttribute('class', 'w-100 rounded vh-100');
-            iframe.src = input.url+'#zoom=FitW';
+            iframe.src = input.url + '#zoom=FitW';
             container.appendChild(iframe);
           }
         }
@@ -362,7 +362,7 @@ var checklist_mod = {
       text_area.style.height = 'auto';
       text_area.style.height = (text_area.scrollHeight) + 'px'
     },
-    openPhoto(item) { console.log(item);photo_mgmt.loaded = true },
+    openPhoto(item) { console.log(item); photo_mgmt.loaded = true },
     snycItems(item, event) {
       if (event != undefined) {
         if (event.target.nodeName == 'TEXTAREA') {
@@ -471,11 +471,14 @@ var checklist_mod = {
           }).map(
             function (e) { return { 'text': e.ack_desc, 'value': e.ack_code } })
     },
-    showFaultRequired() {
-      return this.raw.filter(
-        function (e) {
-          return e.ack_possiblefindings !== '' && e.ack_finding !== ''
-        }).length > 0
+    showFaultRequired(id) {
+      if (id.search('FAULTS') === -1) { return true }
+      else {
+        return this.raw.filter(
+          function (e) {
+            return e.ack_possiblefindings !== '' && e.ack_finding !== ''
+          }).length > 0
+      }
     },
     selectFault(event) {
       var target = event.target;
