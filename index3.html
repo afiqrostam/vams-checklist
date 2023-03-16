@@ -240,21 +240,20 @@
                                 <i class="bi bi-exclamation-circle-fill fs-5"></i>
                                 Enter faults identified in the Faults section
                               </span>
-                              <span class="hstack text-info gap-2">
-                                <span class="hstack gap-1">
+                              <div class="row text-info">
+                                <span class="col-12 col-sm-4 col-md-4 hstack gap-1">
                                   <i class="bi bi-check-square-fill fs-5"></i>
-                                  No Obvious Defect / Done
+                                  <span class="lh-1">No Obvious Defect / Done</span>
                                 </span>
-                                <span class="hstack gap-1">
+                                <span class="col-12 col-sm-4 col-md-3 hstack gap-1">
                                   <i class="bi bi-x-square-fill fs-5"></i>
-                                  Fault
-                                  Identified
+                                  <span class="lh-1">Fault Identified</span>
                                 </span>
-                                <span class="hstack gap-1">
+                                <span class="col-12 col-sm-4 col-md-3 hstack gap-1">
                                   <i class="bi bi-slash-square-fill fs-5"></i>
-                                  Not Applicable
+                                  <span class="lh-1">Not Applicable</span>
                                 </span>
-                              </span>
+                              </div>
                             </div>
                           </div>
                           <div :class="[ getdisplay(item) ? 'accordion-item' : 'accordion-item d-none']"
@@ -270,18 +269,17 @@
                                 <input v-if="item.ack_type == 13" type="date"
                                   class="form-control border-0 border-bottom" :id="'FREE'+item.ack_code"
                                   autocomplete="off" v-model="item.ack_checklistdate" @input="snycItems(item,$event)"
-                                  @focus="snycItems(item,$event)"
-                                  @keyup="snycItems(item,$event)" :disabled="data.status">
+                                  @focus="snycItems(item,$event)" @keyup="snycItems(item,$event)"
+                                  :disabled="data.status">
                                 <input v-if="item.ack_type == 14" type="datetime-local"
                                   class="form-control border-0 border-bottom" :id="'FREE'+item.ack_code"
                                   autocomplete="off" v-model="item.ack_checklistdatetime"
-                                  @input="snycItems(item,$event)" @focus="snycItems(item,$event)" @keyup="snycItems(item,$event)"
-                                  :disabled="data.status">
+                                  @input="snycItems(item,$event)" @focus="snycItems(item,$event)"
+                                  @keyup="snycItems(item,$event)" :disabled="data.status">
                                 <input v-if="item.ack_type == 15" type="text"
                                   class="form-control border-0 border-bottom" :id="'FREE'+item.ack_code"
                                   autocomplete="off" v-model="item.ack_freetext" @input="snycItems(item,$event)"
-                                  @focus="snycItems(item,$event)" 
-                                  @keyup="snycItems(item,$event)"
+                                  @focus="snycItems(item,$event)" @keyup="snycItems(item,$event)"
                                   :disabled="data.status || ['Unit/Fleet No','Registration No','Worker Name'].indexOf(item.ack_desc) != -1">
                                 <div v-if="item.ack_type == 03" class="my-2 hstack gap-2">
                                   <div class="col d-none">
@@ -292,7 +290,8 @@
                                     <input type="radio" class="btn-check" @change="snycItems(item,$event)"
                                       v-model.lazy="item.ack_finding" :id="'FREE'+item.ack_code+'_chk_'+option.value"
                                       :value="option.value" autocomplete="off">
-                                    <label class="btn btn-outline-primary" :for="'FREE'+item.ack_code+'_chk_'+option.value"
+                                    <label class="btn btn-outline-primary"
+                                      :for="'FREE'+item.ack_code+'_chk_'+option.value"
                                       v-html="getOptionHTML(option.value)"></label>
                                   </div>
                                 </div>
@@ -308,8 +307,7 @@
                               -->
                                 <div class="input-group" v-if="item.ack_type == '04'">
                                   <input type="number" v-model="item.ack_value" @input="snycItems(item,$event)"
-                                    @focus="snycItems(item,$event)" 
-                                    @keyup="snycItems(item,$event)"
+                                    @focus="snycItems(item,$event)" @keyup="snycItems(item,$event)"
                                     class="form-control border-0 border-end border-bottom" :placeholder="item.ack_desc"
                                     :disabled="data.status" :id="'FREE'+item.ack_code">
                                   <span class="input-group-text border-0 bg-light border-bottom">{{ item.ack_uom
@@ -366,8 +364,8 @@
                                   <textarea :ref="'NOTES'+item.ack_code" :id="'NOTES'+item.ack_code"
                                     :class="[ item.ack_notes == '' ? 'form-control bg-warning-subtle' : 'form-control']"
                                     :disabled="data.status" v-model="item.ack_notes" @input="snycItems(item,$event)"
-                                    @focus="snycItems(item,$event)" 
-                                    @keyup="snycItems(item,$event)" placeholder="..."></textarea>
+                                    @focus="snycItems(item,$event)" @keyup="snycItems(item,$event)"
+                                    placeholder="..."></textarea>
                                   <label class="ps-4" :for="'NOTES'+item.ack_code">Notes</label>
                                 </div>
                                 <button :id="'PHOTO'+item.ack_code" type="button" class="btn btn-sm btn-outline-primary"
