@@ -259,13 +259,13 @@
                           <div :class="[ getdisplay(item) ? 'accordion-item' : 'accordion-item d-none']"
                             v-for="item in group.items" :key="item.ack_code">
                             <div class="accordion-body py-2 row">
-                              <div class="col" v-if="['03','04','13','14','15'].indexOf(item.ack_type) != -1">
+                              <div class="col" v-if="['04','13','14','15'].indexOf(item.ack_type) != -1">
                                 <span>{{ item.ack_desc }}</span>
                                 <p v-if="item.ack_taskchecklistcode_comments != ''" class="pre-line m-0">{{
                                   item.ack_taskchecklistcode_comments }}</p>
                               </div>
                               <div class="col-md hstack gap-2 fw-light"
-                                v-if="['03','04','13','14','15'].indexOf(item.ack_type) != -1">
+                                v-if="['04','13','14','15'].indexOf(item.ack_type) != -1">
                                 <input v-if="item.ack_type == 13" type="date"
                                   class="form-control border-0 border-bottom" :id="'FREE'+item.ack_code"
                                   autocomplete="off" v-model="item.ack_checklistdate" @input="snycItems(item,$event)"
@@ -281,20 +281,6 @@
                                   autocomplete="off" v-model="item.ack_freetext" @input="snycItems(item,$event)"
                                   @focus="snycItems(item,$event)" @keyup="snycItems(item,$event)"
                                   :disabled="data.status || ['Unit/Fleet No','Registration No','Worker Name'].indexOf(item.ack_desc) != -1">
-                                <div v-if="item.ack_type == 03" class="my-2 hstack gap-2">
-                                  <div class="col d-none">
-                                    <input type="radio" v-model="item.ack_finding"
-                                      :id="'FREE'+item.ack_code+'_chk_null'" value="" autocomplete="off" checked>
-                                  </div>
-                                  <div class="col" v-for="option in item.ack_possiblefindings">
-                                    <input type="radio" class="btn-check" @change="snycItems(item,$event)"
-                                      v-model.lazy="item.ack_finding" :id="'FREE'+item.ack_code+'_chk_'+option.value"
-                                      :value="option.value" autocomplete="off">
-                                    <label class="btn btn-outline-primary"
-                                      :for="'FREE'+item.ack_code+'_chk_'+option.value"
-                                      v-html="getOptionHTML(option.value)"></label>
-                                  </div>
-                                </div>
                                 <!-- 
                                 <select v-if="item.ack_type == 03" class="form-select border-0 border-bottom"
                                   :id="'FREE'+item.ack_code" autocomplete="off" v-model="item.ack_finding"
@@ -330,15 +316,49 @@
                                 <i class="bi bi-check-circle-fill text-info pe-2"
                                   v-if="getItemCompleted(item) && item.updated && item.process"></i>
                               </div>
-                              <div class="hstack gap-2 fw-light" v-if="['01'].indexOf(item.ack_type) != -1">
-                                <div class="" v-if="item.ack_type == '01'">
-                                  <input type="checkbox" class="btn-check" :id="'FREE'+item.ack_code" autocomplete="off"
-                                    v-model="item.ack_completed" true-value="+" false-value="-" :disabled="data.status"
-                                    @change="snycItems(item,$event)">
-                                  <label class="btn btn-outline-primary d-block" :for="'FREE'+item.ack_code"><i
-                                      class="bi bi-check-lg"></i></label>
+                              <div class="hstack gap-2 fw-light" v-if="['03'].indexOf(item.ack_type) != -1">
+                                <div class="my-2 hstack gap-2">
+                                  <div class="col d-none">
+                                    <input type="radio" v-model="item.ack_finding"
+                                      :id="'FREE'+item.ack_code+'_chk_null'" value="" autocomplete="off" checked>
+                                  </div>
+                                  <div class="col" v-for="option in item.ack_possiblefindings">
+                                    <input type="radio" class="btn-check" @change="snycItems(item,$event)"
+                                      v-model.lazy="item.ack_finding" :id="'FREE'+item.ack_code+'_chk_'+option.value"
+                                      :value="option.value" autocomplete="off">
+                                    <label class="btn btn-outline-primary"
+                                      :for="'FREE'+item.ack_code+'_chk_'+option.value"
+                                      v-html="getOptionHTML(option.value)"></label>
+                                  </div>
                                 </div>
-                                <div class="col" v-if="['01'].indexOf(item.ack_type) != -1">
+                                <div class="col">
+                                  <span>{{ item.ack_desc }}</span>
+                                  <p v-if="item.ack_taskchecklistcode_comments != ''" class="pre-line m-0">{{
+                                    item.ack_taskchecklistcode_comments }}</p>
+                                </div>
+                                <button type="button" :id="'REFRESH'+item.ack_code" v-show="!data.status"
+                                  class="btn btn-sm rounded-circle btn-outline-secondary"
+                                  @click="resetItems(item,$event)"><i class="bi bi-arrow-repeat"></i></button>
+                                <i class="bi bi-circle pe-2"
+                                  v-if="!getItemCompleted(item) && !item.updated && !item.process"></i>
+                                <i class="bi bi-circle-fill pe-2"
+                                  v-if="!getItemCompleted(item) && item.updated && !item.process"></i>
+                                <i class="bi bi-circle text-info pe-2"
+                                  v-if="!getItemCompleted(item) && item.updated && item.process"></i>
+                                <i class="bi bi-check-circle pe-2"
+                                  v-if="getItemCompleted(item) && !item.updated && !item.process"></i>
+                                <i class="bi bi-check-circle-fill pe-2"
+                                  v-if="getItemCompleted(item) && item.updated && !item.process"></i>
+                                <i class="bi bi-check-circle-fill text-info pe-2"
+                                  v-if="getItemCompleted(item) && item.updated && item.process"></i>
+                              </div>
+                              <div class="hstack gap-2 fw-light" v-if="['01'].indexOf(item.ack_type) != -1">
+                                <input type="checkbox" class="btn-check" :id="'FREE'+item.ack_code" autocomplete="off"
+                                  v-model="item.ack_completed" true-value="+" false-value="-" :disabled="data.status"
+                                  @change="snycItems(item,$event)">
+                                <label class="btn btn-outline-primary d-block" :for="'FREE'+item.ack_code"><i
+                                    class="bi bi-check-lg"></i></label>
+                                <div class="col">
                                   <span>{{ item.ack_desc }}</span>
                                   <p v-if="item.ack_taskchecklistcode_comments != ''" class="pre-line m-0">{{
                                     item.ack_taskchecklistcode_comments }}</p>
