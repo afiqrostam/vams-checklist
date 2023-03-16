@@ -261,6 +261,20 @@
                                   @focus="snycItems(item,$event)" @blur="snycItems(item,$event)"
                                   @keyup="snycItems(item,$event)"
                                   :disabled="data.status || ['Unit/Fleet No','Registration No','Worker Name'].indexOf(item.ack_desc) != -1">
+                                <div v-if="item.ack_type == 03" class="my-2 hstack gap-2">
+                                  <div class="col d-none">
+                                    <input type="radio" v-model="item.ack_finding" :id="'FREE'+item.ack_code+'_chk_null'" value=""
+                                      autocomplete="off" checked>
+                                  </div>
+                                  <div class="col" v-for="option in item.ack_possiblefindings" :key="option.value">
+                                    <input type="radio" class="btn-check" @change="snycItems(item,$event)"
+                                      v-model.lazy="item.ack_finding" :id="'FREE'+item.ack_code+'_chk_'+option" :value="option.value"
+                                      autocomplete="off">
+                                    <label class="btn btn-outline-primary" :for="'FREE'+item.ack_code+'_chk_'+option"
+                                      v-html="getOptionHTML(option.value)"></label>
+                                  </div>
+                                </div>
+                                <!-- 
                                 <select v-if="item.ack_type == 03" class="form-select border-0 border-bottom"
                                   :id="'FREE'+item.ack_code" autocomplete="off" v-model="item.ack_finding"
                                   @change="snycItems(item,$event)" :disabled="data.status">
@@ -269,6 +283,7 @@
                                     {{ option.text }}
                                   </option>
                                 </select>
+                              -->
                                 <div class="input-group" v-if="item.ack_type == '04'">
                                   <input type="number" v-model="item.ack_value" @input="snycItems(item,$event)"
                                     @focus="snycItems(item,$event)" @blur="snycItems(item,$event)"

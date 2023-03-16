@@ -349,6 +349,11 @@ var checklist_mod = {
         });
       }
     },
+    getOptionHTML(option) {
+      if (option === 'Z028') { return '<i class="bi bi-check-lg"></i>' }
+      if (option === 'Z029') { return '<i class="bi bi-x-lg"></i>' }
+      if (option === 'Z030') { return '<i class="bi bi-slash-lg"></i>' }
+    },
     expandTextArea(event) {
       var target = event.target;
       if (target.tagName != 'button') { target = target.closest('button') }
