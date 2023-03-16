@@ -16,9 +16,11 @@
 </head>
 
 <body class="bg-light">
+  <!-- modal -->
   <div class="bg-light modal fade" id="newPage" tabindex="-1" aria-labelledby="newPage" data-bs-keyboard="false"
     data-bs-backdrop="static" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen-lg-down modal-dialog-scrollable modal-xl">
+      <!-- open faults -->
       <div id="openjobmodal">
         <div v-if="loaded == true" class="modal-content">
           <div class="modal-body">
@@ -46,6 +48,7 @@
           </div>
         </div>
       </div>
+      <!-- photo -->
       <div id="photomodal">
         <div v-if="loaded == true" class="modal-content">
           <div class="modal-header">
@@ -60,6 +63,7 @@
           </div>
         </div>
       </div>
+      <!-- past dvr -->
       <div id="pastdvrmodal">
         <div v-if="loaded == true" class="modal-content">
           <div class="modal-body">
@@ -110,6 +114,7 @@
       </div>
     </div>
   </div>
+  <!-- nav -->
   <div class="container-fluid bg-secondary bg-opacity-25 p-2  hstack gap-2 fixed-top">
     <div class="ms-auto dropdown">
       <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -137,6 +142,7 @@
       </ul>
     </div>
   </div>
+  <!-- alert -->
   <div id="alert" class="container fixed-bottom p-1">
     <div :id="data.id" v-for="data in datas" :key="data.id"
       v-bind="{ 'class': 'lh-sm my-1 alert text-light opacity-85 alert-dismissible fade show pre-line '+data.classfix }">
@@ -148,6 +154,7 @@
   <div class="container my-5">
     &nbsp;
   </div>
+  <!-- main -->
   <div id="check" class="container p-1">
     <div class="min-vh-95 d-flex align-items-center justify-content-center" v-if="loaded == false">
       <div class="spinner-grow text-dark" role="status" v-show="broken == false">
@@ -183,6 +190,7 @@
     </div>
   </div>
 
+  <!-- checklist -->
   <div id="form">
     <div id="form-container" class="container p-1 mb-5" v-if="loaded == true">
       <div class="min-vh-95 d-flex align-items-center justify-content-center" v-if="Object.keys(data).length == 0">
