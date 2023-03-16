@@ -89,7 +89,7 @@ var photo_mod = {
   data() {
     return {
       'data': {
-        'id':'',
+        'id': '',
         'src': '',
         'loaded': false
       },
@@ -152,7 +152,8 @@ var photo_mod = {
         app_data_.data.src = canvas.toDataURL('image/jpeg', 0.8);
         app_data_.data.loaded = false;
       }
-    }
+    },
+    openFile() { document.getElementById('new_photo_btn').click() }
   }
 }
 
