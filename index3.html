@@ -280,11 +280,11 @@
                                     <input type="radio" v-model="item.ack_finding"
                                       :id="'FREE'+item.ack_code+'_chk_null'" value="" autocomplete="off" checked>
                                   </div>
-                                  <div class="col" v-for="option in item.ack_possiblefindings" :key="option.value">
+                                  <div class="col" v-for="option in item.ack_possiblefindings">
                                     <input type="radio" class="btn-check" @change="snycItems(item,$event)"
-                                      v-model.lazy="item.ack_finding" :id="'FREE'+item.ack_code+'_chk_'+option"
+                                      v-model.lazy="item.ack_finding" :id="'FREE'+item.ack_code+'_chk_'+option.value"
                                       :value="option.value" autocomplete="off">
-                                    <label class="btn btn-outline-primary" :for="'FREE'+item.ack_code+'_chk_'+option"
+                                    <label class="btn btn-outline-primary" :for="'FREE'+item.ack_code+'_chk_'+option.value"
                                       v-html="getOptionHTML(option.value)"></label>
                                   </div>
                                 </div>
