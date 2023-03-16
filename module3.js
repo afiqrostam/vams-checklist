@@ -149,7 +149,7 @@ var photo_mod = {
         canvas.height = newHeight;
         var ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, newWidth, newHeight);
-        app_data_data.src = canvas.toDataURL('image/jpeg', 0.8);
+        app_data_.data.src = canvas.toDataURL('image/jpeg', 0.8);
         app_data_.data.loaded = false;
       }
     }
