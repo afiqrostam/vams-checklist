@@ -234,7 +234,7 @@
                       <template v-if="group.items !== undefined">
                         <div class="accordion accordion-flush" :id="group.id">
                           <div class="accordion-item bg-light"
-                            v-if="(group.group_code === 'F-200104' || group.group_code === 'F-200102') && !data.status">
+                            v-if="(group.group_code === 'F-200104' || group.group_code === 'F-200102')">
                             <div class="accordion-body py-2 row">
                               <span class="hstack text-danger gap-2" v-if="!data.status">
                                 <i class="bi bi-exclamation-circle-fill fs-5"></i>
