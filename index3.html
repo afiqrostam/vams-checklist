@@ -52,11 +52,21 @@
       <div id="photomodal">
         <div v-if="loaded == true" class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="modal-title">Photos</h5>
           </div>
-          <div class="modal-body">
-            <p>Modal body text goes here.</p>
+          <div class="modal-body d-flex justify-content-center">
+            <div class="card col-9 min-vh-75 p-3">
+              <div v-if="data.src === ''" class="card h-100 text-bg-info bg-opacity-25"></div>
+              <img v-else class="rounded" :src="data.src">
+            </div>
+          </div>
+          <div class="modal-body border-top">
+            <div class="hstack gap-1">
+              <label for="new_photo" class="btn btn-primary">
+                <i class="bi bi-camera-fill"></i>
+              </label>
+              <input class="d-none" @change="processImg($event)" type="file" accept="image/*">
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" @click="closeModal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

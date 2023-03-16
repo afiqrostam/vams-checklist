@@ -88,18 +88,95 @@ var open_jobs_mod = {
 var photo_mod = {
   data() {
     return {
-      data: [],
-      loaded: false,
+      'data': {
+        'id':'',
+        'src': ''
+      },
+      'loaded': false,
     }
   },
   methods: {
-    addItems(input) {
-      this.data.push(input);
-    },
+    addChecklist(id) { this['data']['id'] = id; this.loaded = true },
     closeModal() { this.loaded = false },
-    getData() {
-      var data = this.data;
-      return data
+    resizeImg(img, maxWidth) {
+      var width = img.width;
+      var height = img.height;
+      if (width >= height) {
+        var maxVal = {
+          l: width,
+          a: 'x',
+          r: height / width
+        }
+      }
+      else {
+        var maxVal = {
+          l: height,
+          a: 'y',
+          r: width / height
+        }
+      }
+      if (maxVal.l >= maxWidth) {
+        if (maxVal.a == 'x') {
+          width = maxWidth;
+          height = maxVal.r * maxWidth
+        }
+        else {
+          height = maxWidth;
+          width = maxVal.r * maxWidth
+        }
+      }
+      return [width, height];
+    },
+    resizeImg(img, maxWidth) {
+      var width = img.width;
+      var height = img.height;
+      if (width >= height) {
+        var maxVal = {
+          l: width,
+          a: 'x',
+          r: height / width
+        }
+      }
+      else {
+        var maxVal = {
+          l: height,
+          a: 'y',
+          r: width / height
+        }
+      }
+      if (maxVal.l >= maxWidth) {
+        if (maxVal.a == 'x') {
+          width = maxWidth;
+          height = maxVal.r * maxWidth
+        }
+        else {
+          height = maxWidth;
+          width = maxVal.r * maxWidth
+        }
+      }
+      return [width, height];
+    },
+    processImg(event) {
+      var app_data_ = this;
+      var file = event.target.files[0]; // get the file
+      var blobURL = URL.createObjectURL(file);
+      var img = new Image();
+      img.src = blobURL;
+      img.onerror = function () {
+        URL.revokeObjectURL(this.src);
+        // Handle the failure properly
+        console.log('Cannot load image');
+      };
+      img.onload = function () {
+        URL.revokeObjectURL(this.src);
+        var [newWidth, newHeight] = app_data_.resizeImg(img, 1600);
+        var canvas = document.createElement('canvas');
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, newWidth, newHeight);
+        app_data_.src = canvas.toDataURL('image/jpeg', 0.8);
+      }
     }
   }
 }
@@ -362,7 +439,7 @@ var checklist_mod = {
       text_area.style.height = 'auto';
       text_area.style.height = (text_area.scrollHeight) + 'px'
     },
-    openPhoto(item) { console.log(item); photo_mgmt.loaded = true },
+    openPhoto(item) { console.log(item); photo_mgmt.addChecklist(item) },
     snycItems(item, event) {
       if (event != undefined) {
         if (event.target.nodeName == 'TEXTAREA') {
