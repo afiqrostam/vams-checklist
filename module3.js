@@ -90,7 +90,8 @@ var photo_mod = {
     return {
       'data': {
         'id':'',
-        'src': ''
+        'src': '',
+        'loaded': false
       },
       'loaded': false,
     }
@@ -127,43 +128,16 @@ var photo_mod = {
       }
       return [width, height];
     },
-    resizeImg(img, maxWidth) {
-      var width = img.width;
-      var height = img.height;
-      if (width >= height) {
-        var maxVal = {
-          l: width,
-          a: 'x',
-          r: height / width
-        }
-      }
-      else {
-        var maxVal = {
-          l: height,
-          a: 'y',
-          r: width / height
-        }
-      }
-      if (maxVal.l >= maxWidth) {
-        if (maxVal.a == 'x') {
-          width = maxWidth;
-          height = maxVal.r * maxWidth
-        }
-        else {
-          height = maxWidth;
-          width = maxVal.r * maxWidth
-        }
-      }
-      return [width, height];
-    },
     processImg(event) {
       var app_data_ = this;
-      var file = event.target.files[0]; // get the file
+      var file = event.target.files[0];
+      app_data_.data.loaded = true;
       var blobURL = URL.createObjectURL(file);
       var img = new Image();
       img.src = blobURL;
       img.onerror = function () {
         URL.revokeObjectURL(this.src);
+        app_data_.data.loaded = false;
         // Handle the failure properly
         console.log('Cannot load image');
       };
@@ -175,7 +149,8 @@ var photo_mod = {
         canvas.height = newHeight;
         var ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, newWidth, newHeight);
-        app_data_.src = canvas.toDataURL('image/jpeg', 0.8);
+        app_data_data.src = canvas.toDataURL('image/jpeg', 0.8);
+        app_data_.data.loaded = false;
       }
     }
   }
