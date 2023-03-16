@@ -563,8 +563,10 @@
             });
       var check = function () {
         if (form.getAllCompleted()) {
+          console.log('not start')
           if (input.reference == 'PRE') { location.reload() }
           else {
+            console.log('start')
             var req_comp_param = gas + '?process=complete_checklist&tenant=' + param.tenant + '&organization='
               + param.organization + '&checklist=' + input.ock_code + '&userid=' + param.userid;
 
