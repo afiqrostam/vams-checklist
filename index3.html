@@ -262,18 +262,17 @@
                                 <input v-if="item.ack_type == 13" type="date"
                                   class="form-control border-0 border-bottom" :id="'FREE'+item.ack_code"
                                   autocomplete="off" v-model="item.ack_checklistdate" @input="snycItems(item,$event)"
-                                  @focus="snycItems(item,$event)" @blur="snycItems(item,$event)"
+                                  @focus="snycItems(item,$event)"
                                   @keyup="snycItems(item,$event)" :disabled="data.status">
                                 <input v-if="item.ack_type == 14" type="datetime-local"
                                   class="form-control border-0 border-bottom" :id="'FREE'+item.ack_code"
                                   autocomplete="off" v-model="item.ack_checklistdatetime"
-                                  @input="snycItems(item,$event)" @focus="snycItems(item,$event)"
-                                  @blur="snycItems(item,$event)" @keyup="snycItems(item,$event)"
+                                  @input="snycItems(item,$event)" @focus="snycItems(item,$event)" @keyup="snycItems(item,$event)"
                                   :disabled="data.status">
                                 <input v-if="item.ack_type == 15" type="text"
                                   class="form-control border-0 border-bottom" :id="'FREE'+item.ack_code"
                                   autocomplete="off" v-model="item.ack_freetext" @input="snycItems(item,$event)"
-                                  @focus="snycItems(item,$event)" @blur="snycItems(item,$event)"
+                                  @focus="snycItems(item,$event)" 
                                   @keyup="snycItems(item,$event)"
                                   :disabled="data.status || ['Unit/Fleet No','Registration No','Worker Name'].indexOf(item.ack_desc) != -1">
                                 <div v-if="item.ack_type == 03" class="my-2 hstack gap-2">
@@ -301,7 +300,7 @@
                               -->
                                 <div class="input-group" v-if="item.ack_type == '04'">
                                   <input type="number" v-model="item.ack_value" @input="snycItems(item,$event)"
-                                    @focus="snycItems(item,$event)" @blur="snycItems(item,$event)"
+                                    @focus="snycItems(item,$event)" 
                                     @keyup="snycItems(item,$event)"
                                     class="form-control border-0 border-end border-bottom" :placeholder="item.ack_desc"
                                     :disabled="data.status" :id="'FREE'+item.ack_code">
@@ -359,7 +358,7 @@
                                   <textarea :ref="'NOTES'+item.ack_code" :id="'NOTES'+item.ack_code"
                                     :class="[ item.ack_notes == '' ? 'form-control bg-warning-subtle' : 'form-control']"
                                     :disabled="data.status" v-model="item.ack_notes" @input="snycItems(item,$event)"
-                                    @focus="snycItems(item,$event)" @blur="snycItems(item,$event)"
+                                    @focus="snycItems(item,$event)" 
                                     @keyup="snycItems(item,$event)" placeholder="..."></textarea>
                                   <label class="ps-4" :for="'NOTES'+item.ack_code">Notes</label>
                                 </div>
