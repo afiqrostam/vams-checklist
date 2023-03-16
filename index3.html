@@ -463,6 +463,7 @@
     dvr_button.addEventListener("click", function (event) { dvr_mgmt.loaded = true });
 
     var param;
+    var start = false;
     var gas = "https://script.google.com/macros/s/AKfycbxgyf6QTyfjMV46G2tvIOVEfB4vF9JbfP8dF18i-ZTLuUqm64ng5GCqRLYVcUKxYo1P/exec";
 
     function build_form(input) {
@@ -566,31 +567,35 @@
           console.log('not start')
           if (input.reference == 'PRE') { location.reload() }
           else {
-            console.log('start')
-            var req_comp_param = gas + '?process=complete_checklist&tenant=' + param.tenant + '&organization='
-              + param.organization + '&checklist=' + input.ock_code + '&userid=' + param.userid;
+            if (!start) {
+              console.log('start');
+              start = true;
+              var req_comp_param = gas + '?process=complete_checklist&tenant=' + param.tenant + '&organization='
+                + param.organization + '&checklist=' + input.ock_code + '&userid=' + param.userid;
 
-            var upd_checklist_req = new Request(req_comp_param, {
-              redirect: "follow",
-              method: 'POST',
-              headers: {
-                "Content-Type": "text/plain;charset=utf-8",
-              },
-            });
-            fetch(upd_checklist_req)
-              .then(function (response) {
-                return response.json();
-              })
-              .then(function (data) {
-                console.log(data)
-                if (data.status != undefined && data.status === false) {
-                  alert.add({
-                    text: data.text,
-                    type: 'error'
-                  })
-                }
-                else { location.reload() }
+              var upd_checklist_req = new Request(req_comp_param, {
+                redirect: "follow",
+                method: 'POST',
+                headers: {
+                  "Content-Type": "text/plain;charset=utf-8",
+                },
               });
+              fetch(upd_checklist_req)
+                .then(function (response) {
+                  console.log(response)
+                  return response.json();
+                })
+                .then(function (data) {
+                  console.log(data)
+                  if (data.status != undefined && data.status === false) {
+                    alert.add({
+                      text: data.text,
+                      type: 'error'
+                    })
+                  }
+                  else { location.reload() }
+                });
+            }
           }
         }
         else { setTimeout(check, 250) }
