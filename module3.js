@@ -153,7 +153,9 @@ var photo_mod = {
         app_data_.data.loaded = false;
       }
     },
-    openFile() { document.getElementById('new_photo_btn').click() }
+    openFile() { document.getElementById('new_photo_btn').click() },
+    clear() { this.data.src = '' },
+    uploadPhoto() { console.log('do something') }
   }
 }
 
