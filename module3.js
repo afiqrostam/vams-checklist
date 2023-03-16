@@ -439,7 +439,7 @@ var checklist_mod = {
       text_area.style.height = 'auto';
       text_area.style.height = (text_area.scrollHeight) + 'px'
     },
-    openPhoto(item) { console.log(item); photo_mgmt.addChecklist(item) },
+    openPhoto(item) { console.log(item); photo_mgmt.addChecklist(item.ack_code) },
     snycItems(item, event) {
       if (event != undefined) {
         if (event.target.nodeName == 'TEXTAREA') {
