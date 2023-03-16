@@ -167,7 +167,7 @@ var past_dvr_mod = {
           else {
             var iframe = document.createElement('iframe');
             iframe.setAttribute('class', 'w-100 rounded vh-100');
-            iframe.src = input.url;
+            iframe.src = input.url+'#zoom=FitW';
             container.appendChild(iframe);
           }
         }
