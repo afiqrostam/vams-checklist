@@ -471,6 +471,12 @@ var checklist_mod = {
           }).map(
             function (e) { return { 'text': e.ack_desc, 'value': e.ack_code } })
     },
+    showFaultRequired() {
+      return this.raw.filter(
+        function (e) {
+          return e.ack_possiblefindings !== '' && e.ack_finding !== ''
+        }).length > 0
+    },
     selectFault(event) {
       var target = event.target;
       var selected = target.value;
