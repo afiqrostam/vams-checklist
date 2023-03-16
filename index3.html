@@ -232,6 +232,21 @@
                                 <i class="bi bi-exclamation-circle-fill fs-5"></i>
                                 Enter faults identified in the Faults section
                               </span>
+                              <span class="hstack text-info gap-2">
+                                <span class="hstack gap-1">
+                                  <i class="bi bi-check-square-fill fs-5"></i>
+                                  No Obvious Defect / Done
+                                </span>
+                                <span class="hstack gap-1">
+                                  <i class="bi bi-x-square-fill fs-5"></i>
+                                  Fault
+                                  Identified
+                                </span>
+                                <span class="hstack gap-1">
+                                  <i class="bi bi-slash-square-fill fs-5"></i>
+                                  Not Applicable
+                                </span>
+                              </span>
                             </div>
                           </div>
                           <div :class="[ getdisplay(item) ? 'accordion-item' : 'accordion-item d-none']"
@@ -263,13 +278,13 @@
                                   :disabled="data.status || ['Unit/Fleet No','Registration No','Worker Name'].indexOf(item.ack_desc) != -1">
                                 <div v-if="item.ack_type == 03" class="my-2 hstack gap-2">
                                   <div class="col d-none">
-                                    <input type="radio" v-model="item.ack_finding" :id="'FREE'+item.ack_code+'_chk_null'" value=""
-                                      autocomplete="off" checked>
+                                    <input type="radio" v-model="item.ack_finding"
+                                      :id="'FREE'+item.ack_code+'_chk_null'" value="" autocomplete="off" checked>
                                   </div>
                                   <div class="col" v-for="option in item.ack_possiblefindings" :key="option.value">
                                     <input type="radio" class="btn-check" @change="snycItems(item,$event)"
-                                      v-model.lazy="item.ack_finding" :id="'FREE'+item.ack_code+'_chk_'+option" :value="option.value"
-                                      autocomplete="off">
+                                      v-model.lazy="item.ack_finding" :id="'FREE'+item.ack_code+'_chk_'+option"
+                                      :value="option.value" autocomplete="off">
                                     <label class="btn btn-outline-primary" :for="'FREE'+item.ack_code+'_chk_'+option"
                                       v-html="getOptionHTML(option.value)"></label>
                                   </div>
