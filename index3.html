@@ -295,7 +295,7 @@
                                 </div>
                                 <button type="button" :id="'REFRESH'+item.ack_code" v-show="!data.status"
                                   :class="[ ['Unit/Fleet No','Registration No','Worker Name'].indexOf(item.ack_desc) != -1 ? 'btn btn-sm rounded-circle btn-outline-secondary d-none' : 'btn btn-sm rounded-circle btn-outline-secondary']"
-                                  class="btn btn-sm rounded-circle btn-outline-secondary"
+                                  class="btn btn-sm rounded-circle ms-auto btn-outline-secondary"
                                   @click="resetItems(item,$event)"><i class="bi bi-arrow-repeat"></i></button>
                                 <i class="bi bi-circle pe-2"
                                   v-if="!getItemCompleted(item) && !item.updated && !item.process"></i>
