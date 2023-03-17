@@ -115,23 +115,21 @@ var photo_mod = {
         },
       });
       fetch(data_request)
-        .then(function (response) {
-          return response.json();
-        })
+        .then(function (response) { return response.json() })
         .then(function (data) {
-          if (data.status != undefined && data.status === false) {
-            alert.add({ text: data.text, type: 'error' });
-          }
-          else {
+          if (data.status) {
             app_data.list = data.text;
             if (data.text.length > 0) {
               app_data.list.map(
                 function (e) { return e.dae_document }).forEach(
                   function (e) { app_data.getData(param, e) });
-              if (callback !== undefined) {
-                app_data.addChecklist(callback, checklist)
-              }
+              if (callback !== undefined) { app_data.addChecklist(callback, checklist) }
             }
+          }
+          else {
+            console.log(data.text)
+            app_data.list = [];
+            if (callback !== undefined) { app_data.addChecklist(callback, checklist) }
           }
         });
     },
@@ -154,15 +152,13 @@ var photo_mod = {
           return response.json();
         })
         .then(function (data) {
-          if (data.status != undefined && data.status === false) {
-            alert.add({ text: data.text, type: 'error' });
-          }
-          else {
+          if (data.status) {
             var node_list = app_data.list.filter(function (e) { return e.dae_document == data.text.doc_id });
             if (node_list.length === 1) {
               node_list[0].src = 'data:application/pdf;base64,' + data.text.base;
             }
           }
+          else{ console.log(data.text) }
         });
     },
     addChecklist(id, checklist) {
@@ -498,7 +494,7 @@ var checklist_mod = {
       text_area.style.height = 'auto';
       text_area.style.height = (text_area.scrollHeight) + 'px'
     },
-    openPhoto(item) { console.log(item); photo_mgmt.addChecklist(item.ack_code,this.data.wo) },
+    openPhoto(item) { console.log(item); photo_mgmt.addChecklist(item.ack_code, this.data.wo) },
     snycItems(item, event) {
       if (event != undefined) {
         if (event.target.nodeName == 'TEXTAREA') {
