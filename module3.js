@@ -160,8 +160,11 @@ var photo_mod = {
             var node_list = app_data.list.filter(function (e) { return e.dae_document == data.text.doc_id });
             if (node_list.length === 1) {
               node_list[0].src = 'data:application/pdf;base64,' + data.text.base;
+              if (callback !== undefined) { app_data.addChecklist(callback.id, callback.checklist) }
             }
-            if (callback !== undefined) { app_data.addChecklist(callback.id, callback.checklist) }
+            else {
+              if (callback !== undefined) { app_data.addChecklist(callback.id, callback.checklist) }
+            }
           }
           else {
             console.log(data.text);
@@ -182,7 +185,7 @@ var photo_mod = {
           app_data['data']['src'] = getData[0].src;
           app_data['data']['loaded'] = false;
         }
-        else{app_data['data']['loaded'] = false}
+        else { app_data['data']['loaded'] = false }
       }
     },
     closeModal() { this.loaded = false },
