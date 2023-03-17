@@ -90,6 +90,7 @@ var photo_mod = {
     return {
       'data': {
         'checklistid': '',
+        'org': '',
         'photoid': '',
         'src': '',
         'loaded': false
@@ -131,7 +132,6 @@ var photo_mod = {
             else {
               if (callback !== undefined) { app_data.addChecklist(callback, checklist) }
             }
-
           }
           else {
             console.log(data.text)
@@ -184,6 +184,7 @@ var photo_mod = {
       else {
         var getData = app_data['list'].filter(function (e) { return e.ack_code === id });
         if (getData.length === 1 && getData[0].src !== undefined) {
+          app_data['data']['org'] = getData[0].dae_document;
           app_data['data']['photoid'] = getData[0].dae_document;
           app_data['data']['src'] = getData[0].src;
           app_data['data']['loaded'] = false;
@@ -247,7 +248,9 @@ var photo_mod = {
       }
     },
     openFile() { document.getElementById('new_photo_btn').click() },
-    uploadPhoto() { console.log('do something') }
+    uploadPhoto() { 
+      
+     }
   }
 }
 
