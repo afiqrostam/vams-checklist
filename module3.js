@@ -120,11 +120,15 @@ var photo_mod = {
           if (data.status) {
             app_data.list = data.text;
             if (data.text.length > 0) {
-              app_data.list.map(
-                function (e) { return e.dae_document }).forEach(
-                  function (e) { app_data.getData(param, e) });
-              if (callback !== undefined) { app_data.addChecklist(callback, checklist) }
+              app_data.list.forEach(
+                function (e) {
+                  if (callback !== undefined && callback === e.ack_code) {
+                    app_data.getData(param, e.dae_document, { id: e.ack_code, checklist: e.ock_code })
+                  }
+                  else { app_data.getData(param, e.dae_document) }
+                });
             }
+            if (callback !== undefined) { app_data.addChecklist(callback, checklist) }
           }
           else {
             console.log(data.text)
@@ -133,7 +137,7 @@ var photo_mod = {
           }
         });
     },
-    getData(param, doc_id) {
+    getData(param, doc_id, callback) {
       var app_data = this;
       var p = {
         'process': 'download_doc_attachment',
@@ -157,8 +161,12 @@ var photo_mod = {
             if (node_list.length === 1) {
               node_list[0].src = 'data:application/pdf;base64,' + data.text.base;
             }
+            if (callback !== undefined) { app_data.addChecklist(callback.id, callback.checklist) }
           }
-          else{ console.log(data.text) }
+          else {
+            console.log(data.text);
+            if (callback !== undefined) { app_data.addChecklist(callback.id, callback.checklist) }
+          }
         });
     },
     addChecklist(id, checklist) {
@@ -169,7 +177,7 @@ var photo_mod = {
       if (app_data['list'] === false) { app_data.updateList(param, checklist, id) }
       else {
         var getData = app_data['list'].filter(function (e) { return e.ack_code === id });
-        if (getData.length === 1) {
+        if (getData.length === 1 && getData[0].src !== undefined) {
           app_data['data']['photoid'] = getData[0].dae_document;
           app_data['data']['src'] = getData[0].src;
         }
