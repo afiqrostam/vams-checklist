@@ -89,15 +89,97 @@ var photo_mod = {
   data() {
     return {
       'data': {
-        'id': '',
+        'checklistid': '',
+        'photoid': '',
         'src': '',
         'loaded': false
       },
-      'loaded': false,
+      'list': false,
+      'loaded': false
     }
   },
   methods: {
-    addChecklist(id) { this['data']['id'] = id; this.loaded = true },
+    updateList(param, checklist, callback) {
+      var app_data = this;
+      var p = {
+        'process': 'get_photos',
+        'tenant': param.tenant,
+        'userid': param.userid,
+        'checklist': checklist
+      }
+      var data_request = new Request(updateUrl(gas, p), {
+        redirect: "follow",
+        method: 'POST',
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        },
+      });
+      fetch(data_request)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          if (data.status != undefined && data.status === false) {
+            alert.add({ text: data.text, type: 'error' });
+          }
+          else {
+            app_data.list = data.text;
+            if (data.text.length > 0) {
+              app_data.list.map(
+                function (e) { return e.dae_document }).forEach(
+                  function (e) { app_data.getData(param, e) });
+              if (callback !== undefined) {
+                app_data.addChecklist(callback, checklist)
+              }
+            }
+          }
+        });
+    },
+    getData(param, doc_id) {
+      var app_data = this;
+      var p = {
+        'process': 'download_doc_attachment',
+        'tenant': param.tenant,
+        'doc_id': doc_id
+      }
+      var data_request = new Request(updateUrl(gas, p), {
+        redirect: "follow",
+        method: 'POST',
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        },
+      });
+      fetch(data_request)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          if (data.status != undefined && data.status === false) {
+            alert.add({ text: data.text, type: 'error' });
+          }
+          else {
+            var node_list = app_data.list.filter(function (e) { return e.dae_document == data.text.doc_id });
+            if (node_list.length === 1) {
+              node_list[0].src = 'data:application/pdf;base64,' + data.text.base;
+            }
+          }
+        });
+    },
+    addChecklist(id, checklist) {
+      var app_data = this;
+      app_data['data']['checklistid'] = id;
+      app_data['data']['loaded'] = true;
+      if (app_data['list'] === false) { app_data.updateList(param, checklist, id) }
+      else {
+        var getData = app_data['list'].filter(function (e) { return e.ack_code === id });
+        if (getData.length === 1) {
+          app_data['data']['photoid'] = getData[0].dae_document;
+          app_data['data']['src'] = getData[0].src;
+        }
+        app_data['data']['loaded'] = false;
+        app_data.loaded = true
+      }
+    },
     closeModal() { this.loaded = false },
     resizeImg(img, maxWidth) {
       var width = img.width;
@@ -154,7 +236,6 @@ var photo_mod = {
       }
     },
     openFile() { document.getElementById('new_photo_btn').click() },
-    clear() { this.data.src = '' },
     uploadPhoto() { console.log('do something') }
   }
 }
@@ -417,7 +498,7 @@ var checklist_mod = {
       text_area.style.height = 'auto';
       text_area.style.height = (text_area.scrollHeight) + 'px'
     },
-    openPhoto(item) { console.log(item); photo_mgmt.addChecklist(item.ack_code) },
+    openPhoto(item) { console.log(item); photo_mgmt.addChecklist(item.ack_code,item.ock_code) },
     snycItems(item, event) {
       if (event != undefined) {
         if (event.target.nodeName == 'TEXTAREA') {
