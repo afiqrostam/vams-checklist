@@ -169,6 +169,7 @@ var photo_mod = {
       var app_data = this;
       app_data['data']['checklistid'] = id;
       app_data['data']['loaded'] = true;
+      app_data.loaded = true;
       if (app_data['list'] === false) { app_data.updateList(param, checklist, id) }
       else {
         var getData = app_data['list'].filter(function (e) { return e.ack_code === id });
@@ -177,7 +178,6 @@ var photo_mod = {
           app_data['data']['src'] = getData[0].src;
         }
         app_data['data']['loaded'] = false;
-        app_data.loaded = true
       }
     },
     closeModal() { this.loaded = false },
