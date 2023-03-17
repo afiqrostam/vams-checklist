@@ -180,8 +180,9 @@ var photo_mod = {
         if (getData.length === 1 && getData[0].src !== undefined) {
           app_data['data']['photoid'] = getData[0].dae_document;
           app_data['data']['src'] = getData[0].src;
+          app_data['data']['loaded'] = false;
         }
-        app_data['data']['loaded'] = false;
+        else{app_data['data']['loaded'] = false}
       }
     },
     closeModal() { this.loaded = false },
