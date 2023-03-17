@@ -128,7 +128,10 @@ var photo_mod = {
                   else { app_data.getData(param, e.dae_document) }
                 });
             }
-            if (callback !== undefined) { app_data.addChecklist(callback, checklist) }
+            else {
+              if (callback !== undefined) { app_data.addChecklist(callback, checklist) }
+            }
+
           }
           else {
             console.log(data.text)
