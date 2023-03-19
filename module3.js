@@ -256,24 +256,41 @@ var photo_mod = {
     uploadPhoto(param) {
       var app_data = this;
       app_data['data']['loaded'] = true;
-      var p = {
-        'process': 'create_photo_record',
-        'tenant': param.tenant,
-        'userid': param.userid,
-        'organization': app_data['data']['org'],
-        'checklist': app_data['data']['checklistid'],
-        'file': app_data['data']['src'],
+      if (app_data['data']['photoid'] === '') {
+        var p = {
+          'process': 'create_photo_record',
+          'tenant': param.tenant,
+          'userid': param.userid,
+          'organization': app_data['data']['org'],
+          'checklist': app_data['data']['checklistid']
+        }
+      }
+      else{
+        var p = {
+          'process': 'update_photo_attachment',
+          'tenant': param.tenant,
+          'userid': param.userid,
+          'doc_id': app_data['data']['photoid']
+        }
+
+      }
+      var file = {
+        'file': app_data['data']['src']
       }
       var data_request = new Request(updateUrl(gas, p), {
         redirect: "follow",
         method: 'POST',
+        body: JSON.stringify(file),
         headers: {
           "Content-Type": "text/plain;charset=utf-8",
         },
       });
       fetch(data_request)
         .then(function (response) { return response.json() })
-        .then(function (data) {console.log(data)
+        .then(function (data) {
+          console.log(data);
+
+          app_data['data']['loaded'] = false;
         });
     }
   }
