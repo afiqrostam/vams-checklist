@@ -56,13 +56,15 @@
           </div>
           <div class="modal-body d-flex justify-content-center">
             <div class="card col-12 col-md-9 min-vh-50 p-3" @click="openFile">
-              <div v-if="data.src === ''" class="card vstack hstack h-100 text-bg-info bg-opacity-25">
-                <div v-if="data.loaded" class="m-auto spinner-grow" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-                <i v-else class="m-auto big-3 bi bi-camera-fill"></i>
+              <div v-if="data.loaded" class="m-auto spinner-grow" role="status">
+                <span class="visually-hidden">Loading...</span>
               </div>
-              <img v-else class="rounded" :src="data.src">
+              <template v-else>
+                <div v-if="data.src === ''" class="card vstack hstack h-100 text-bg-info bg-opacity-25">
+                  <i class="m-auto big-3 bi bi-camera-fill"></i>
+                </div>
+                <img v-else class="rounded" :src="data.src">
+              </template>
             </div>
             <input class="d-none" id="new_photo_btn" @change="processImg($event)" type="file" accept="image/*">
           </div>
