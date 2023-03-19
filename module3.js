@@ -123,20 +123,24 @@ var photo_mod = {
             if (data.text.length > 0) {
               app_data.list.forEach(
                 function (e) {
-                  if (callback !== undefined && callback === e.ack_code) {
-                    app_data.getData(param, e.dae_document, { id: e.ack_code, checklist: e.ock_code })
+                  if (callback !== undefined && callback.id === e.ack_code) {
+                    app_data.getData(param, e.dae_document, {
+                      id: e.ack_code,
+                      checklist: e.ock_code,
+                      org: e.ock_org
+                    })
                   }
                   else { app_data.getData(param, e.dae_document) }
                 });
             }
             else {
-              if (callback !== undefined) { app_data.addChecklist(callback, checklist) }
+              if (callback !== undefined) { app_data.addChecklist(callback.id, checklist, callback.org) }
             }
           }
           else {
             console.log(data.text)
             app_data.list = [];
-            if (callback !== undefined) { app_data.addChecklist(callback, checklist) }
+            if (callback !== undefined) { app_data.addChecklist(callback.id, checklist, callback.org) }
           }
         });
     },
@@ -163,24 +167,25 @@ var photo_mod = {
             var node_list = app_data.list.filter(function (e) { return e.dae_document == data.text.doc_id });
             if (node_list.length === 1) {
               node_list[0].src = 'data:application/pdf;base64,' + data.text.base;
-              if (callback !== undefined) { app_data.addChecklist(callback.id, callback.checklist) }
+              if (callback !== undefined) { app_data.addChecklist(callback.id, callback.checklist, callback.org) }
             }
             else {
-              if (callback !== undefined) { app_data.addChecklist(callback.id, callback.checklist) }
+              if (callback !== undefined) { app_data.addChecklist(callback.id, callback.checklist, callback.org) }
             }
           }
           else {
             console.log(data.text);
-            if (callback !== undefined) { app_data.addChecklist(callback.id, callback.checklist) }
+            if (callback !== undefined) { app_data.addChecklist(callback.id, callback.checklist, callback.org) }
           }
         });
     },
-    addChecklist(id, checklist) {
+    addChecklist(id, checklist, org) {
       var app_data = this;
       app_data['data']['checklistid'] = id;
+      app_data['data']['checklistid'] = org;
       app_data['data']['loaded'] = true;
       app_data.loaded = true;
-      if (app_data['list'] === false) { app_data.updateList(param, checklist, id) }
+      if (app_data['list'] === false) { app_data.updateList(param, checklist, { 'id': id, 'org': org }) }
       else {
         var getData = app_data['list'].filter(function (e) { return e.ack_code === id });
         if (getData.length === 1 && getData[0].src !== undefined) {
@@ -248,9 +253,8 @@ var photo_mod = {
       }
     },
     openFile() { document.getElementById('new_photo_btn').click() },
-    uploadPhoto() { 
-      
-     }
+    uploadPhoto(param) {
+    }
   }
 }
 
@@ -512,7 +516,7 @@ var checklist_mod = {
       text_area.style.height = 'auto';
       text_area.style.height = (text_area.scrollHeight) + 'px'
     },
-    openPhoto(item) { console.log(item); photo_mgmt.addChecklist(item.ack_code, this.data.wo) },
+    openPhoto(item) { photo_mgmt.addChecklist(item.ack_code, this.data.wo, this.data.org) },
     snycItems(item, event) {
       if (event != undefined) {
         if (event.target.nodeName == 'TEXTAREA') {
