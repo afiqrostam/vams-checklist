@@ -229,6 +229,7 @@ var photo_mod = {
     },
     processImg(event) {
       var app_data_ = this;
+      var old_ = app_data_.data.src;
       var file = event.target.files[0];
       app_data_.data.loaded = true;
       var blobURL = URL.createObjectURL(file);
@@ -236,6 +237,7 @@ var photo_mod = {
       img.src = blobURL;
       img.onerror = function () {
         URL.revokeObjectURL(this.src);
+        app_data_.data.src = old_;
         app_data_.data.loaded = false;
         // Handle the failure properly
         console.log('Cannot load image');
