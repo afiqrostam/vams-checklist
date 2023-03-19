@@ -253,7 +253,7 @@ var photo_mod = {
       }
     },
     openFile() { document.getElementById('new_photo_btn').click() },
-    uploadPhoto(param) {
+    uploadPhoto() {
       var app_data = this;
       app_data['data']['loaded'] = true;
       if (app_data['data']['photoid'] === '') {
@@ -265,7 +265,7 @@ var photo_mod = {
           'checklist': app_data['data']['checklistid']
         }
       }
-      else{
+      else {
         var p = {
           'process': 'update_photo_attachment',
           'tenant': param.tenant,
