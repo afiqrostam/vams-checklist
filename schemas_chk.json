@@ -197,7 +197,7 @@
         "version": "001",
         "Namespace": "http://schemas.datastream.net/MP_functions/MP5727_001",
         "OperatorChecklist": {
-          "recordid":"0",
+          "recordid": "0",
           "_view_only_access": "false",
           "_is_task_plan_prevent_performed_by_signature": "false",
           "_is_task_plan_prevent_reviewed_by_signature": "false",
@@ -332,7 +332,7 @@
         "version": "001",
         "Namespace": "http://schemas.datastream.net/MP_functions/MP5730_001",
         "OPERATORCHECKLISTID": {
-          "Namespace":"http://schemas.datastream.net/MP_fields",
+          "Namespace": "http://schemas.datastream.net/MP_fields",
           "ORGANIZATIONID": {
             "entity": "User"
           }
@@ -372,7 +372,7 @@
         "version": "001",
         "Namespace": "http://schemas.datastream.net/MP_functions/MP5731_001",
         "OPERATORCHECKLISTID": {
-          "Namespace":"http://schemas.datastream.net/MP_fields",
+          "Namespace": "http://schemas.datastream.net/MP_fields",
           "ORGANIZATIONID": {
             "entity": "User"
           }
@@ -412,18 +412,38 @@
         "version": "001",
         "Namespace": "http://schemas.datastream.net/MP_functions/MP0112_001",
         "DOCUMENTENTITY": {
-          "type":"*",
-          "copyToWO":"-",
-          "printOnWO":"+",
-          "copyToPO":"-",
-          "printOnPO":"-",
-          "createAndCopyToWO":"-",
-          "Namespace":"http://schemas.datastream.net/MP_fields",
+          "type": "*",
+          "copyToWO": "-",
+          "printOnWO": "+",
+          "copyToPO": "-",
+          "printOnPO": "-",
+          "createAndCopyToWO": "-",
+          "Namespace": "http://schemas.datastream.net/MP_fields",
           "DOCUMENTENTITYID": {
-            "document":"",
-            "rentity":"",
-            "code":""
+            "document": "",
+            "rentity": "",
+            "code": ""
           }
+        }
+      }
+    }
+  },
+  {
+    "name": "MP0115_DeleteDocumentAssociation_001",
+    "simple": "Delete Document Association",
+    "group": "Document Association",
+    "role": "Document Update",
+    "body": {
+      "MP0115_DeleteDocumentAssociation_001": {
+        "verb": "Delete",
+        "noun": "DocumentAssociation",
+        "version": "001",
+        "Namespace": "http://schemas.datastream.net/MP_functions/MP0115_001",
+        "DOCUMENTENTITYID": {
+          "Namespace": "http://schemas.datastream.net/MP_fields",
+          "document": "",
+          "rentity": "",
+          "code": ""
         }
       }
     }
