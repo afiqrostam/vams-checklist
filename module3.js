@@ -182,7 +182,7 @@ var photo_mod = {
     addChecklist(id, checklist, org) {
       var app_data = this;
       app_data['data']['checklistid'] = id;
-      app_data['data']['checklistid'] = org;
+      app_data['data']['org'] = org;
       app_data['data']['loaded'] = true;
       app_data.loaded = true;
       if (app_data['list'] === false) { app_data.updateList(param, checklist, { 'id': id, 'org': org }) }
@@ -254,6 +254,27 @@ var photo_mod = {
     },
     openFile() { document.getElementById('new_photo_btn').click() },
     uploadPhoto(param) {
+      var app_data = this;
+      app_data['data']['loaded'] = true;
+      var p = {
+        'process': 'create_photo_record',
+        'tenant': param.tenant,
+        'userid': param.userid,
+        'organization': app_data['data']['org'],
+        'checklist': app_data['data']['checklistid'],
+        'file': app_data['data']['src'],
+      }
+      var data_request = new Request(updateUrl(gas, p), {
+        redirect: "follow",
+        method: 'POST',
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        },
+      });
+      fetch(data_request)
+        .then(function (response) { return response.json() })
+        .then(function (data) {console.log(data)
+        });
     }
   }
 }
