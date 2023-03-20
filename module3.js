@@ -194,14 +194,21 @@ var photo_mod = {
           app_data['data']['src'] = getData[0].src;
           app_data['data']['loaded'] = false;
         }
-        else { 
+        else {
           app_data['data']['photoid'] = '';
           app_data['data']['src'] = '';
           app_data['data']['loaded'] = false;
-         }
+        }
       }
     },
-    closeModal() { this.loaded = false },
+    closeModal() {
+      this['data']['checklistid'] = '';
+      this['data']['org'] = '';
+      this['data']['photoid'] = '';
+      this['data']['src'] = '';
+      this['data']['loaded'] = false;
+      this.loaded = false;
+    },
     resizeImg(img, maxWidth) {
       var width = img.width;
       var height = img.height;
