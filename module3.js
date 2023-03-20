@@ -118,22 +118,31 @@ var photo_mod = {
       fetch(data_request)
         .then(function (response) { return response.json() })
         .then(function (data) {
-          
-          console.log(data)
           if (data.status) {
             app_data.list = data.text;
             if (data.text.length > 0) {
-              app_data.list.forEach(
-                function (e) {
-                  if (callback !== undefined && callback.id === e.ack_code) {
-                    app_data.getData(param, e.dae_document, {
-                      id: e.ack_code,
-                      checklist: e.ock_code,
-                      org: e.ock_org
-                    })
-                  }
-                  else { app_data.getData(param, e.dae_document) }
-                });
+              if (callback !== undefined) {
+                if (data.text.filter(function (e) { return e.ack_code === callback.id }).length === 0) {
+                  app_data.list.forEach(function (e) { app_data.getData(param, e.dae_document) });
+                  app_data.addChecklist(callback.id, checklist, callback.org);
+                }
+                else {
+                  app_data.list.forEach(
+                    function (e) {
+                      if (callback !== undefined && callback.id === e.ack_code) {
+                        app_data.getData(param, e.dae_document, {
+                          id: e.ack_code,
+                          checklist: e.ock_code,
+                          org: e.ock_org
+                        })
+                      }
+                      else { app_data.getData(param, e.dae_document) }
+                    });
+                }
+              }
+              else {
+                app_data.list.forEach(function (e) { app_data.getData(param, e.dae_document) });
+              }
             }
             else {
               if (callback !== undefined) { app_data.addChecklist(callback.id, checklist, callback.org) }
