@@ -118,6 +118,8 @@ var photo_mod = {
       fetch(data_request)
         .then(function (response) { return response.json() })
         .then(function (data) {
+          
+          console.log(data)
           if (data.status) {
             app_data.list = data.text;
             if (data.text.length > 0) {
