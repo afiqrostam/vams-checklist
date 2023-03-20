@@ -324,8 +324,6 @@ var photo_mod = {
           console.log(data);
           updateList(param, app_data['data']['checklistid'], { 'close': true })
         });
-
-      updateList(url_prm, ock_code, c)
     }
   }
 }
