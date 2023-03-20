@@ -188,6 +188,7 @@ var photo_mod = {
       if (app_data['list'] === false) { app_data.updateList(param, checklist, { 'id': id, 'org': org }) }
       else {
         var getData = app_data['list'].filter(function (e) { return e.ack_code === id });
+        console.log(getData)
         if (getData.length === 1 && getData[0].src !== undefined) {
           app_data['data']['org'] = getData[0].dae_document;
           app_data['data']['photoid'] = getData[0].dae_document;
