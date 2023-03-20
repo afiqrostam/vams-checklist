@@ -89,6 +89,7 @@ var photo_mod = {
   data() {
     return {
       'data': {
+        'checklistcode': '',
         'checklistid': '',
         'org': '',
         'photoid': '',
@@ -101,9 +102,6 @@ var photo_mod = {
   },
   methods: {
     updateList(url_prm, ock_code, c) {
-      console.log(url_prm);
-      console.log(ock_code);
-      console.log(c);
       var app_data = this;
       var p = {
         'process': 'get_photos',
@@ -123,20 +121,27 @@ var photo_mod = {
         .then(function (data) {
           if (data.status) {
             app_data.list = data.text;
+
             if (data.text.length > 0) {
               if (c !== undefined && c.close !== undefined) {
-                app_data.list.forEach(function (e) { app_data.getData(url_prm, e.dae_document) });
-                app_data['data']['loaded'] = false;
                 document.getElementById('photo_close_btn').click();
+                app_data.list.forEach(function (e) {
+                  form.raw.filter(function (f) { return f.ack_code === e.ack_code })[0].doc_codes = e.dae_document;
+                  app_data.getData(url_prm, e.dae_document);
+                });
               }
               if (c !== undefined && c.close === undefined) {
                 if (data.text.filter(function (e) { return e.ack_code === c.id }).length === 0) {
-                  app_data.list.forEach(function (e) { app_data.getData(url_prm, e.dae_document) });
+                  app_data.list.forEach(function (e) {
+                    form.raw.filter(function (f) { return f.ack_code === e.ack_code })[0].doc_codes = e.dae_document;
+                    app_data.getData(url_prm, e.dae_document);
+                  });
                   app_data.addChecklist(c.id, ock_code, c.org);
                 }
                 else {
                   app_data.list.forEach(
                     function (e) {
+                      form.raw.filter(function (f) { return f.ack_code === e.ack_code })[0].doc_codes = e.dae_document;
                       if (c !== undefined && c.id === e.ack_code) {
                         app_data.getData(url_prm, e.dae_document, {
                           id: e.ack_code,
@@ -149,31 +154,33 @@ var photo_mod = {
                 }
               }
               else {
-                app_data.list.forEach(function (e) { app_data.getData(url_prm, e.dae_document) });
+                app_data.list.forEach(function (e) {
+                  form.raw.filter(function (f) { return f.ack_code === e.ack_code })[0].doc_codes = e.dae_document;
+                  app_data.getData(url_prm, e.dae_document)
+                });
               }
             }
             else {
-              if (c !== undefined && c.close !== undefined) { 
-                app_data['data']['loaded'] = false;
+              if (c !== undefined && c.close !== undefined) {
                 document.getElementById('photo_close_btn').click();
-               }
+              }
               if (c !== undefined && c.close === undefined) { app_data.addChecklist(c.id, ock_code, c.org) }
             }
           }
           else {
-            console.log(data.text)
             app_data.list = [];
             if (c !== undefined) { app_data.addChecklist(c.id, ock_code, c.org) }
           }
         });
     },
-    getData(param, doc_id, callback) {
+    getData(param, doc_id, c) {
       var app_data = this;
       var p = {
         'process': 'download_doc_attachment',
         'tenant': param.tenant,
         'doc_id': doc_id
       }
+
       var data_request = new Request(updateUrl(gas, p), {
         redirect: "follow",
         method: 'POST',
@@ -188,22 +195,29 @@ var photo_mod = {
         .then(function (data) {
           if (data.status) {
             var node_list = app_data.list.filter(function (e) { return e.dae_document == data.text.doc_id });
-            if (node_list.length === 1) {
-              node_list[0].src = 'data:application/pdf;base64,' + data.text.base;
-              if (callback !== undefined) { app_data.addChecklist(callback.id, callback.checklist, callback.org) }
+            if (node_list.length === 1 && data.text.base !== '' && data.text.base !== undefined) {
+
+              node_list[0].src = 'data:image/jpeg;base64,' + data.text.base;
+
+              if (c !== undefined) {
+                app_data.addChecklist(c.id, c.checklist, c.org)
+              }
             }
             else {
-              if (callback !== undefined) { app_data.addChecklist(callback.id, callback.checklist, callback.org) }
+              if (c !== undefined) {
+                app_data.addChecklist(c.id, c.checklist, c.org)
+              }
             }
           }
           else {
             console.log(data.text);
-            if (callback !== undefined) { app_data.addChecklist(callback.id, callback.checklist, callback.org) }
+            if (c !== undefined) { app_data.addChecklist(c.id, c.checklist, c.org) }
           }
         });
     },
     addChecklist(id, checklist, org) {
       var app_data = this;
+      app_data['data']['checklistcode'] = checklist;
       app_data['data']['checklistid'] = id;
       app_data['data']['org'] = org;
       app_data['data']['loaded'] = true;
@@ -211,11 +225,17 @@ var photo_mod = {
       if (app_data['list'] === false) { app_data.updateList(param, checklist, { 'id': id, 'org': org }) }
       else {
         var getData = app_data['list'].filter(function (e) { return e.ack_code === id });
-        console.log(getData)
-        if (getData.length === 1 && getData[0].src !== undefined) {
+        if (getData.length === 1
+          && getData[0].src !== undefined
+          && getData[0].src !== '') {
           app_data['data']['photoid'] = getData[0].dae_document;
           app_data['data']['src'] = getData[0].src;
           app_data['data']['loaded'] = false;
+        }
+        else if (getData.length === 1
+          && (getData[0].src === undefined || getData[0].src == '')
+          && getData[0].dae_document !== undefined) {
+          app_data.getData(param, getData[0].dae_document, { 'id': id, 'org': org })
         }
         else {
           app_data['data']['photoid'] = '';
@@ -225,6 +245,7 @@ var photo_mod = {
       }
     },
     closeModal() {
+      this['data']['checklistcode'] = '';
       this['data']['checklistid'] = '';
       this['data']['org'] = '';
       this['data']['photoid'] = '';
@@ -273,8 +294,6 @@ var photo_mod = {
         URL.revokeObjectURL(this.src);
         app_data_.data.src = old_;
         app_data_.data.loaded = false;
-        // Handle the failure properly
-        console.log('Cannot load image');
       };
       img.onload = function () {
         URL.revokeObjectURL(this.src);
@@ -310,7 +329,6 @@ var photo_mod = {
         }
       }
       var file = { 'file': app_data['data']['src'] }
-      console.log(p)
       var data_request = new Request(updateUrl(gas, p), {
         redirect: "follow",
         method: 'POST',
@@ -322,9 +340,44 @@ var photo_mod = {
       fetch(data_request)
         .then(function (response) { return response.json() })
         .then(function (data) {
-          console.log(data);
-          app_data.updateList(param, app_data['data']['checklistid'], { 'close': true })
+          if (p['process'] === 'create_photo_record') {
+            app_data.updateList(param, app_data['data']['checklistcode'], { 'close': true })
+          }
+          else {
+            app_data.getData(param, app_data['data']['photoid']);
+            document.getElementById('photo_close_btn').click();
+          }
         });
+    },
+    deletePhoto() {
+      var app_data = this;
+      app_data['data']['loaded'] = true;
+      if (app_data['data']['photoid'] !== '' && app_data['data']['checklistid'] !== '') {
+        var p = {
+          'process': 'delete_photo',
+          'tenant': param.tenant,
+          'userid': param.userid,
+          'doc_id': app_data['data']['photoid'],
+          'checklist': app_data['data']['checklistid']
+        };
+        var data_request = new Request(updateUrl(gas, p), {
+          redirect: "follow",
+          method: 'POST',
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8",
+          },
+        });
+        fetch(data_request)
+          .then(function (response) { return response.json() })
+          .then(function (data) {
+            form.raw.filter(
+              function (f) { return f.ack_code === app_data['data']['checklistid'] })[0].doc_codes = '';
+            app_data.updateList(param, app_data['data']['checklistcode'], { 'close': true });
+          });
+      }
+      else {
+        document.getElementById('photo_close_btn').click();
+      }
     }
   }
 }
@@ -427,7 +480,6 @@ var checklist_mod = {
   },
   methods: {
     addItems(input) {
-      console.log(input)
       input['updated'] = false;
       input['process'] = false;
       input['wo'] = 'WO' + input['ock_code'];
@@ -660,6 +712,13 @@ var checklist_mod = {
         return false
       }
       else { return true }
+    },
+    getPhotoId(itemid) {
+      var id = this.raw.filter(function (e) {
+        return e.ack_code == itemid
+      });
+      if (id[0].doc_codes !== undefined && id[0].doc_codes !== '') { return id[0].doc_codes }
+      else { return '' }
     },
     getdisplay(item) {
       if (item.ack_type === '14') { return false }
