@@ -17,13 +17,13 @@
 
 <body class="bg-light">
   <!-- modal -->
-  <div class="bg-light modal fade" id="newPage" tabindex="-1" aria-labelledby="newPage" data-bs-keyboard="false"
-    data-bs-backdrop="static" aria-hidden="true">
+  <div id="newPage" class="bg-white modal fade" aria-hidden="true" aria-labelledby="newPage" data-bs-keyboard="false"
+    data-bs-backdrop="static" tabindex="-1">
     <div class="modal-dialog modal-fullscreen-lg-down modal-dialog-scrollable modal-xl">
       <!-- open faults -->
       <div id="openjobmodal">
         <div v-if="loaded == true" class="modal-content">
-          <div class="modal-body">
+          <div class="modal-body min-vh-85">
             <div class="list-group">
               <div class="list-group-item list-group-item-action list-group-item-dark " aria-current="true">
                 <div class="d-flex w-100 justify-content-between">
@@ -55,15 +55,18 @@
             <h5 class="modal-title">Photo</h5>
           </div>
           <div class="modal-body d-flex justify-content-center">
-            <div class="card border-0 col-12 col-md-9 min-vh-50 p-3" @click="openFile">
+            click on camera icon or exisiting image to take a photo
+          </div>
+          <div class="modal-body min-vh-75 d-flex justify-content-center">
+            <div class="card border-0 col-12 col-md-9 p-3" @click="openFile">
               <div v-if="data.loaded" class="m-auto spinner-grow" role="status">
                 <span class="visually-hidden">Loading...</span>
               </div>
               <template v-else>
-                <div v-if="data.src === ''" class="card vstack hstack h-100 border-0">
+                <div v-if="data.src === ''" class="card h-100 border-0">
                   <i class="m-auto big-3 bi bi-camera-fill"></i>
                 </div>
-                <img v-else class="rounded" :src="data.src">
+                <img v-else class="my-auto rounded" :src="data.src">
               </template>
             </div>
             <input class="d-none" id="new_photo_btn" @change="processImg($event)" type="file" accept="image/*">
@@ -73,14 +76,14 @@
             <button type="button" @click="closeModal" id="photo_close_btn" class="btn btn-secondary"
               data-bs-dismiss="modal">Cancel</button>
             <button type="button" v-if="data.photoid !== '' && data.checklistid !==''" @click="deletePhoto"
-              class="btn btn-primary">Delete</button>
+              class="btn btn-danger">Delete</button>
           </div>
         </div>
       </div>
       <!-- past dvr -->
       <div id="pastdvrmodal">
         <div v-if="loaded == true" class="modal-content">
-          <div class="modal-body">
+          <div class="modal-body  min-vh-85">
             <div class="list-group">
               <div class="list-group-item list-group-item-action list-group-item-dark " aria-current="true">
                 <div class="d-flex w-100 justify-content-between">
@@ -91,22 +94,21 @@
                 :id="'FORMS_'+dt['dae_document']">
                 <div class="hstack gap-2 mb-1">
                   <div class="hstack gap-1">
-                    <button @click="download(dt)"
-                      :class="[ dt['url'] == undefined ? 'btn btn-primary disabled' : 'btn btn-primary']"
+                    <button @click="download(dt)" :class="'btn btn-primary '+[dt['url'] == undefined ?'disabled':'']"
                       :id="'PREV_'+dt['dae_document']">
                       <span v-if="dt['url'] == undefined " class="spinner-grow spinner-grow-sm" role="status"
                         aria-hidden="true"></span>
                       <i v-else class="bi bi-file-earmark-pdf-fill"></i>
                     </button>
                     <button @click="downloadfile(dt)" v-if="!isMob()"
-                      :class="[ dt['url'] == undefined ? 'btn btn-primary disabled' : 'btn btn-primary']"
+                      :class="'btn btn-primary '+[dt['url'] == undefined ?'disabled':'']"
                       :id="'LINK_'+dt['dae_document']">
                       <span v-if="dt['url'] == undefined " class="spinner-grow spinner-grow-sm" role="status"
                         aria-hidden="true"></span>
                       <i v-else class="bi bi-archive-fill"></i>
                     </button>
                     <a target="_blank" :href="[ dt['url'] == undefined ? '#' : dt['url']]" v-if="isMob()"
-                      :class="[ dt['url'] == undefined ? 'btn btn-primary disabled' : 'btn btn-primary']"
+                      :class="'btn btn-primary '+[dt['url'] == undefined ?'disabled':'']"
                       :id="'LINKMOB_'+dt['dae_document']">
                       <span v-if="dt['url'] == undefined " class="spinner-grow spinner-grow-sm" role="status"
                         aria-hidden="true"></span>
@@ -220,7 +222,7 @@
         <div class="accordion accordion-flush" :id="data.id">
           <div class="accordion-item" v-for="( activity, index ) in data.activities" :key="activity.id">
             <div class="accordion-header" :id="'h'+activity.id">
-              <button :class="[ index == 0 ? 'accordion-button py-3' : 'accordion-button py-3 collapsed']" type="button"
+              <button :class="'accordion-button bg-light py-3 '+[ index == 0 ? '' : 'collapsed']" type="button"
                 data-bs-toggle="collapse" aria-expanded="false"
                 v-bind="{ 'data-bs-target': '#c'+activity.id, 'aria-controls': 'c'+activity.id }" @click="loadMeta()">
                 <span class="h6 p-0 m-0">{{ activity.act_note}}</span>
@@ -228,13 +230,13 @@
             </div>
             <div
               v-bind="{ 'id': 'c'+activity.id, 'aria-labelledby': 'h'+activity.id, 'data-bs-parent': '#'+activity.parentid }"
-              :class="[ index == 0 ? 'accordion-collapse collapse show' : 'accordion-collapse collapse']">
+              :class="'accordion-collapse collapse '+[ index == 0 ? 'show' : '']">
               <template v-if="activity.groups !== undefined">
                 <div class="accordion accordion-flush" :id="activity.id">
                   <div class="accordion-item" v-for="group in activity.groups" :key="group.id">
                     <div class="accordion-header" :id="'h'+group.id">
-                      <button class="accordion-button py-2 bg-light collapsed" type="button" data-bs-toggle="collapse"
-                        aria-expanded="false"
+                      <button class="accordion-button py-2 bg-secondary bg-opacity-25 collapsed" type="button"
+                        data-bs-toggle="collapse" aria-expanded="false"
                         v-bind="{ 'data-bs-target': '#c'+group.id, 'aria-controls': 'c'+group.id }" @click="loadMeta()">
                         <span class="w-100">{{ group.group_label}}</span>
                         <span class="small fw-light pe-2 text-nowrap">( {{ getGroupCompleted(group) }} of {{
@@ -249,37 +251,39 @@
                         <div class="accordion accordion-flush" :id="group.id">
                           <div class="accordion-item bg-light"
                             v-if="(group.group_code === 'F-200104' || group.group_code === 'F-200102')">
-                            <div class="accordion-body py-2 row">
-                              <span class="hstack text-danger gap-2" v-if="!data.status">
-                                <i class="bi bi-exclamation-circle-fill fs-5"></i>
-                                Enter faults identified in the Faults section
+                            <div class="accordion-body py-2 row text-body-tertiary small">
+                              <span class="col-12 col-sm-4 col-md-4 hstack gap-1">
+                                <i class="bi bi-check-square-fill"></i>
+                                <span class="lh-1">No Obvious Defect / Done</span>
                               </span>
-                              <div class="row text-muted">
-                                <span class="col-12 col-sm-4 col-md-4 hstack gap-1">
-                                  <i class="bi bi-check-square-fill fs-5"></i>
-                                  <span class="lh-1">No Obvious Defect / Done</span>
-                                </span>
-                                <span class="col-12 col-sm-4 col-md-3 hstack gap-1">
-                                  <i class="bi bi-x-square-fill fs-5"></i>
-                                  <span class="lh-1">Fault Identified</span>
-                                </span>
-                                <span class="col-12 col-sm-4 col-md-3 hstack gap-1">
-                                  <i class="bi bi-slash-square-fill fs-5"></i>
-                                  <span class="lh-1">Not Applicable</span>
-                                </span>
-                              </div>
+                              <span class="col-12 col-sm-4 col-md-3 hstack gap-1">
+                                <i class="bi bi-x-square-fill"></i>
+                                <span class="lh-1">Fault Identified</span>
+                              </span>
+                              <span class="col-12 col-sm-4 col-md-3 hstack gap-1">
+                                <i class="bi bi-slash-square-fill"></i>
+                                <span class="lh-1">Not Applicable</span>
+                              </span>
                             </div>
                           </div>
-                          <div :class="[ getdisplay(item) ? 'accordion-item' : 'accordion-item d-none']"
-                            v-for="item in group.items" :key="item.ack_code">
+                          <div :class="'accordion-item '+[getdisplay(item) ? '' : 'd-none']" v-for="item in group.items"
+                            :key="item.ack_code">
                             <div class="accordion-body py-2 row">
-                              <div class="col" v-if="['04','13','14','15'].indexOf(item.ack_type) != -1">
+                              <div class="col col-md-4 d-flex align-items-center"
+                                v-if="['03','04','13','14','15'].indexOf(item.ack_type) != -1">
                                 <span>{{ item.ack_desc }}</span>
                                 <p v-if="item.ack_taskchecklistcode_comments != ''" class="pre-line m-0">{{
                                   item.ack_taskchecklistcode_comments }}</p>
+                                <template v-else></template>
+                                <span v-if="getStartReading(item) !== ''"
+                                  class="ms-auto text-muted small">{{parseInt(getStartReading(item),10).toLocaleString()}}
+                                  {{ item.ack_uom
+                                  }}</span>
+
+                                <template v-else></template>
                               </div>
                               <div class="col-md hstack gap-2 fw-light"
-                                v-if="['04','13','14','15'].indexOf(item.ack_type) != -1">
+                                v-if="['03','04','13','14','15'].indexOf(item.ack_type) != -1">
                                 <input v-if="item.ack_type == 13" type="date"
                                   class="form-control border-0 border-bottom" :id="'FREE'+item.ack_code"
                                   autocomplete="off" v-model="item.ack_checklistdate" @input="snycItems(item,$event)"
@@ -295,16 +299,6 @@
                                   autocomplete="off" v-model="item.ack_freetext" @input="snycItems(item,$event)"
                                   @focus="snycItems(item,$event)" @keyup="snycItems(item,$event)"
                                   :disabled="data.status || ['Unit/Fleet No','Registration No','Worker Name'].indexOf(item.ack_desc) != -1">
-                                <!-- 
-                                <select v-if="item.ack_type == 03" class="form-select border-0 border-bottom"
-                                  :id="'FREE'+item.ack_code" autocomplete="off" v-model="item.ack_finding"
-                                  @change="snycItems(item,$event)" :disabled="data.status">
-                                  <option disabled value="">select one</option>
-                                  <option v-for="option in item.ack_possiblefindings" :value="option.value">
-                                    {{ option.text }}
-                                  </option>
-                                </select>
-                              -->
                                 <div class="input-group" v-if="item.ack_type == '04'">
                                   <input type="number" v-model="item.ack_value" @input="snycItems(item,$event)"
                                     @focus="snycItems(item,$event)" @keyup="snycItems(item,$event)"
@@ -313,25 +307,7 @@
                                   <span class="input-group-text border-0 bg-light border-bottom">{{ item.ack_uom
                                     }}</span>
                                 </div>
-                                <button type="button" :id="'REFRESH'+item.ack_code" v-show="!data.status"
-                                  :class="[ ['Unit/Fleet No','Registration No','Worker Name'].indexOf(item.ack_desc) != -1 ? 'btn btn-sm rounded-circle btn-outline-secondary d-none' : 'btn btn-sm rounded-circle btn-outline-secondary']"
-                                  class="btn btn-sm rounded-circle ms-auto btn-outline-secondary"
-                                  @click="resetItems(item,$event)"><i class="bi bi-arrow-repeat"></i></button>
-                                <i class="bi bi-circle pe-2"
-                                  v-if="!getItemCompleted(item) && !item.updated && !item.process"></i>
-                                <i class="bi bi-circle-fill pe-2"
-                                  v-if="!getItemCompleted(item) && item.updated && !item.process"></i>
-                                <i class="bi bi-circle text-info pe-2"
-                                  v-if="!getItemCompleted(item) && item.updated && item.process"></i>
-                                <i class="bi bi-check-circle pe-2"
-                                  v-if="getItemCompleted(item) && !item.updated && !item.process"></i>
-                                <i class="bi bi-check-circle-fill pe-2"
-                                  v-if="getItemCompleted(item) && item.updated && !item.process"></i>
-                                <i class="bi bi-check-circle-fill text-info pe-2"
-                                  v-if="getItemCompleted(item) && item.updated && item.process"></i>
-                              </div>
-                              <div class="hstack gap-2 fw-light" v-if="['03'].indexOf(item.ack_type) != -1">
-                                <div class="my-2 hstack gap-2">
+                                <div v-if="item.ack_type == 03" class="my-2 hstack gap-2">
                                   <div class="col d-none">
                                     <input type="radio" v-model="item.ack_finding"
                                       :id="'FREE'+item.ack_code+'_chk_null'" value="" autocomplete="off" checked>
@@ -344,14 +320,12 @@
                                       :for="'FREE'+item.ack_code+'_chk_'+option.value"
                                       v-html="getOptionHTML(option.value)"></label>
                                   </div>
-                                </div>
-                                <div class="col">
-                                  <span>{{ item.ack_desc }}</span>
-                                  <p v-if="item.ack_taskchecklistcode_comments != ''" class="pre-line m-0">{{
-                                    item.ack_taskchecklistcode_comments }}</p>
+                                  <span v-if="item.ack_finding == 'Z029'" class="hstack small text-danger gap-2"><i
+                                      class="bi bi-exclamation-circle-fill"></i> Enter faults identified in the Faults
+                                    section </span>
                                 </div>
                                 <button type="button" :id="'REFRESH'+item.ack_code" v-show="!data.status"
-                                  class="btn btn-sm rounded-circle btn-outline-secondary"
+                                  :class="'ms-auto btn btn-sm rounded-circle btn-outline-secondary '+[ ['Unit/Fleet No','Registration No','Worker Name'].indexOf(item.ack_desc) != -1 ? ' d-none' : '']"
                                   @click="resetItems(item,$event)"><i class="bi bi-arrow-repeat"></i></button>
                                 <i class="bi bi-circle pe-2"
                                   v-if="!getItemCompleted(item) && !item.updated && !item.process"></i>
@@ -378,7 +352,7 @@
                                     item.ack_taskchecklistcode_comments }}</p>
                                 </div>
                                 <button type="button" :id="'REFRESH'+item.ack_code" v-show="!data.status"
-                                  class="btn btn-sm rounded-circle btn-outline-secondary"
+                                  class="ms-auto btn btn-sm rounded-circle btn-outline-secondary"
                                   @click="resetItems(item,$event)"><i class="bi bi-arrow-repeat"></i></button>
                                 <i class="bi bi-circle pe-2"
                                   v-if="!getItemCompleted(item) && !item.updated && !item.process"></i>
@@ -396,7 +370,7 @@
                               <div class="hstack gap-2 py-2" v-if="hasTextArea(item)">
                                 <div class="w-100 form-floating me-auto">
                                   <textarea :ref="'NOTES'+item.ack_code" :id="'NOTES'+item.ack_code"
-                                    :class="[ item.ack_notes == '' ? 'form-control bg-warning-subtle' : 'form-control']"
+                                    :class="'form-control '+[ item.ack_notes == '' ? 'bg-warning-subtle' : '']"
                                     :disabled="data.status" v-model="item.ack_notes" @input="snycItems(item,$event)"
                                     @focus="snycItems(item,$event)" @keyup="snycItems(item,$event)"
                                     placeholder="..."></textarea>

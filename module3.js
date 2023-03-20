@@ -640,6 +640,36 @@ var checklist_mod = {
       text_area.style.height = 'auto';
       text_area.style.height = (text_area.scrollHeight) + 'px'
     },
+    getStartReading(item) {
+      if (item.ack_desc.search(new RegExp('Odometer/Hub', 'gi')) === -1
+        && item.ack_desc.search(new RegExp('Hour Meter', 'gi')) === -1) {
+        return ''
+      }
+      else {
+        var wo = this.data.wo;
+        if (item.ack_desc.search(new RegExp('start', 'gi')) === -1) {
+          if (item.ack_desc.search(new RegExp('Odometer/Hub', 'gi')) !== -1) {
+            return payload.filter(
+              function (e) {
+                return e.ock_code == wo
+                  && e.ack_desc.search(new RegExp('Odometer/Hub', 'gi')) !== -1
+                  && e.ack_desc.search(new RegExp('start', 'gi')) !== -1
+              })[0].ack_value
+          }
+          else {
+            return payload.filter(
+              function (e) {
+                return e.ock_code == wo
+                  && e.ack_desc.search(new RegExp('Hour Meter', 'gi')) !== -1
+                  && e.ack_desc.search(new RegExp('start', 'gi')) !== -1
+              })[0].ack_value
+          }
+        }
+        else {
+          return ''
+        }
+      }
+    },
     openPhoto(item) { photo_mgmt.addChecklist(item.ack_code, this.data.wo, this.data.org) },
     snycItems(item, event) {
       if (event != undefined) {
