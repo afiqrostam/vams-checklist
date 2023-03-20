@@ -244,6 +244,9 @@ var photo_mod = {
         }
       }
     },
+    getChecklistStatus() {
+      return form.data.status
+    },
     closeModal() {
       this['data']['checklistcode'] = '';
       this['data']['checklistid'] = '';
@@ -284,30 +287,32 @@ var photo_mod = {
     },
     processImg(event) {
       var app_data_ = this;
-      var old_ = app_data_.data.src;
-      var file = event.target.files[0];
-      app_data_.data.loaded = true;
-      var blobURL = URL.createObjectURL(file);
-      var img = new Image();
-      img.src = blobURL;
-      img.onerror = function () {
-        URL.revokeObjectURL(this.src);
-        app_data_.data.src = old_;
-        app_data_.data.loaded = false;
-      };
-      img.onload = function () {
-        URL.revokeObjectURL(this.src);
-        var [newWidth, newHeight] = app_data_.resizeImg(img, 1600);
-        var canvas = document.createElement('canvas');
-        canvas.width = newWidth;
-        canvas.height = newHeight;
-        var ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, newWidth, newHeight);
-        app_data_.data.src = canvas.toDataURL('image/jpeg', 0.8);
-        app_data_.data.loaded = false;
+      if (!app_data_.getChecklistStatus()) {
+        var old_ = app_data_.data.src;
+        var file = event.target.files[0];
+        app_data_.data.loaded = true;
+        var blobURL = URL.createObjectURL(file);
+        var img = new Image();
+        img.src = blobURL;
+        img.onerror = function () {
+          URL.revokeObjectURL(this.src);
+          app_data_.data.src = old_;
+          app_data_.data.loaded = false;
+        };
+        img.onload = function () {
+          URL.revokeObjectURL(this.src);
+          var [newWidth, newHeight] = app_data_.resizeImg(img, 1600);
+          var canvas = document.createElement('canvas');
+          canvas.width = newWidth;
+          canvas.height = newHeight;
+          var ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, newWidth, newHeight);
+          app_data_.data.src = canvas.toDataURL('image/jpeg', 0.8);
+          app_data_.data.loaded = false;
+        }
       }
     },
-    openFile() { document.getElementById('new_photo_btn').click() },
+    openFile() { if (!this.getChecklistStatus()) { document.getElementById('new_photo_btn').click() } },
     uploadPhoto() {
       var app_data = this;
       app_data['data']['loaded'] = true;
