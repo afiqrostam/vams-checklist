@@ -101,6 +101,9 @@ var photo_mod = {
   },
   methods: {
     updateList(url_prm, ock_code, c) {
+      console.log(url_prm);
+      console.log(ock_code);
+      console.log(c);
       var app_data = this;
       var p = {
         'process': 'get_photos',
@@ -305,11 +308,9 @@ var photo_mod = {
           'userid': param.userid,
           'doc_id': app_data['data']['photoid']
         }
-
       }
-      var file = {
-        'file': app_data['data']['src']
-      }
+      var file = { 'file': app_data['data']['src'] }
+      console.log(p)
       var data_request = new Request(updateUrl(gas, p), {
         redirect: "follow",
         method: 'POST',
@@ -426,6 +427,7 @@ var checklist_mod = {
   },
   methods: {
     addItems(input) {
+      console.log(input)
       input['updated'] = false;
       input['process'] = false;
       input['wo'] = 'WO' + input['ock_code'];
