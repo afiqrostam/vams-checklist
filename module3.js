@@ -322,7 +322,7 @@ var photo_mod = {
         .then(function (response) { return response.json() })
         .then(function (data) {
           console.log(data);
-          updateList(param, app_data['data']['checklistid'], { 'close': true })
+          app_data.updateList(param, app_data['data']['checklistid'], { 'close': true })
         });
     }
   }
